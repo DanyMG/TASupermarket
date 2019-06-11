@@ -77,7 +77,7 @@ public class Beranda extends javax.swing.JFrame {
     private void txtBARANGMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBARANGMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new Barang().setVisible(true);
+        new FormMenuBarang().setVisible(true);
     }//GEN-LAST:event_txtBARANGMouseClicked
 
     /**
