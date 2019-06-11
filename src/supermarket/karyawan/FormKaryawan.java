@@ -10,9 +10,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableColumnModel;
-import javax.swing.table.TableColumn;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import supermarket.FormAnggota;
@@ -20,7 +17,6 @@ import supermarket.FormBarang;
 import supermarket.FormJamKerja;
 import supermarket.FormLaporan;
 import supermarket.suplier.FormSuplier;
-import supermarket.FormtambahSuplier;
 import supermarket.KoneksiMySQL;
 
 /**
@@ -29,49 +25,40 @@ import supermarket.KoneksiMySQL;
  */
 public class FormKaryawan extends javax.swing.JFrame {
 
-    Karyawan empl= new Karyawan();
+    private Karyawan empl= new Karyawan();
     Connection con;
     ResultSet RsKaryawan;
     Statement stm;
     String selectedEmployee;
     /** Creates new form FormKaryawan */
     public FormKaryawan() {
-        initComponents();
-        open_db();
+        initComponents();        
         setTable(empl.getAllEmployee());
-    }
-    private void open_db(){
-        try{
-            KoneksiMySQL kon= new KoneksiMySQL("localhost", "root", "", "supermarket");
-            con=kon.getConnection();
-        }
-        catch(Exception e){
-            System.out.println("Error : "+e);
-        }
-    }
-    private void setTable(String[][] data){
-        //Membuat tabel untuk menampilkan karyawan
-        DefaultTableModel model= new DefaultTableModel();        
-        //Menambahkan kolom
+    }    
+    public void addEmployeeColumn(DefaultTableModel model){        
         model.addColumn("ID");        
         model.addColumn("Nama");
         model.addColumn("Alamat");
         model.addColumn("Kota");
         model.addColumn("Nomor Telepon");               
         model.addColumn("Kategori");
-        tblkaryawan.setModel(model);
-        //Mengatur ukuran kolom
-        TableColumnModel columnModel=tblkaryawan.getColumnModel();
+    }
+    public void setColumnModel(TableColumnModel columnModel){        
         columnModel.getColumn(0).setPreferredWidth(5);
         columnModel.getColumn(1).setPreferredWidth(100);
         columnModel.getColumn(2).setPreferredWidth(200);
         columnModel.getColumn(3).setPreferredWidth(75);
-        columnModel.getColumn(4).setPreferredWidth(100);
+        columnModel.getColumn(4).setPreferredWidth(100);        
+    }
+    public void setTable(String[][] data){
+        DefaultTableModel table= new DefaultTableModel();
+        addEmployeeColumn(table);
+        tblkaryawan.setModel(table);        
+        TableColumnModel columnModel=tblkaryawan.getColumnModel();
+        setColumnModel(columnModel);        
         tblkaryawan.setColumnModel(columnModel);
-        for(int i=0;i<data.length;i++){
-            model.addRow(new Object[]{
-                data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5]
-            });
+        for (String[] data1 : data) {
+            table.addRow(new Object[]{data1[0], data1[1], data1[2], data1[3], data1[4], data1[5]});
         }        
     }
     /** This method is called from within the constructor to
