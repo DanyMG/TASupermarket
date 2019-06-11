@@ -29,6 +29,7 @@ import supermarket.KoneksiMySQL;
  */
 public class FormKaryawan extends javax.swing.JFrame {
 
+    Karyawan empl= new Karyawan();
     Connection con;
     ResultSet RsKaryawan;
     Statement stm;
@@ -37,7 +38,7 @@ public class FormKaryawan extends javax.swing.JFrame {
     public FormKaryawan() {
         initComponents();
         open_db();
-        setTable();
+        setTable(empl.getAllEmployee());
     }
     private void open_db(){
         try{
@@ -48,7 +49,7 @@ public class FormKaryawan extends javax.swing.JFrame {
             System.out.println("Error : "+e);
         }
     }
-    private void setTable(){
+    private void setTable(String[][] data){
         //Membuat tabel untuk menampilkan karyawan
         DefaultTableModel model= new DefaultTableModel();        
         //Menambahkan kolom
@@ -67,20 +68,11 @@ public class FormKaryawan extends javax.swing.JFrame {
         columnModel.getColumn(3).setPreferredWidth(75);
         columnModel.getColumn(4).setPreferredWidth(100);
         tblkaryawan.setColumnModel(columnModel);
-        //Membaca data karyawan
-        try{    
-            stm=con.createStatement();
-            RsKaryawan=stm.executeQuery("select * from karyawan");
-            while (RsKaryawan.next())
-                model.addRow(new Object[]{          
-                    RsKaryawan.getString("id_karyawan"), RsKaryawan.getString("nama_karyawan"),
-                    RsKaryawan.getString("almt_karyawan"), RsKaryawan.getString("kota_karyawan"),
-                    RsKaryawan.getString("notelp_karyawan"), RsKaryawan.getString("kategori_karyawan")
-                });
-            tblkaryawan.setModel(model);
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, "ERROR : " +e);
-        }
+        for(int i=0;i<data.length;i++){
+            model.addRow(new Object[]{
+                data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5]
+            });
+        }        
     }
     /** This method is called from within the constructor to
      * initialize the form.
@@ -110,8 +102,8 @@ public class FormKaryawan extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         txtkaryawanbaru = new javax.swing.JLabel();
         txtkuncicari = new javax.swing.JTextField();
-        txtcari = new javax.swing.JLabel();
-        txtbatal = new javax.swing.JLabel();
+        lblCari = new javax.swing.JLabel();
+        lblBatal = new javax.swing.JLabel();
         txteditkaryawan = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblkaryawan = new javax.swing.JTable();
@@ -347,15 +339,20 @@ public class FormKaryawan extends javax.swing.JFrame {
             }
         });
 
-        txtcari.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtcari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_11_Search_106236.png"))); // NOI18N
-        txtcari.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblCari.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_11_Search_106236.png"))); // NOI18N
+        lblCari.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtcariMouseClicked(evt);
+                lblCariMouseClicked(evt);
             }
         });
 
-        txtbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_Delete_1493279.png"))); // NOI18N
+        lblBatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_Delete_1493279.png"))); // NOI18N
+        lblBatal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBatalMouseClicked(evt);
+            }
+        });
 
         txteditkaryawan.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txteditkaryawan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new-24_103173.png"))); // NOI18N
@@ -377,9 +374,9 @@ public class FormKaryawan extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtcari)
+                .addComponent(lblCari)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtbatal)
+                .addComponent(lblBatal)
                 .addGap(0, 343, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
@@ -389,10 +386,10 @@ public class FormKaryawan extends javax.swing.JFrame {
                 .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(txteditkaryawan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtbatal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblBatal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblCari, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -470,10 +467,9 @@ public class FormKaryawan extends javax.swing.JFrame {
         new FormtambahKaryawan().setVisible(true);
     }//GEN-LAST:event_txtkaryawanbaruMouseClicked
 
-    private void txtcariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtcariMouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtcariMouseClicked
+    private void lblCariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCariMouseClicked
+        setTable(empl.findEmployee(txtkuncicari.getText()));
+    }//GEN-LAST:event_lblCariMouseClicked
 
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
         // TODO add your handling code here:
@@ -525,6 +521,10 @@ public class FormKaryawan extends javax.swing.JFrame {
         txtkuncicari.setText(selectedEmployee);
     }//GEN-LAST:event_tblkaryawanMouseClicked
 
+    private void lblBatalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBatalMouseClicked
+        setTable(empl.getAllEmployee());
+    }//GEN-LAST:event_lblBatalMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -575,13 +575,13 @@ public class FormKaryawan extends javax.swing.JFrame {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblAnggota;
     private javax.swing.JLabel lblBarang;
+    private javax.swing.JLabel lblBatal;
+    private javax.swing.JLabel lblCari;
     private javax.swing.JLabel lblJamKerja;
     private javax.swing.JLabel lblKaryawan;
     private javax.swing.JLabel lblLaporan;
     private javax.swing.JLabel lblSuplier;
     private javax.swing.JTable tblkaryawan;
-    private javax.swing.JLabel txtbatal;
-    private javax.swing.JLabel txtcari;
     private javax.swing.JLabel txteditkaryawan;
     private javax.swing.JLabel txtkaryawanbaru;
     private javax.swing.JTextField txtkuncicari;

@@ -427,9 +427,9 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="txtkuncicari" min="-2" pref="165" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtcari" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblCari" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtbatal" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblBatal" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="343" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -442,11 +442,11 @@
                               <Component id="txteditkaryawan" alignment="3" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtbatal" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="lblBatal" min="-2" pref="25" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtcari" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="lblCari" min="-2" pref="24" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -469,7 +469,7 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtkuncicari">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="txtcari">
+                    <Component class="javax.swing.JLabel" name="lblCari">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="14" style="0"/>
@@ -479,15 +479,18 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtcariMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCariMouseClicked"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="txtbatal">
+                    <Component class="javax.swing.JLabel" name="lblBatal">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                           <Image iconType="3" name="/supermarket/gambar/iconfinder_Delete_1493279.png"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblBatalMouseClicked"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="txteditkaryawan">
                       <Properties>
