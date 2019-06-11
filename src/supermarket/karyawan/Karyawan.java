@@ -50,22 +50,12 @@ public class Karyawan {
         }
         return id;
     }
-    public int countAllEmployee(){
-        int count=0;
-        try{
-            stm=con.createStatement();
-            RsKaryawan=stm.executeQuery("select count(*) as count from karyawan");
-            while(RsKaryawan.next()) count=RsKaryawan.getInt("count");
-        }catch(SQLException e){
-            System.out.println("Error : "+e);
-        }
-        return count;
-    }
     public String[][] getAllEmployee(){        
-        String[][] employee=new String[countAllEmployee()][6];        
+        String[][] employee;        
         try{    
             stm=con.createStatement();
             RsKaryawan=stm.executeQuery("select * from karyawan");
+            employee=new String[countRowRs(RsKaryawan)][6];
             for(int i=0;RsKaryawan.next();i++){
                 employee[i][0]=RsKaryawan.getString("id_karyawan");
                 employee[i][1]=RsKaryawan.getString("nama_karyawan");
@@ -76,25 +66,22 @@ public class Karyawan {
             }            
         } catch (SQLException e){
             System.out.println("Error : "+e);
+            employee=new String[0][0];
         }
         return employee;
     }
-    public int countFindEmployee(String keyword){
-        int count=0;
-        try{
-            stm=con.createStatement();
-            RsKaryawan=stm.executeQuery("select count(*) as count from karyawan where nama_karyawan like '%"+keyword+"%'");
-            while(RsKaryawan.next()) count=RsKaryawan.getInt("count");
-        }catch(SQLException e){
-            System.out.println("Error : "+e);
-        }
+    public int countRowRs(ResultSet rs) throws SQLException{
+        rs.last();
+        int count=rs.getRow();
+        rs.beforeFirst();
         return count;
     }
     public String[][] findEmployee(String keyword){
-        String[][] employee= new String [countFindEmployee(keyword)][6];
+        String[][] employee;
         try{    
             stm=con.createStatement();
-            RsKaryawan=stm.executeQuery("select * from karyawan where nama_karyawan like '%"+keyword+"%'");
+            RsKaryawan=stm.executeQuery("select * from karyawan where nama_karyawan like '%"+keyword+"%'");            
+            employee= new String [countRowRs(RsKaryawan)][6];            
             for(int i=0;RsKaryawan.next();i++){
                 employee[i][0]=RsKaryawan.getString("id_karyawan");
                 employee[i][1]=RsKaryawan.getString("nama_karyawan");
@@ -105,6 +92,7 @@ public class Karyawan {
             }            
         } catch (SQLException e){
             System.out.println("Error : "+e);
+            employee=new String[0][0];
         }        
         return employee;
     }
