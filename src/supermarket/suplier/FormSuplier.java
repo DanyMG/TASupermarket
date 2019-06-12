@@ -6,6 +6,7 @@
 
 package supermarket.suplier;
 
+import supermarket.barang.FormBarang;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -439,7 +440,6 @@ public class FormSuplier extends javax.swing.JFrame {
             new FormeditSuplier(selectedSuplier).setVisible(true);
         }
         else JOptionPane.showMessageDialog(this, "Tidak ada suplier yang dipilih.", "Alert", JOptionPane.WARNING_MESSAGE);
-
     }//GEN-LAST:event_txteditkaryawanMouseClicked
 
     private void tblsuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblsuplierMouseClicked

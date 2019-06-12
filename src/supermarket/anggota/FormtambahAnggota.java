@@ -12,8 +12,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import supermarket.FormAnggota;
-import supermarket.FormBarang;
-import supermarket.FormJamKerja;
+import supermarket.barang.FormBarang;
+import supermarket.jamkerja.FormJamKerja;
 import supermarket.suplier.FormSuplier;
 import supermarket.KoneksiMySQL;
 

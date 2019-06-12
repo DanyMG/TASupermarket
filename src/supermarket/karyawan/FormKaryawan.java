@@ -12,10 +12,10 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import supermarket.FormAnggota;
-import supermarket.FormBarang;
-import supermarket.FormJamKerja;
-import supermarket.FormLaporan;
+import supermarket.anggota.FormAnggota;
+import supermarket.barang.FormBarang;
+import supermarket.jamkerja.FormJamKerja;
+import supermarket.laporan.FormLaporan;
 import supermarket.suplier.FormSuplier;
 
 /**

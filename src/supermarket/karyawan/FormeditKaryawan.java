@@ -10,9 +10,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import supermarket.FormAnggota;
-import supermarket.FormBarang;
-import supermarket.FormJamKerja;
+import supermarket.anggota.FormAnggota;
+import supermarket.barang.FormBarang;
+import supermarket.jamkerja.FormJamKerja;
 import supermarket.suplier.FormSuplier;
 import supermarket.KoneksiMySQL;
 
@@ -25,13 +25,13 @@ public class FormeditKaryawan extends javax.swing.JFrame {
     Connection con;
     ResultSet RsKaryawan;
     Statement stm; 
-    String id;
+    String[] employeeData;
     /** Creates new form FormKaryawan */
     public FormeditKaryawan(String[] eData) {
         initComponents();
-        this.id=eData[0];
+        employeeData=eData;
         open_db();
-        setField();
+        setField(employeeData);
     }
     private void open_db(){
         try{
@@ -42,22 +42,14 @@ public class FormeditKaryawan extends javax.swing.JFrame {
             System.out.println("Error : "+e);
         }
     }
-    private void setField(){        
-        txtidkaryawan.setText(id);
-         try{
-            stm=con.createStatement();
-            RsKaryawan=stm.executeQuery("select * from karyawan where id_karyawan = '"+id+"'");
-            while (RsKaryawan.next()){
-                txtnama.setText(RsKaryawan.getString("nama_karyawan"));
-                txtalamat.setText(RsKaryawan.getString("almt_karyawan"));
-                txtkota.setText(RsKaryawan.getString("kota_karyawan"));
-                txtnotelp.setText(RsKaryawan.getString("notelp_karyawan"));
-                if(RsKaryawan.getString("kategori_karyawan").equalsIgnoreCase("full time)")) cbkategori.setSelectedIndex(0);
-                else cbkategori.setSelectedIndex(1);                
-            }                
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "ERROR : " +e);
-        }
+    private void setField(String[] eData){        
+        txtidkaryawan.setText(eData[0]);
+        txtnama.setText(eData[1]);
+        txtalamat.setText(eData[2]);
+        txtkota.setText(eData[3]);
+        txtnotelp.setText(eData[4]);
+        if(eData[5].equalsIgnoreCase("full time)")) cbkategori.setSelectedIndex(0);
+        else cbkategori.setSelectedIndex(1);        
     }
     private boolean checkEmptyField(){
         //Fungsi untuk mengembalikan nilai true jika ada field karyawan baru yang kosong
@@ -65,17 +57,18 @@ public class FormeditKaryawan extends javax.swing.JFrame {
                 ||txtkota.getText().equals("")||txtnotelp.getText().equals("")) return true;
         else return false;
     }
-     private void editEmployee(String nama, String alamat, String kota, String no_telp,String kategori){
+     private void editEmployee(String[] eData){
         //Prosedur untuk menambakan data karyawan baru ke database karyawan
         try{
             stm=con.createStatement();
-            stm.executeUpdate("UPDATE karyawan SET nama_karyawan = '"+nama+"', almt_karyawan = '"+alamat+"'"
-                    + ", kota_karyawan = '"+kota+"', notelp_karyawan = '"+no_telp+"', kategori_karyawan = '"+kategori+"' "
-                            + "WHERE karyawan.id_karyawan = "+id+"");
+            stm.executeUpdate("UPDATE karyawan SET nama_karyawan = '"+eData[1]+"', almt_karyawan = '"+eData[2]+"'"
+                    + ", kota_karyawan = '"+eData[3]+"', notelp_karyawan = '"+eData[4]+"', kategori_karyawan = '"+eData[5]+"' "
+                            + "WHERE karyawan.id_karyawan = "+eData[0]+"");
             //Memberitahu jika pengeditan karyawan berhasil
             JOptionPane.showConfirmDialog(null, "Karyawan berhasil diedit!", "Informasi", JOptionPane.DEFAULT_OPTION);
+            employeeData=eData;
             //Menyiapkan ulang textfield karyawan
-            setField();
+            setField(employeeData);
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, e);
         }
@@ -471,11 +464,11 @@ public class FormeditKaryawan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnresetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMouseClicked
-            setField(); //Menyiapkan ulangsemua textfield jika tombol reset diklik
+            setField(employeeData); //Menyiapkan ulangsemua textfield jika tombol reset diklik
     }//GEN-LAST:event_btnresetMouseClicked
 
     private void btneditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btneditMouseClicked
-        editEmployee(txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText(), cbkategori.getSelectedItem().toString());
+        editEmployee(new String[]{txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText(), cbkategori.getSelectedItem().toString()});
     }//GEN-LAST:event_btneditMouseClicked
 
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
