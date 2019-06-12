@@ -17,7 +17,6 @@ import supermarket.FormBarang;
 import supermarket.FormJamKerja;
 import supermarket.FormLaporan;
 import supermarket.suplier.FormSuplier;
-import supermarket.KoneksiMySQL;
 
 /**
  *
@@ -26,14 +25,16 @@ import supermarket.KoneksiMySQL;
 public class FormKaryawan extends javax.swing.JFrame {
 
     private Karyawan empl= new Karyawan();
-    Connection con;
-    ResultSet RsKaryawan;
-    Statement stm;
-    String selectedEmployee;
+    private String [][]employeeData=empl.getAllEmployee();
+    private String[] selEmployeeData;
+    private Connection con;
+    private ResultSet RsKaryawan;
+    private Statement stm;
+    
     /** Creates new form FormKaryawan */
     public FormKaryawan() {
         initComponents();        
-        setTable(empl.getAllEmployee());
+        setTable(employeeData);
     }    
     public void addEmployeeColumn(DefaultTableModel model){        
         model.addColumn("ID");        
@@ -60,6 +61,16 @@ public class FormKaryawan extends javax.swing.JFrame {
         for (String[] data1 : data) {
             table.addRow(new Object[]{data1[0], data1[1], data1[2], data1[3], data1[4], data1[5]});
         }        
+    }
+    public String[] getEmployee(String[][] eData, int id){
+        String[] employee= new String[6];
+        for(String[] item:eData){
+            if(Integer.parseInt(item[0])==id){
+                employee=item;
+                break;
+            }
+        }        
+        return employee;
     }
     /** This method is called from within the constructor to
      * initialize the form.
@@ -495,21 +506,20 @@ public class FormKaryawan extends javax.swing.JFrame {
     }//GEN-LAST:event_lblLaporanMouseClicked
 
     private void txteditkaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txteditkaryawanMouseClicked
-        if(selectedEmployee!=null){
+        if(selEmployeeData!=null){
             this.setVisible(false);
-            new FormeditKaryawan(selectedEmployee).setVisible(true);
+            new FormeditKaryawan(selEmployeeData).setVisible(true);
         }
         else JOptionPane.showMessageDialog(this, "Tidak ada karyawan yang dipilih.", "Alert", JOptionPane.WARNING_MESSAGE);
         
     }//GEN-LAST:event_txteditkaryawanMouseClicked
 
     private void tblkaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblkaryawanMouseClicked
-        selectedEmployee=tblkaryawan.getValueAt(tblkaryawan.getSelectedRow(),0).toString();
-        txtkuncicari.setText(selectedEmployee);
+        selEmployeeData=getEmployee(employeeData, Integer.parseInt(tblkaryawan.getValueAt(tblkaryawan.getSelectedRow(), 0).toString()));
     }//GEN-LAST:event_tblkaryawanMouseClicked
 
     private void lblBatalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBatalMouseClicked
-        setTable(empl.getAllEmployee());
+        setTable(employeeData);
     }//GEN-LAST:event_lblBatalMouseClicked
 
     /**

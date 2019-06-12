@@ -27,9 +27,9 @@ public class FormeditKaryawan extends javax.swing.JFrame {
     Statement stm; 
     String id;
     /** Creates new form FormKaryawan */
-    public FormeditKaryawan(String id) {
+    public FormeditKaryawan(String[] eData) {
         initComponents();
-        this.id=id;
+        this.id=eData[0];
         open_db();
         setField();
     }

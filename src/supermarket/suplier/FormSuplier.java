@@ -447,7 +447,8 @@ public class FormSuplier extends javax.swing.JFrame {
     }//GEN-LAST:event_tblsuplierMouseClicked
 
     private void lblbarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblbarangMouseClicked
-        
+        this.setVisible(false);
+        new FormBarang().setVisible(true);
     }//GEN-LAST:event_lblbarangMouseClicked
 
     private void lblkaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblkaryawanMouseClicked
