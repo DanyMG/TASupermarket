@@ -26,7 +26,6 @@ public class FormeditKaryawan extends javax.swing.JFrame {
     ResultSet RsKaryawan;
     Statement stm; 
     String[] employeeData;
-    /** Creates new form FormKaryawan */
     public FormeditKaryawan(String[] eData) {
         initComponents();
         employeeData=eData;

@@ -10,11 +10,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import jdk.nashorn.internal.runtime.regexp.joni.EncodingHelper;
 import supermarket.anggota.FormAnggota;
 import supermarket.barang.FormBarang;
 import supermarket.jamkerja.FormJamKerja;
 import supermarket.suplier.FormSuplier;
-import supermarket.KoneksiMySQL;
 
 /**
  *
@@ -22,38 +22,19 @@ import supermarket.KoneksiMySQL;
  */
 public class FormtambahKaryawan extends javax.swing.JFrame {
 
+    private Employee emp=new Employee();    
+    private int id;    
     Connection con;
     ResultSet RsKaryawan;
     Statement stm; 
-    /** Creates new form FormKaryawan */
-    public FormtambahKaryawan() {
-        initComponents();
-        open_db();
-        setField();
+        
+    public FormtambahKaryawan(int lastId) {        
+        initComponents();        
+        this.id = lastId+1;
+        setField(id);
     }
-    private void open_db(){
-        try{
-            KoneksiMySQL kon= new KoneksiMySQL("localhost", "root", "", "supermarket");
-            con=kon.getConnection();
-        }
-        catch(Exception e){
-            System.out.println("Error : "+e);
-        }
-    }
-    private void setField(){
-        //Menyiapkan id karyawan baru
-        try{
-            stm=con.createStatement();
-            RsKaryawan=stm.executeQuery("select * from karyawan order by id_karyawan DESC");
-            if(RsKaryawan.next()){
-                String id=Integer.toString(RsKaryawan.getInt("id_karyawan")+1);
-                txtidkaryawan.setText(id);
-                
-            }else txtidkaryawan.setText("1");            
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, e);
-        }
-        //Mengkosongkan nama, alamat, kota, dan no telepon
+    public void setField(int id){
+        txtidkaryawan.setText(Integer.toString(id));        
         txtnama.setText("");
         txtalamat.setText("");
         txtkota.setText("");
@@ -66,26 +47,18 @@ public class FormtambahKaryawan extends javax.swing.JFrame {
                 &&txtkota.getText().equals("")&&txtnotelp.getText().equals("")) return false;
         else return true;
     }
-    private boolean checkEmptyField(){
+    public boolean isNameEmpty(String nama){
         //Fungsi untuk mengembalikan nilai true jika ada field karyawan baru yang kosong
-        if(txtnama.getText().equals("")||txtalamat.getText().equals("")
-                ||txtkota.getText().equals("")||txtnotelp.getText().equals("")||cbkategori.getSelectedIndex()==0) return true;
+        if(nama.equals("")) return true;
+        else return false;
+    }   
+    public boolean isCategoryEmpty(String category){
+        if(category.equals("Pilih Kategori...")) return true;
         else return false;
     }
-    private void addNewEmployee(String nama, String alamat, String kota, String no_telp,String kategori){
-        //Prosedur untuk menambakan data karyawan baru ke database karyawan
-        try{
-            stm=con.createStatement();
-            stm.executeUpdate("INSERT INTO "
-                    + "karyawan(id_karyawan, nama_karyawan, almt_karyawan, kota_karyawan, notelp_karyawan, kategori_karyawan) "
-                    + "VALUES (NULL,'"+nama+"', '"+alamat+"', '"+kota+"', '"+no_telp+"', '"+kategori+"')");    
-            //Memberitahu jika penambahan karyawan baru berhasil
-            JOptionPane.showConfirmDialog(null, "Karyawan baru berhasil ditambahkan!", "Informasi", JOptionPane.DEFAULT_OPTION);
-            //Menyiapkan ulang textfield karyawan
-            setField();
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, e);
-        }
+    public boolean isAddEmployeeSuccess(int id, int newId){
+        if(newId>id) return true;
+        else return false;
     }
     /** This method is called from within the constructor to
      * initialize the form.
@@ -492,14 +465,21 @@ public class FormtambahKaryawan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnresetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMouseClicked
-            setField(); //Menyiapkan ulangsemua textfield jika tombol reset diklik
+            setField(id);
     }//GEN-LAST:event_btnresetMouseClicked
 
     private void btntambahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btntambahMouseClicked
-        if(checkEmptyField()) JOptionPane.showMessageDialog(this, "Tolong lengkapi data karyawan baru"); //Mengecek data kosong pada data karyawan baru
-        else{
-            // Menambahkan karyawan baru ke database sesuai data yang diisikan
-            addNewEmployee(txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText(),cbkategori.getSelectedItem().toString());            
+        if(isNameEmpty(txtnama.getText()) || isCategoryEmpty(cbkategori.getSelectedItem().toString())) 
+            JOptionPane.showMessageDialog(this, "Nama karyawan dan kategori wajib diisi.");
+        else{                       
+            String[] newEData=new String[]{Integer.toString(id),txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText(),cbkategori.getSelectedItem().toString()};
+            emp.addEmployee(newEData);            
+            if(emp.isAddSuccess(newEData)){
+                JOptionPane.showMessageDialog(this, "Data karyawan berhasil ditambahkan.");
+                id++;
+                setField(id);
+            }
+            else JOptionPane.showMessageDialog(this, "Data karyawan gagal ditambahkan.");
         }        
     }//GEN-LAST:event_btntambahMouseClicked
 
@@ -573,13 +553,7 @@ public class FormtambahKaryawan extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormtambahKaryawan().setVisible(true);
-            }
-        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

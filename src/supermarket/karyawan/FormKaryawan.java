@@ -6,9 +6,6 @@
 
 package supermarket.karyawan;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -24,17 +21,14 @@ import supermarket.suplier.FormSuplier;
  */
 public class FormKaryawan extends javax.swing.JFrame {
 
-    private Karyawan empl= new Karyawan();
-    private String [][]employeeData=empl.getAllEmployee();
+    private Employee empl= new Employee();
+    private String [][]allEmployeeData=empl.getAllEmployee();
     private String[] selEmployeeData;
-    private Connection con;
-    private ResultSet RsKaryawan;
-    private Statement stm;
     
     /** Creates new form FormKaryawan */
     public FormKaryawan() {
         initComponents();        
-        setTable(employeeData);
+        setTable(allEmployeeData);
     }    
     public void addEmployeeColumn(DefaultTableModel model){        
         model.addColumn("ID");        
@@ -62,16 +56,7 @@ public class FormKaryawan extends javax.swing.JFrame {
             table.addRow(new Object[]{data1[0], data1[1], data1[2], data1[3], data1[4], data1[5]});
         }        
     }
-    public String[] getEmployee(String[][] eData, int id){
-        String[] employee= new String[6];
-        for(String[] item:eData){
-            if(Integer.parseInt(item[0])==id){
-                employee=item;
-                break;
-            }
-        }        
-        return employee;
-    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -462,7 +447,7 @@ public class FormKaryawan extends javax.swing.JFrame {
     private void txtkaryawanbaruMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtkaryawanbaruMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new FormtambahKaryawan().setVisible(true);
+        new FormtambahKaryawan(empl.getLastId(allEmployeeData)).setVisible(true);
     }//GEN-LAST:event_txtkaryawanbaruMouseClicked
 
     private void lblCariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCariMouseClicked
@@ -515,11 +500,11 @@ public class FormKaryawan extends javax.swing.JFrame {
     }//GEN-LAST:event_txteditkaryawanMouseClicked
 
     private void tblkaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblkaryawanMouseClicked
-        selEmployeeData=getEmployee(employeeData, Integer.parseInt(tblkaryawan.getValueAt(tblkaryawan.getSelectedRow(), 0).toString()));
+        selEmployeeData=empl.getEmployee(allEmployeeData, Integer.parseInt(tblkaryawan.getValueAt(tblkaryawan.getSelectedRow(), 0).toString()));
     }//GEN-LAST:event_tblkaryawanMouseClicked
 
     private void lblBatalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBatalMouseClicked
-        setTable(employeeData);
+        setTable(allEmployeeData);
     }//GEN-LAST:event_lblBatalMouseClicked
 
     /**
