@@ -472,9 +472,8 @@ public class FormtambahKaryawan extends javax.swing.JFrame {
         if(isNameEmpty(txtnama.getText()) || isCategoryEmpty(cbkategori.getSelectedItem().toString())) 
             JOptionPane.showMessageDialog(this, "Nama karyawan dan kategori wajib diisi.");
         else{                       
-            String[] newEData=new String[]{Integer.toString(id),txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText(),cbkategori.getSelectedItem().toString()};
-            emp.addEmployee(newEData);            
-            if(emp.isAddSuccess(newEData)){
+            String[] newEData=new String[]{Integer.toString(id),txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText(),cbkategori.getSelectedItem().toString()};            
+            if(emp.addEmployee(newEData)){
                 JOptionPane.showMessageDialog(this, "Data karyawan berhasil ditambahkan.");
                 id++;
                 setField(id);
