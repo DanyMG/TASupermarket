@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2019 at 05:44 AM
+-- Generation Time: Jun 16, 2019 at 06:53 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -77,18 +77,34 @@ CREATE TABLE `karyawan` (
   `nama_karyawan` varchar(50) NOT NULL,
   `almt_karyawan` varchar(100) DEFAULT NULL,
   `kota_karyawan` varchar(50) DEFAULT NULL,
-  `notelp_karyawan` varchar(12) NOT NULL,
-  `kategori_karyawan` varchar(15) NOT NULL
+  `notelp_karyawan` varchar(12) DEFAULT NULL,
+  `kategori_karyawan` varchar(15) NOT NULL,
+  `deleted` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `karyawan`
 --
 
-INSERT INTO `karyawan` (`id_karyawan`, `nama_karyawan`, `almt_karyawan`, `kota_karyawan`, `notelp_karyawan`, `kategori_karyawan`) VALUES
-(1, 'Dany Muhammad Ghaly', 'Jl. Wonodri Baru III nomor 6', 'Semarang', '08213826033', 'Full Time'),
-(2, 'Gustaf', 'Petek', 'Semarang', '082213545', 'Part Time'),
-(3, 'Adyatma Fajriannur', 'Jl. Wanara', 'Semarang', '0484246', 'Full Time');
+INSERT INTO `karyawan` (`id_karyawan`, `nama_karyawan`, `almt_karyawan`, `kota_karyawan`, `notelp_karyawan`, `kategori_karyawan`, `deleted`) VALUES
+(1, 'Dany Muhammad Ghaly', 'Jl. Wonodri Baru III nomor 6', 'Semarang', '08213826033', 'Full Time', 0),
+(2, 'Gustaf', 'Petek', 'Semarang', '082213545', 'Part Time', 0),
+(3, 'Adyatma Fajriannur', 'Jl. Wanara', 'Semarang', '0484246', 'Full Time', 0),
+(4, 'Dhanu', '', '', '', 'Part Time', 0),
+(5, 'asdfasd', '', '', '', 'Full Time', 0),
+(6, 'haha', '', '', '', 'Full Time', 0),
+(7, 'hehe', '', '', '', 'Full Time', 0),
+(8, 'entah', '', '', '', 'Full Time', 0),
+(9, 'afdasfsdaffffff', '', '', '', 'Part Time', 0),
+(10, 'fffff', '', '', '', 'Full Time', 0),
+(11, 'lelahcok', '', '', '', 'Full Time', 0),
+(12, 'ffffffaaaaaa', '', '', '', 'Full Time', 0),
+(13, 'aaaaaa', '', '', '', 'Full Time', 0),
+(14, 'entah', '', '', '', 'Full Time', 1),
+(15, 'Gggggg', 'fafafa', 'w', '', 'Full Time', 1),
+(16, 'jajajajaja', '', '', '', 'Part Time', 0),
+(17, 'Jihad', 'haha', '', '', 'Full Time', 0),
+(18, 'coba', '', '', '', 'Part Time', 0);
 
 -- --------------------------------------------------------
 
@@ -222,7 +238,7 @@ ALTER TABLE `barang`
 -- AUTO_INCREMENT for table `karyawan`
 --
 ALTER TABLE `karyawan`
-  MODIFY `id_karyawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_karyawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `pembuangan`
