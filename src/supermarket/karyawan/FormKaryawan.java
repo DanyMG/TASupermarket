@@ -28,8 +28,7 @@ public class FormKaryawan extends javax.swing.JFrame {
     private String [][]allEmployeeData=empl.getAllEmployee();
     private String[] selEmployeeData;
     private TableRowSorter<TableModel> rowSorter;
-    
-    /** Creates new form FormKaryawan */
+        
     public FormKaryawan() {
         initComponents();        
         setTable(allEmployeeData);
@@ -465,7 +464,6 @@ public class FormKaryawan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtAddEmployeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAddEmployeeMouseClicked
-        // TODO add your handling code here:
         this.setVisible(false);
         new FormtambahKaryawan(empl.getLastId(allEmployeeData)).setVisible(true);
     }//GEN-LAST:event_txtAddEmployeeMouseClicked
@@ -474,42 +472,36 @@ public class FormKaryawan extends javax.swing.JFrame {
         if(txtKeyWord.getText().equals("")) tblkaryawan.setRowSorter(null);
         else{
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtKeyWord.getText()));
-        tblkaryawan.setRowSorter(rowSorter);
+            tblkaryawan.setRowSorter(rowSorter);
         }        
     }//GEN-LAST:event_lblSearchMouseClicked
 
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
-        // TODO add your handling code here:
         this.setVisible(false);
         new FormSuplier().setVisible(true);
     }//GEN-LAST:event_lblSuplierMouseClicked
 
     private void lblBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBarangMouseClicked
-        // TODO add your handling code here:
         this.setVisible(false);
         new FormBarang().setVisible(true);
     }//GEN-LAST:event_lblBarangMouseClicked
 
     private void lblKaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKaryawanMouseClicked
-        // TODO add your handling code here:
         this.setVisible(false);
         new FormKaryawan().setVisible(true);
     }//GEN-LAST:event_lblKaryawanMouseClicked
 
     private void lblJamKerjaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblJamKerjaMouseClicked
-        // TODO add your handling code here:
         this.setVisible(false);
         new FormJamKerja().setVisible(true);
     }//GEN-LAST:event_lblJamKerjaMouseClicked
 
     private void lblAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnggotaMouseClicked
-        // TODO add your handling code here: 
         this.setVisible(false);
         new FormAnggota().setVisible(true);
     }//GEN-LAST:event_lblAnggotaMouseClicked
 
     private void lblLaporanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLaporanMouseClicked
-        // TODO add your handling code here:
         this.setVisible(false);
         new FormLaporan().setVisible(true);
     }//GEN-LAST:event_lblLaporanMouseClicked
