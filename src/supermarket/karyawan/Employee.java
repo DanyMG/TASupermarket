@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import supermarket.KoneksiMySQL;
 
 /**
@@ -81,28 +80,7 @@ public class Employee {
         int count=rs.getRow();
         rs.beforeFirst();
         return count;
-    }
-    public String[][] findEmployee(String keyword){
-        String[][] employee;
-        try{    
-            stm=con.createStatement();
-            RsKaryawan=stm.executeQuery("select * from karyawan where nama_karyawan like '%"+keyword+"%'");            
-            employee= new String [countRowRs(RsKaryawan)][6];            
-            for(int i=0;RsKaryawan.next();i++){
-                employee[i][0]=RsKaryawan.getString("id_karyawan");
-                employee[i][1]=RsKaryawan.getString("nama_karyawan");
-                employee[i][2]=RsKaryawan.getString("almt_karyawan");
-                employee[i][3]=RsKaryawan.getString("kota_karyawan");
-                employee[i][4]=RsKaryawan.getString("notelp_karyawan");
-                employee[i][5]=RsKaryawan.getString("kategori_karyawan");
-                employee[i][6]=RsKaryawan.getString("deleted");
-            }            
-        } catch (SQLException e){
-            System.out.println("Error : "+e);
-            employee=new String[0][0];
-        }        
-        return employee;
-    }
+    }    
     public boolean editEmployee(String[] eData){
         try{
             stm=con.createStatement();
