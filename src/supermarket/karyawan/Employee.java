@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import supermarket.KoneksiMySQL;
 
 /**
@@ -30,35 +29,18 @@ public class Employee {
             System.out.println("Error : "+e);
         }
     }
-    public void addEmployee(String[] newEData){
+    public boolean addEmployee(String[] newEData){
         try{
             stm=con.createStatement();
             stm.executeUpdate("INSERT INTO "
-                    + "karyawan(id_karyawan, nama_karyawan, almt_karyawan, kota_karyawan, notelp_karyawan, kategori_karyawan) "
-                    + "VALUES (NULL,'"+newEData[1]+"', '"+newEData[2]+"', '"+newEData[3]+"', '"+newEData[4]+"', '"+newEData[5]+"')");                      
+                    + "karyawan(id_karyawan, nama_karyawan, almt_karyawan, kota_karyawan, notelp_karyawan, kategori_karyawan,deleted) "
+                    + "VALUES (NULL,'"+newEData[1]+"', '"+newEData[2]+"', '"+newEData[3]+"', '"+newEData[4]+"', '"+newEData[5]+"', FALSE)");
+            return true;
         }catch(SQLException e){
             System.out.println("Error : "+e);
+            return false;
         }
-    }
-    public boolean isAddSuccess(String[] newEData){
-        String[] employee=new String[6];
-        try{    
-            stm=con.createStatement();
-            RsKaryawan=stm.executeQuery("select * from karyawan order by id_karyawan DESC");            
-            if(RsKaryawan.next()){
-                employee[0]=RsKaryawan.getString("id_karyawan");
-                employee[1]=RsKaryawan.getString("nama_karyawan");
-                employee[2]=RsKaryawan.getString("almt_karyawan");
-                employee[3]=RsKaryawan.getString("kota_karyawan");
-                employee[4]=RsKaryawan.getString("notelp_karyawan");
-                employee[5]=RsKaryawan.getString("kategori_karyawan");
-            }            
-        } catch (SQLException e){
-            System.out.println("Error : "+e);
-        }
-        if(Arrays.equals(employee,newEData)) return true;
-        else return false;
-    }
+    }   
     public String[] getEmployee(String[][] eData, int id){
         String[] employee= new String[6];
         for(String[] item:eData){
@@ -77,7 +59,7 @@ public class Employee {
         try{    
             stm=con.createStatement();
             RsKaryawan=stm.executeQuery("select * from karyawan");
-            employee=new String[countRowRs(RsKaryawan)][6];
+            employee=new String[countRowRs(RsKaryawan)][7];
             for(int i=0;RsKaryawan.next();i++){
                 employee[i][0]=RsKaryawan.getString("id_karyawan");
                 employee[i][1]=RsKaryawan.getString("nama_karyawan");
@@ -85,6 +67,7 @@ public class Employee {
                 employee[i][3]=RsKaryawan.getString("kota_karyawan");
                 employee[i][4]=RsKaryawan.getString("notelp_karyawan");
                 employee[i][5]=RsKaryawan.getString("kategori_karyawan");
+                employee[i][6]=RsKaryawan.getString("deleted");
             }            
         } catch (SQLException e){
             System.out.println("Error : "+e);
@@ -97,25 +80,27 @@ public class Employee {
         int count=rs.getRow();
         rs.beforeFirst();
         return count;
-    }
-    public String[][] findEmployee(String keyword){
-        String[][] employee;
-        try{    
-            stm=con.createStatement();
-            RsKaryawan=stm.executeQuery("select * from karyawan where nama_karyawan like '%"+keyword+"%'");            
-            employee= new String [countRowRs(RsKaryawan)][6];            
-            for(int i=0;RsKaryawan.next();i++){
-                employee[i][0]=RsKaryawan.getString("id_karyawan");
-                employee[i][1]=RsKaryawan.getString("nama_karyawan");
-                employee[i][2]=RsKaryawan.getString("almt_karyawan");
-                employee[i][3]=RsKaryawan.getString("kota_karyawan");
-                employee[i][4]=RsKaryawan.getString("notelp_karyawan");
-                employee[i][5]=RsKaryawan.getString("kategori_karyawan");
-            }            
-        } catch (SQLException e){
-            System.out.println("Error : "+e);
-            employee=new String[0][0];
-        }        
-        return employee;
     }    
+    public boolean editEmployee(String[] eData){
+        try{
+            stm=con.createStatement();
+            stm.executeUpdate("UPDATE karyawan SET nama_karyawan = '"+eData[1]+"', almt_karyawan = '"+eData[2]+"'"
+                    + ", kota_karyawan = '"+eData[3]+"', notelp_karyawan = '"+eData[4]+"', kategori_karyawan = '"+eData[5]+"' "
+                            + "WHERE karyawan.id_karyawan = "+eData[0]+"");
+            return true;
+        }catch(SQLException e){
+            System.out.println("Error : "+e);
+            return false;
+        }
+    }
+    public boolean delEmployee(String[] eData){
+        try{
+            stm=con.createStatement();
+            stm.executeUpdate("UPDATE karyawan SET deleted = TRUE WHERE karyawan.id_karyawan = "+eData[0]+"");
+            return true;
+        }catch(SQLException e){
+            System.out.println("Error : "+e);
+            return false;
+        }
+    }
 }

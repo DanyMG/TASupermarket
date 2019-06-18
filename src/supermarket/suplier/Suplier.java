@@ -16,39 +16,12 @@ import supermarket.KoneksiMySQL;
  * @author DanyMG
  */
 public class Suplier {
-    private int id;
-    private String nama,alamat,kota,notelp;
     
     private Connection con;
     private Statement stm;
     private ResultSet RsSuplier;
     
     public Suplier() {
-        open_db();
-    }
-    public Suplier(int id, String nama, String alamat, String kota, String notelp){
-        this.id=id;
-        this.nama=nama;
-        this.alamat=alamat;
-        this.kota=kota;
-        this.notelp=notelp;       
-    }
-    public int getId(){
-        return this.id;
-    }
-    public String getNama(){
-        return this.nama;        
-    }
-    public String getAlamat(){
-        return this.alamat;
-    }
-    public String getKota(){
-        return this.kota;
-    }
-    public String getNotelp(){
-        return this.notelp;
-    }
-    private void open_db(){
         try{
             KoneksiMySQL kon= new KoneksiMySQL("localhost", "root", "", "supermarket");
             con=kon.getConnection();
@@ -56,46 +29,77 @@ public class Suplier {
         catch(Exception e){
             System.out.println("Error : "+e);
         }
-    }
-    public void addSuplier(String nama, String almt, String kota, String notelp){        
+    }   
+    public boolean addSuplier(String[] newSData){        
         try{
             stm=con.createStatement();
             stm.executeUpdate("INSERT INTO suplier"
-                    + "(id_suplier, nama_suplier, almt_suplier, kota_suplier, notelp_suplier) "
-                    + "VALUES (NULL,'"+nama+"', '"+almt+"', '"+kota+"', '"+notelp+"')");            
+                    + "(id_suplier, nama_suplier, almt_suplier, kota_suplier, notelp_suplier, deleted) "
+                    + "VALUES (NULL,'"+newSData[1]+"', '"+newSData[2]+"', '"+newSData[3]+"', '"+newSData[4]+"', FALSE)");
+            return true;
         }catch(SQLException e){
             System.out.println("Error : "+e);
+            return false;
         }        
     }
-    public Suplier getSuplier(int id){
-        Suplier hasil=new Suplier();
+    public String[][] getAllSuplier(){
+        String[][] suplier;
         try{
             stm=con.createStatement();
-            RsSuplier=stm.executeQuery("select * from suplier where id_suplier='"+id+"'");            
-            if(RsSuplier.next()){
-                hasil=new Suplier(RsSuplier.getInt("id_suplier"),RsSuplier.getString("nama_suplier"),
-                    RsSuplier.getString("almt_suplier"),RsSuplier.getString("kota_suplier"),
-                    RsSuplier.getString("notelp_suplier"));
+            RsSuplier=stm.executeQuery("select * from suplier");
+            suplier=new String[countRowRs(RsSuplier)][6];
+            for(int i=0;RsSuplier.next();i++){
+                suplier[i][0]=RsSuplier.getString("id_suplier");
+                suplier[i][1]=RsSuplier.getString("nama_suplier");
+                suplier[i][2]=RsSuplier.getString("almt_suplier");
+                suplier[i][3]=RsSuplier.getString("kota_suplier");
+                suplier[i][4]=RsSuplier.getString("notelp_suplier");                
+                suplier[i][5]=RsSuplier.getString("deleted");
+            }            
+        }catch(SQLException e){
+            System.out.println("Error : "+e);
+            suplier=new String[0][0];
+        }
+        return suplier;
+    }
+    public int countRowRs(ResultSet rs) throws SQLException{
+        rs.last();
+        int count=rs.getRow();
+        rs.beforeFirst();
+        return count;
+    }
+    public String[] getSuplier(String[][] sData, int id){
+        String[] suplier= new String[6];
+        for(String[] item:sData){
+            if(Integer.parseInt(item[0])==id){
+                suplier=item;
+                break;
             }
-        }catch(SQLException e){
-            System.out.println("Error : "+e);
-        }
-        return hasil;
+        }        
+        return suplier;
     }
-    public Suplier[] getAllSuplier(){
-        Suplier[] hasil=new Suplier[getLastId()];
-        for(int i=0;i<getLastId();i++){
-            hasil[i]=getSuplier(i+1);
-        }
-        return hasil;      
+    public int getLastId(String[][] sData){             
+        return Integer.parseInt(sData[sData.length-1][0]);
     }
-    public void editSuplier(int id,String nama, String almt, String kota, String notelp){
+    public boolean editSuplier(String[] sData){        
         try{
             stm=con.createStatement();
-            stm.executeUpdate("UPDATE suplier SET nama_suplier = '"+nama+"', almt_suplier = '"+almt+"'"
-                    + ", kota_suplier = '"+kota+"', notelp_suplier = '"+notelp+"' WHERE suplier.id_suplier = "+id+"");            
+            stm.executeUpdate("UPDATE suplier SET nama_suplier = '"+sData[1]+"', almt_suplier = '"+sData[2]+"'"
+                    + ", kota_suplier = '"+sData[3]+"', notelp_suplier = '"+sData[4]+"' WHERE suplier.id_suplier = "+sData[0]+"");
+            return true;
         }catch(SQLException e){
             System.out.println("Error : "+e);
+            return false;
+        }
+    }
+    public boolean delEmployee(String[] sData){
+        try{
+            stm=con.createStatement();
+            stm.executeUpdate("UPDATE suplier SET deleted = TRUE WHERE suplier.id_suplier= "+sData[0]+"");
+            return true;
+        }catch(SQLException e){
+            System.out.println("Error : "+e);
+            return false;
         }
     }
     public boolean isAny(String nama){
@@ -110,17 +114,5 @@ public class Suplier {
             System.out.println("Error : "+e);
         }
         return cari;
-    }
-    public int getLastId(){
-        int id=0;
-        try{
-            stm=con.createStatement();
-            RsSuplier=stm.executeQuery("select * from suplier order by id_suplier DESC");
-            if(RsSuplier.next()) id=RsSuplier.getInt("id_suplier");
-        }catch(SQLException e){
-            System.out.println("Error : "+e);
-        }
-        return id;
     }   
-    
 }

@@ -6,15 +6,11 @@
 
 package supermarket.karyawan;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import javax.swing.JOptionPane;
 import supermarket.anggota.FormAnggota;
 import supermarket.barang.FormBarang;
 import supermarket.jamkerja.FormJamKerja;
 import supermarket.suplier.FormSuplier;
-import supermarket.KoneksiMySQL;
 
 /**
  *
@@ -22,26 +18,15 @@ import supermarket.KoneksiMySQL;
  */
 public class FormeditKaryawan extends javax.swing.JFrame {
 
-    Connection con;
-    ResultSet RsKaryawan;
-    Statement stm; 
+    Employee emp=new Employee();   
     String[] employeeData;
+    
     public FormeditKaryawan(String[] eData) {
         initComponents();
-        employeeData=eData;
-        open_db();
+        employeeData=eData;        
         setField(employeeData);
-    }
-    private void open_db(){
-        try{
-            KoneksiMySQL kon= new KoneksiMySQL("localhost", "root", "", "supermarket");
-            con=kon.getConnection();
-        }
-        catch(Exception e){
-            System.out.println("Error : "+e);
-        }
-    }
-    private void setField(String[] eData){        
+    }    
+    public void setField(String[] eData){        
         txtidkaryawan.setText(eData[0]);
         txtnama.setText(eData[1]);
         txtalamat.setText(eData[2]);
@@ -50,28 +35,11 @@ public class FormeditKaryawan extends javax.swing.JFrame {
         if(eData[5].equalsIgnoreCase("full time)")) cbkategori.setSelectedIndex(0);
         else cbkategori.setSelectedIndex(1);        
     }
-    private boolean checkEmptyField(){
+    public boolean isNameEmpty(String nama){
         //Fungsi untuk mengembalikan nilai true jika ada field karyawan baru yang kosong
-        if(txtnama.getText().equals("")||txtalamat.getText().equals("")
-                ||txtkota.getText().equals("")||txtnotelp.getText().equals("")) return true;
+        if(nama.equals("")) return true;
         else return false;
-    }
-     private void editEmployee(String[] eData){
-        //Prosedur untuk menambakan data karyawan baru ke database karyawan
-        try{
-            stm=con.createStatement();
-            stm.executeUpdate("UPDATE karyawan SET nama_karyawan = '"+eData[1]+"', almt_karyawan = '"+eData[2]+"'"
-                    + ", kota_karyawan = '"+eData[3]+"', notelp_karyawan = '"+eData[4]+"', kategori_karyawan = '"+eData[5]+"' "
-                            + "WHERE karyawan.id_karyawan = "+eData[0]+"");
-            //Memberitahu jika pengeditan karyawan berhasil
-            JOptionPane.showConfirmDialog(null, "Karyawan berhasil diedit!", "Informasi", JOptionPane.DEFAULT_OPTION);
-            employeeData=eData;
-            //Menyiapkan ulang textfield karyawan
-            setField(employeeData);
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, e);
-        }
-    }
+    }           
    
     /** This method is called from within the constructor to
      * initialize the form.
@@ -467,7 +435,18 @@ public class FormeditKaryawan extends javax.swing.JFrame {
     }//GEN-LAST:event_btnresetMouseClicked
 
     private void btneditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btneditMouseClicked
-        editEmployee(new String[]{txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText(), cbkategori.getSelectedItem().toString()});
+        if(isNameEmpty(txtnama.getText()))            
+            JOptionPane.showMessageDialog(this, "Nama karyawan dan kategori wajib diisi.");
+        else{
+            String[]editedEData=new String[]{txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText(), cbkategori.getSelectedItem().toString()};
+            if(emp.editEmployee(editedEData)){
+                JOptionPane.showMessageDialog(this, "Data karyawan berhasil diedit.");
+                employeeData=editedEData;
+                setField(employeeData);
+            }
+            else JOptionPane.showMessageDialog(this, "Data karyawan gagal diedit.");
+        }
+        
     }//GEN-LAST:event_btneditMouseClicked
 
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
