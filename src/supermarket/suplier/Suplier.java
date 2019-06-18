@@ -46,16 +46,15 @@ public class Suplier {
         String[][] suplier;
         try{
             stm=con.createStatement();
-            RsSuplier=stm.executeQuery("select * from karyawan");
-            suplier=new String[countRowRs(RsSuplier)][7];
+            RsSuplier=stm.executeQuery("select * from suplier");
+            suplier=new String[countRowRs(RsSuplier)][6];
             for(int i=0;RsSuplier.next();i++){
-                suplier[i][0]=RsSuplier.getString("id_karyawan");
-                suplier[i][1]=RsSuplier.getString("nama_karyawan");
-                suplier[i][2]=RsSuplier.getString("almt_karyawan");
-                suplier[i][3]=RsSuplier.getString("kota_karyawan");
-                suplier[i][4]=RsSuplier.getString("notelp_karyawan");
-                suplier[i][5]=RsSuplier.getString("kategori_karyawan");
-                suplier[i][6]=RsSuplier.getString("deleted");
+                suplier[i][0]=RsSuplier.getString("id_suplier");
+                suplier[i][1]=RsSuplier.getString("nama_suplier");
+                suplier[i][2]=RsSuplier.getString("almt_suplier");
+                suplier[i][3]=RsSuplier.getString("kota_suplier");
+                suplier[i][4]=RsSuplier.getString("notelp_suplier");                
+                suplier[i][5]=RsSuplier.getString("deleted");
             }            
         }catch(SQLException e){
             System.out.println("Error : "+e);
@@ -82,12 +81,21 @@ public class Suplier {
     public int getLastId(String[][] sData){             
         return Integer.parseInt(sData[sData.length-1][0]);
     }
-    
     public boolean editSuplier(String[] sData){        
         try{
             stm=con.createStatement();
             stm.executeUpdate("UPDATE suplier SET nama_suplier = '"+sData[1]+"', almt_suplier = '"+sData[2]+"'"
                     + ", kota_suplier = '"+sData[3]+"', notelp_suplier = '"+sData[4]+"' WHERE suplier.id_suplier = "+sData[0]+"");
+            return true;
+        }catch(SQLException e){
+            System.out.println("Error : "+e);
+            return false;
+        }
+    }
+    public boolean delEmployee(String[] sData){
+        try{
+            stm=con.createStatement();
+            stm.executeUpdate("UPDATE suplier SET deleted = TRUE WHERE suplier.id_suplier= "+sData[0]+"");
             return true;
         }catch(SQLException e){
             System.out.println("Error : "+e);

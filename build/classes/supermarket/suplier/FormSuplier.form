@@ -409,9 +409,9 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtsuplierbaru" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtAddSuplier" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txteditkaryawan" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtEditSuplier" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                               <Component id="txtkuncicari" min="-2" pref="165" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -425,9 +425,9 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="txtsuplierbaru" alignment="3" max="32767" attributes="0"/>
+                              <Component id="txtAddSuplier" alignment="3" max="32767" attributes="0"/>
                               <Component id="txtkuncicari" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                              <Component id="txteditkaryawan" alignment="3" max="32767" attributes="0"/>
+                              <Component id="txtEditSuplier" alignment="3" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="txtbatal" min="-2" pref="25" max="-2" attributes="0"/>
@@ -441,7 +441,7 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="txtsuplierbaru">
+                    <Component class="javax.swing.JLabel" name="txtAddSuplier">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="12" style="0"/>
@@ -452,7 +452,7 @@
                         <Property name="text" type="java.lang.String" value="Suplier Baru"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtsuplierbaruMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtAddSuplierMouseClicked"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtkuncicari">
@@ -477,7 +477,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="txteditkaryawan">
+                    <Component class="javax.swing.JLabel" name="txtEditSuplier">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="12" style="0"/>
@@ -488,7 +488,7 @@
                         <Property name="text" type="java.lang.String" value="Edit Suplier"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txteditkaryawanMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtEditSuplierMouseClicked"/>
                       </Events>
                     </Component>
                   </SubComponents>

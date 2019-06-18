@@ -34,7 +34,7 @@ public class FormKaryawan extends javax.swing.JFrame {
         setTable(allEmployeeData);
         rowSorter=new TableRowSorter<>(tblkaryawan.getModel());
     }    
-    public void addEmployeeColumn(DefaultTableModel model){        
+    public void setColumnTable(DefaultTableModel model){        
         model.addColumn("ID");        
         model.addColumn("Nama");
         model.addColumn("Alamat");
@@ -51,7 +51,7 @@ public class FormKaryawan extends javax.swing.JFrame {
     }
     public void setTable(String[][] data){
         DefaultTableModel table= new DefaultTableModel();
-        addEmployeeColumn(table);
+        setColumnTable(table);
         tblkaryawan.setModel(table);        
         TableColumnModel columnModel=tblkaryawan.getColumnModel();
         setColumnModel(columnModel);        
