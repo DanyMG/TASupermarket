@@ -6,11 +6,7 @@
 
 package supermarket.suplier;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import javax.swing.JOptionPane;
-import supermarket.FormAnggota;
 import supermarket.barang.FormBarang;
 import supermarket.jamkerja.FormJamKerja;
 import supermarket.karyawan.FormKaryawan;
@@ -21,24 +17,20 @@ import supermarket.karyawan.FormKaryawan;
  */
 public class FormtambahSuplier extends javax.swing.JFrame {
 
-    Suplier suplier=new Suplier();
-    Connection con;
-    ResultSet RsSuplier;
-    Statement stm; 
+    Suplier spl=new Suplier();   
+    private int id;
     
-    /** Creates new form FormKaryawan */
     public FormtambahSuplier(int lastId) {
-        initComponents();        
-        setField();
+        initComponents();   
+        id=lastId+1;
+        setField(id);
     }    
-    private void setField(){
-        txtid.setText(Integer.toString(suplier.getLastId()+1));
-        //Mengkosongkan nama, alamat, kota, dan no telepon
+    private void setField(int id){
+        txtid.setText(Integer.toString(id));        
         txtnama.setText("");
         txtalamat.setText("");
         txtkota.setText("");
-        txtnotelp.setText("");
-        lblnotif.setText("");
+        txtnotelp.setText("");        
     }
     private boolean isEditField(){
         //Fungsi untuk mengembalikan nilai true jika ada perubahan data
@@ -47,7 +39,7 @@ public class FormtambahSuplier extends javax.swing.JFrame {
         else return true;
     }
     private boolean isNamaEmpty(){
-        //Fungsi untuk mengembalikan nilai true jika ada field suplier baru yang kosong
+        //Fungsi untuk mengembalikan nilai true jika ada field spl baru yang kosong
         if(txtnama.getText().equals("")) return true;
         else return false;
     }
@@ -89,7 +81,6 @@ public class FormtambahSuplier extends javax.swing.JFrame {
         btntambah = new javax.swing.JToggleButton();
         btnreset = new javax.swing.JToggleButton();
         lblkembali = new javax.swing.JLabel();
-        lblnotif = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -358,10 +349,6 @@ public class FormtambahSuplier extends javax.swing.JFrame {
             }
         });
 
-        lblnotif.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblnotif.setForeground(new java.awt.Color(255, 0, 0));
-        lblnotif.setText("*Wajib Diisi");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -374,28 +361,23 @@ public class FormtambahSuplier extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(150, 150, 150)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblnotif)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblidkaryawan)
-                            .addComponent(lblnmkaryawan)
-                            .addComponent(lblalamat)
-                            .addComponent(lblkota)
-                            .addComponent(lblnotelp))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(btntambah, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnreset, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtnama, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtalamat, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtkota, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtnotelp, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(150, 150, 150))))
+                    .addComponent(lblidkaryawan)
+                    .addComponent(lblnmkaryawan)
+                    .addComponent(lblalamat)
+                    .addComponent(lblkota)
+                    .addComponent(lblnotelp))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(btntambah, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnreset, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtnama, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtalamat, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtkota, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtnotelp, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(150, 150, 150))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -424,9 +406,7 @@ public class FormtambahSuplier extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblnotelp)
                     .addComponent(txtnotelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblnotif)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btntambah)
                     .addComponent(btnreset))
@@ -454,19 +434,19 @@ public class FormtambahSuplier extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnresetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMouseClicked
-            setField(); //Menyiapkan ulangsemua textfield jika tombol reset diklik
+            setField(id);
     }//GEN-LAST:event_btnresetMouseClicked
 
     private void btntambahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btntambahMouseClicked
-        if(isNamaEmpty()) lblnotif.setText("Kolom Nama Wajib Diisi");//Mengecek Field Nama
+        if(isNamaEmpty()) JOptionPane.showMessageDialog(this, "Nama suplier wajib diisi.");
         else{
-            if(!suplier.isAny(txtnama.getText())){
-                // Menambahkan Suplier baru ke database sesuai data yang diisikan
-                suplier.addSuplier(txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText());
-                JOptionPane.showConfirmDialog(null, "Suplier berhasil ditambahkan.", "Pemberitahuan", JOptionPane.DEFAULT_OPTION);
-                setField();
+            String[] newSData= new String[]{Integer.toString(id),txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText()};
+            if(spl.addSuplier(newSData)){                
+                JOptionPane.showMessageDialog(this, "Data suplier berhasil ditambahkan.");
+                this.id++;
+                setField(id);
             }
-            else JOptionPane.showConfirmDialog(null, "Suplier sudah ada.", "Peringatan", JOptionPane.DEFAULT_OPTION);
+            else JOptionPane.showMessageDialog(this, "Data suplier berhasil ditambahkan.");
         }        
     }//GEN-LAST:event_btntambahMouseClicked
 
@@ -541,14 +521,7 @@ public class FormtambahSuplier extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormtambahSuplier().setVisible(true);
-            }
-        });
+        //</editor-fold>        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -576,7 +549,6 @@ public class FormtambahSuplier extends javax.swing.JFrame {
     private javax.swing.JLabel lblkota;
     private javax.swing.JLabel lblnmkaryawan;
     private javax.swing.JLabel lblnotelp;
-    private javax.swing.JLabel lblnotif;
     private javax.swing.JTextField txtalamat;
     private javax.swing.JTextField txtid;
     private javax.swing.JTextField txtkota;
