@@ -7,13 +7,9 @@
 package supermarket.suplier;
 
 import supermarket.barang.FormBarang;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import supermarket.*;
 import supermarket.karyawan.FormKaryawan;
 
 /**
@@ -22,52 +18,38 @@ import supermarket.karyawan.FormKaryawan;
  */
 public class FormSuplier extends javax.swing.JFrame {
 
-    Connection con;
-    ResultSet RsBarang;
-    Statement stm;
-    String selectedSuplier;
-    Suplier suplier = new Suplier();
+    Suplier spl=new Suplier();
+    String[][] allSuplier=spl.getAllSuplier();
+    String[] selSuplier;
     
     public FormSuplier() {
-        initComponents();
-        open_db();
-        setTabelSuplier();
-    }
-    private void open_db(){
-        try{
-            KoneksiMySQL kon= new KoneksiMySQL("localhost", "root", "", "supermarket");
-            con=kon.getConnection();
-        }
-        catch(Exception e){
-            System.out.println("Error : "+e);
-        }
+        initComponents();        
+        setTable(allSuplier);
     }   
-    private void setTabelSuplier(){//Membuat tabel untuk menampilkan suplier
-        //Mengatur model tabel
-        DefaultTableModel data = new DefaultTableModel();
-        //Menambahkan judul kolom
-        data.addColumn ("ID");
-        data.addColumn ("Nama");
-        data.addColumn ("Alamat");
-        data.addColumn ("Kota");
-        data.addColumn ("Nomor Telepon");
-        tblsuplier.setModel(data);
-        //Mengatur agar kolom pertama tidak bisa di ubah ukurannya
-        tblsuplier.getTableHeader().setReorderingAllowed(false);
-        //Mengatur ukuran kolom
-        TableColumnModel columnModel=tblsuplier.getColumnModel();              
-        columnModel.getColumn(0).setMaxWidth(45);
-        columnModel.getColumn(1).setPreferredWidth(125);
+    public void setColumnTable(DefaultTableModel model){        
+        model.addColumn ("ID");
+        model.addColumn ("Nama");
+        model.addColumn ("Alamat");
+        model.addColumn ("Kota");
+        model.addColumn ("Nomor Telepon");
+    }
+    public void setColumnModel(TableColumnModel columnModel){        
+        columnModel.getColumn(0).setPreferredWidth(5);
+        columnModel.getColumn(1).setPreferredWidth(100);
         columnModel.getColumn(2).setPreferredWidth(200);
-        columnModel.getColumn(3).setPreferredWidth(50);
-        columnModel.getColumn(4).setPreferredWidth(100);
-        tblsuplier.setColumnModel(columnModel);
-        Suplier[] temp= suplier.getAllSuplier();
-        System.out.println(temp.length);
-        for(int i=0;i<temp.length;i++){
-            data.addRow(new Object[]{
-                temp[i].getId(),temp[i].getNama(),temp[i].getAlamat(),temp[i].getKota(),temp[i].getNotelp()
-            });
+        columnModel.getColumn(3).setPreferredWidth(75);                
+    }
+    public void setTable(String[][] data){
+        DefaultTableModel table= new DefaultTableModel();
+        setColumnTable(table);
+        tblsuplier.setModel(table);        
+        TableColumnModel columnModel=tblsuplier.getColumnModel();
+        setColumnModel(columnModel);        
+        tblsuplier.setColumnModel(columnModel);        
+        for (String[] data1 : data) {            
+            if(Integer.parseInt(data1[5])==0){
+                table.addRow(new Object[]{data1[0], data1[1], data1[2], data1[3], data1[4]});                
+            }            
         }        
     }
 
@@ -97,11 +79,11 @@ public class FormSuplier extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jPanel10 = new javax.swing.JPanel();
-        txtsuplierbaru = new javax.swing.JLabel();
+        txtAddSuplier = new javax.swing.JLabel();
         txtkuncicari = new javax.swing.JTextField();
         txtcari = new javax.swing.JLabel();
         txtbatal = new javax.swing.JLabel();
-        txteditkaryawan = new javax.swing.JLabel();
+        txtEditSuplier = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblsuplier = new javax.swing.JTable();
 
@@ -307,12 +289,12 @@ public class FormSuplier extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(255, 229, 220));
 
-        txtsuplierbaru.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtsuplierbaru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new10_216291.png"))); // NOI18N
-        txtsuplierbaru.setText("Suplier Baru");
-        txtsuplierbaru.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtAddSuplier.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtAddSuplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new10_216291.png"))); // NOI18N
+        txtAddSuplier.setText("Suplier Baru");
+        txtAddSuplier.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtsuplierbaruMouseClicked(evt);
+                txtAddSuplierMouseClicked(evt);
             }
         });
 
@@ -326,12 +308,12 @@ public class FormSuplier extends javax.swing.JFrame {
 
         txtbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_Delete_1493279.png"))); // NOI18N
 
-        txteditkaryawan.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txteditkaryawan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new-24_103173.png"))); // NOI18N
-        txteditkaryawan.setText("Edit Suplier");
-        txteditkaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtEditSuplier.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtEditSuplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new-24_103173.png"))); // NOI18N
+        txtEditSuplier.setText("Edit Suplier");
+        txtEditSuplier.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txteditkaryawanMouseClicked(evt);
+                txtEditSuplierMouseClicked(evt);
             }
         });
 
@@ -340,9 +322,9 @@ public class FormSuplier extends javax.swing.JFrame {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtsuplierbaru)
+                .addComponent(txtAddSuplier)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txteditkaryawan)
+                .addComponent(txtEditSuplier)
                 .addGap(8, 8, 8)
                 .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -354,9 +336,9 @@ public class FormSuplier extends javax.swing.JFrame {
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtsuplierbaru, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtAddSuplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(txteditkaryawan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(txtEditSuplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(txtbatal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -423,27 +405,27 @@ public class FormSuplier extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtsuplierbaruMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtsuplierbaruMouseClicked
-        // TODO add your handling code here:
+    private void txtAddSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAddSuplierMouseClicked
         this.setVisible(false);
-        new FormtambahSuplier().setVisible(true);
-    }//GEN-LAST:event_txtsuplierbaruMouseClicked
+        new FormtambahSuplier(spl.getLastId(allSuplier)).setVisible(true);
+    }//GEN-LAST:event_txtAddSuplierMouseClicked
 
     private void txtcariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtcariMouseClicked
         // TODO add your handling code here:
 
     }//GEN-LAST:event_txtcariMouseClicked
 
-    private void txteditkaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txteditkaryawanMouseClicked
-        if(selectedSuplier!=null){
+    private void txtEditSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtEditSuplierMouseClicked
+        if(selSuplier!=null){
             this.setVisible(false);
-            new FormeditSuplier(selectedSuplier).setVisible(true);
+            new FormeditSuplier(selSuplier).setVisible(true);
         }
         else JOptionPane.showMessageDialog(this, "Tidak ada suplier yang dipilih.", "Alert", JOptionPane.WARNING_MESSAGE);
-    }//GEN-LAST:event_txteditkaryawanMouseClicked
+    }//GEN-LAST:event_txtEditSuplierMouseClicked
 
     private void tblsuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblsuplierMouseClicked
-        selectedSuplier=tblsuplier.getValueAt(tblsuplier.getSelectedRow(), 0).toString();
+        int id=Integer.parseInt(tblsuplier.getValueAt(tblsuplier.getSelectedRow(), 0).toString());
+        selSuplier=spl.getSuplier(allSuplier, id);
     }//GEN-LAST:event_tblsuplierMouseClicked
 
     private void lblbarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblbarangMouseClicked
@@ -512,11 +494,11 @@ public class FormSuplier extends javax.swing.JFrame {
     private javax.swing.JLabel lbllaporan;
     private javax.swing.JLabel lblsuplier;
     private javax.swing.JTable tblsuplier;
+    private javax.swing.JLabel txtAddSuplier;
+    private javax.swing.JLabel txtEditSuplier;
     private javax.swing.JLabel txtbatal;
     private javax.swing.JLabel txtcari;
-    private javax.swing.JLabel txteditkaryawan;
     private javax.swing.JTextField txtkuncicari;
-    private javax.swing.JLabel txtsuplierbaru;
     // End of variables declaration//GEN-END:variables
 
 }
