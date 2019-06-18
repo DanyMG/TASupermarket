@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 16, 2019 at 06:53 AM
+-- Generation Time: Jun 18, 2019 at 09:53 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -160,18 +160,19 @@ CREATE TABLE `suplier` (
   `nama_suplier` varchar(100) NOT NULL,
   `almt_suplier` varchar(100) DEFAULT NULL,
   `kota_suplier` varchar(50) DEFAULT NULL,
-  `notelp_suplier` varchar(12) DEFAULT NULL
+  `notelp_suplier` varchar(12) DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `suplier`
 --
 
-INSERT INTO `suplier` (`id_suplier`, `nama_suplier`, `almt_suplier`, `kota_suplier`, `notelp_suplier`) VALUES
-(1, 'PT Beiersdorf Indonesia', 'Jl. Raya Randuagug KM. 75', 'Malang', '08001164832'),
-(2, 'PT. AMIDIS TIRTA MULIA', '', 'Bandung', ''),
-(3, 'PT.CS2 Pola Sehat', 'JL.Lalalalalol', 'Bogor', '08001077777'),
-(4, 'PT. Samsung', '', 'Jakarta', '');
+INSERT INTO `suplier` (`id_suplier`, `nama_suplier`, `almt_suplier`, `kota_suplier`, `notelp_suplier`, `deleted`) VALUES
+(1, 'PT Beiersdorf Indonesia', 'Jl. Raya Randuagug KM. 75', 'Malang', '08001164832', 0),
+(2, 'PT. AMIDIS TIRTA MULIA', '', 'Bandung', '', 0),
+(3, 'PT.CS2 Pola Sehat', 'JL.Lalalalalol', 'Bogor', '08001077777', 0),
+(4, 'PT. Samsung', '', 'Jakarta', '', 0);
 
 --
 -- Indexes for dumped tables

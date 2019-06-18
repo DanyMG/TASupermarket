@@ -106,17 +106,5 @@ public class Suplier {
             System.out.println("Error : "+e);
         }
         return cari;
-    }
-    public int getLastId(){
-        int id=0;
-        try{
-            stm=con.createStatement();
-            RsSuplier=stm.executeQuery("select * from suplier order by id_suplier DESC");
-            if(RsSuplier.next()) id=RsSuplier.getInt("id_suplier");
-        }catch(SQLException e){
-            System.out.println("Error : "+e);
-        }
-        return id;
     }   
-    
 }
