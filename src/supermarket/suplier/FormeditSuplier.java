@@ -28,7 +28,7 @@ public class FormeditSuplier extends javax.swing.JFrame {
     ResultSet RsSuplier;
     Statement stm; 
     String id;
-    public FormeditSuplier(String id) {
+    public FormeditSuplier(String[] sData) {
         initComponents();
         this.id=id;
         open_db();

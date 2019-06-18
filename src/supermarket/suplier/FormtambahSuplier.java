@@ -27,7 +27,7 @@ public class FormtambahSuplier extends javax.swing.JFrame {
     Statement stm; 
     
     /** Creates new form FormKaryawan */
-    public FormtambahSuplier() {
+    public FormtambahSuplier(int lastId) {
         initComponents();        
         setField();
     }    
