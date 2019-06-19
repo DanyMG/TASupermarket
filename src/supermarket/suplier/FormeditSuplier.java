@@ -5,14 +5,10 @@
  */
 package supermarket.suplier;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import javax.swing.JOptionPane;
 import supermarket.anggota.FormAnggota;
 import supermarket.barang.FormBarang;
 import supermarket.jamkerja.FormJamKerja;
-import supermarket.KoneksiMySQL;
 import supermarket.karyawan.FormKaryawan;
 
 /**
@@ -21,63 +17,31 @@ import supermarket.karyawan.FormKaryawan;
  */
 public class FormeditSuplier extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormeditSuplier
-     */
-    Connection con;
-    ResultSet RsSuplier;
-    Statement stm; 
-    String id;
+    Suplier spl=new Suplier();
+    String[] suplier;
+    
     public FormeditSuplier(String[] sData) {
-        initComponents();
-        this.id=id;
-        open_db();
-        setField();
+        initComponents();  
+        suplier=sData;
+        setField(suplier);
+    }    
+     public void setField(String[] sData){
+        txtidsuplier.setText(sData[0]);        
+        txtnama.setText(sData[1]);
+        txtalamat.setText(sData[2]);
+        txtkota.setText(sData[3]);
+        txtnotelp.setText(sData[4]);
     }
-    private void open_db(){
-        try{
-            KoneksiMySQL kon= new KoneksiMySQL("localhost", "root", "", "supermarket");
-            con=kon.getConnection();
-        }
-        catch(Exception e){
-            System.out.println("Error : "+e);
-        }
-    }
-     private void setField(){        
-        txtidsuplier.setText(id);
-         try{
-            stm=con.createStatement();
-            RsSuplier=stm.executeQuery("select * from suplier where id_suplier= '"+id+"'");
-            while (RsSuplier.next()){
-                txtnama.setText(RsSuplier.getString("nama_suplier"));
-                txtalamat.setText(RsSuplier.getString("almt_suplier"));
-                txtkota.setText(RsSuplier.getString("kota_suplier"));
-                txtnotelp.setText(RsSuplier.getString("notelp_suplier"));
-            }                
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "ERROR : " +e);
-        }
-    }
-    private boolean checkEmptyField(){
+    public boolean checkEmptyField(){
         //Fungsi untuk mengembalikan nilai true jika ada field karyawan baru yang kosong
         if(txtnama.getText().equals("")||txtalamat.getText().equals("")
                 ||txtkota.getText().equals("")||txtnotelp.getText().equals("")) return true;
         else return false;
     }
-    private void editSuplier(String nama, String alamat, String kota, String no_telp){
-        //Prosedur untuk menambakan data karyawan baru ke database karyawan
-        try{
-            stm=con.createStatement();
-            stm.executeUpdate("UPDATE suplier SET nama_suplier = '"+nama+"', almt_suplier = '"+alamat+"'"
-                    + ", kota_suplier = '"+kota+"', notelp_suplier = '"+no_telp+"' WHERE suplier.id_suplier = "+id+"");
-            //Memberitahu jika penambahan suplier berhasil
-            JOptionPane.showConfirmDialog(null, "Suplier berhasil diedit!", "Informasi", JOptionPane.DEFAULT_OPTION);
-            //Menyiapkan ulang textfield suplier
-            setField();
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, e);
-        }
-    }
+    public boolean isNameEmpty(String nama){
+        if(nama.equals("")) return true;
+        else return false;
+    }    
    
     /**
      * This method is called from within the constructor to initialize the form.
@@ -495,11 +459,21 @@ public class FormeditSuplier extends javax.swing.JFrame {
     }//GEN-LAST:event_lblJamKerjaMouseClicked
 
     private void btneditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btneditMouseClicked
-        editSuplier(txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText());
+        if(isNameEmpty(txtnama.getText()))
+            JOptionPane.showMessageDialog(this, "Nama suplier wajib diisi.");
+        else{
+            String[] editedSData=new String[]{this.id, txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText()};
+            if(spl.addSuplier(editedSData)){
+                JOptionPane.showMessageDialog(this, "Data suplier berhasil diedit.");
+                suplier=editedSData;
+                setField(suplier);
+            }else JOptionPane.showMessageDialog(this, "Data suplier gagal diedit.");
+        }
+        
     }//GEN-LAST:event_btneditMouseClicked
 
     private void btnresetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMouseClicked
-        setField(); //Menyiapkan ulangsemua textfield jika tombol reset diklik
+        setField(suplier); //Menyiapkan ulangsemua textfield jika tombol reset diklik
     }//GEN-LAST:event_btnresetMouseClicked
 
     private void lblkembaliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblkembaliMouseClicked

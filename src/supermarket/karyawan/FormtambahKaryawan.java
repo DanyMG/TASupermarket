@@ -6,9 +6,6 @@
 
 package supermarket.karyawan;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import javax.swing.JOptionPane;
 import supermarket.anggota.FormAnggota;
 import supermarket.barang.FormBarang;
@@ -22,10 +19,7 @@ import supermarket.suplier.FormSuplier;
 public class FormtambahKaryawan extends javax.swing.JFrame {
 
     private Employee emp=new Employee();    
-    private int id;    
-    Connection con;
-    ResultSet RsKaryawan;
-    Statement stm; 
+    private int id;
         
     public FormtambahKaryawan(int lastId) {        
         initComponents();        
@@ -53,10 +47,6 @@ public class FormtambahKaryawan extends javax.swing.JFrame {
     }   
     public boolean isCategoryEmpty(String category){
         if(category.equals("Pilih Kategori...")) return true;
-        else return false;
-    }
-    public boolean isAddEmployeeSuccess(int id, int newId){
-        if(newId>id) return true;
         else return false;
     }
     /** This method is called from within the constructor to
