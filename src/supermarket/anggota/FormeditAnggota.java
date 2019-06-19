@@ -21,14 +21,14 @@ import supermarket.KoneksiMySQL;
  *
  * @author DanyMG
  */
-public class FormeditAnggota extends javax.swing.JFrame {
+public class FormBarangBaru2 extends javax.swing.JFrame {
 
     Connection con;
     ResultSet RsKaryawan;
     Statement stm; 
     String id;
     /** Creates new form FormKaryawan */
-    public FormeditAnggota(String id) {
+    public FormBarangBaru2(String id) {
         initComponents();
         this.id=id;
         open_db();
@@ -162,10 +162,10 @@ public class FormeditAnggota extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel6.setBackground(new java.awt.Color(52, 17, 9));
+        jPanel6.setBackground(new java.awt.Color(254, 151, 114));
 
         lblKaryawan.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblKaryawan.setForeground(new java.awt.Color(254, 151, 114));
+        lblKaryawan.setForeground(new java.awt.Color(52, 17, 9));
         lblKaryawan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblKaryawan.setText("Karyawan");
         lblKaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -187,10 +187,10 @@ public class FormeditAnggota extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel7.setBackground(new java.awt.Color(254, 151, 114));
+        jPanel7.setBackground(new java.awt.Color(52, 17, 9));
 
         lblAnggota.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblAnggota.setForeground(new java.awt.Color(52, 17, 9));
+        lblAnggota.setForeground(new java.awt.Color(254, 151, 114));
         lblAnggota.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAnggota.setText("Anggota");
         lblAnggota.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -492,14 +492,22 @@ public class FormeditAnggota extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormeditAnggota.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormBarangBaru2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormeditAnggota.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormBarangBaru2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormeditAnggota.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormBarangBaru2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormeditAnggota.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormBarangBaru2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>        
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>        
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
