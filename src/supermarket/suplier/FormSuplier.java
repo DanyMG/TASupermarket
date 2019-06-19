@@ -8,8 +8,11 @@ package supermarket.suplier;
 
 import supermarket.barang.FormBarang;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import supermarket.karyawan.FormKaryawan;
 
 /**
@@ -21,10 +24,12 @@ public class FormSuplier extends javax.swing.JFrame {
     Suplier spl=new Suplier();
     String[][] allSuplier=spl.getAllSuplier();
     String[] selSuplier;
+    private TableRowSorter<TableModel> rowSorter;
     
     public FormSuplier() {
         initComponents();        
         setTable(allSuplier);
+        rowSorter=new TableRowSorter<>(tblsuplier.getModel());
     }   
     public void setColumnTable(DefaultTableModel model){        
         model.addColumn ("ID");
@@ -80,9 +85,9 @@ public class FormSuplier extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jPanel10 = new javax.swing.JPanel();
         txtAddSuplier = new javax.swing.JLabel();
-        txtkuncicari = new javax.swing.JTextField();
-        txtcari = new javax.swing.JLabel();
-        txtbatal = new javax.swing.JLabel();
+        txtKeyWord = new javax.swing.JTextField();
+        lblSearch = new javax.swing.JLabel();
+        lblCancel = new javax.swing.JLabel();
         txtEditSuplier = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblsuplier = new javax.swing.JTable();
@@ -298,15 +303,20 @@ public class FormSuplier extends javax.swing.JFrame {
             }
         });
 
-        txtcari.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtcari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_11_Search_106236.png"))); // NOI18N
-        txtcari.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_11_Search_106236.png"))); // NOI18N
+        lblSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtcariMouseClicked(evt);
+                lblSearchMouseClicked(evt);
             }
         });
 
-        txtbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_Delete_1493279.png"))); // NOI18N
+        lblCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_Delete_1493279.png"))); // NOI18N
+        lblCancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCancelMouseClicked(evt);
+            }
+        });
 
         txtEditSuplier.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtEditSuplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new-24_103173.png"))); // NOI18N
@@ -326,24 +336,24 @@ public class FormSuplier extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtEditSuplier)
                 .addGap(8, 8, 8)
-                .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtcari)
+                .addComponent(lblSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtbatal)
+                .addComponent(lblCancel)
                 .addGap(0, 381, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(txtAddSuplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(txtEditSuplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtbatal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -410,10 +420,14 @@ public class FormSuplier extends javax.swing.JFrame {
         new FormtambahSuplier(spl.getLastId(allSuplier)).setVisible(true);
     }//GEN-LAST:event_txtAddSuplierMouseClicked
 
-    private void txtcariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtcariMouseClicked
-        // TODO add your handling code here:
+    private void lblSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSearchMouseClicked
+        if(txtKeyWord.getText().equals("")) tblsuplier.setRowSorter(null);
+        else{
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtKeyWord.getText()));
+            tblsuplier.setRowSorter(rowSorter);
+        } 
 
-    }//GEN-LAST:event_txtcariMouseClicked
+    }//GEN-LAST:event_lblSearchMouseClicked
 
     private void txtEditSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtEditSuplierMouseClicked
         if(selSuplier!=null){
@@ -437,6 +451,10 @@ public class FormSuplier extends javax.swing.JFrame {
         this.setVisible(false);
         new FormKaryawan().setVisible(true);
     }//GEN-LAST:event_lblkaryawanMouseClicked
+
+    private void lblCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCancelMouseClicked
+        tblsuplier.setRowSorter(null);
+    }//GEN-LAST:event_lblCancelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -487,6 +505,8 @@ public class FormSuplier extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lblCancel;
+    private javax.swing.JLabel lblSearch;
     private javax.swing.JLabel lblanggota;
     private javax.swing.JLabel lblbarang;
     private javax.swing.JLabel lbljamkerja;
@@ -496,9 +516,7 @@ public class FormSuplier extends javax.swing.JFrame {
     private javax.swing.JTable tblsuplier;
     private javax.swing.JLabel txtAddSuplier;
     private javax.swing.JLabel txtEditSuplier;
-    private javax.swing.JLabel txtbatal;
-    private javax.swing.JLabel txtcari;
-    private javax.swing.JTextField txtkuncicari;
+    private javax.swing.JTextField txtKeyWord;
     // End of variables declaration//GEN-END:variables
 
 }

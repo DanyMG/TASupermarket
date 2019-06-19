@@ -413,11 +413,11 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtEditSuplier" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                              <Component id="txtkuncicari" min="-2" pref="165" max="-2" attributes="0"/>
+                              <Component id="txtKeyWord" min="-2" pref="165" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtcari" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblSearch" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtbatal" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblCancel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="381" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -426,15 +426,15 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="txtAddSuplier" alignment="3" max="32767" attributes="0"/>
-                              <Component id="txtkuncicari" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="txtKeyWord" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                               <Component id="txtEditSuplier" alignment="3" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtbatal" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="lblCancel" min="-2" pref="25" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtcari" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="lblSearch" min="-2" pref="24" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -455,9 +455,9 @@
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtAddSuplierMouseClicked"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtkuncicari">
+                    <Component class="javax.swing.JTextField" name="txtKeyWord">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="txtcari">
+                    <Component class="javax.swing.JLabel" name="lblSearch">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="14" style="0"/>
@@ -467,15 +467,18 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtcariMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblSearchMouseClicked"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="txtbatal">
+                    <Component class="javax.swing.JLabel" name="lblCancel">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                           <Image iconType="3" name="/supermarket/gambar/iconfinder_Delete_1493279.png"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCancelMouseClicked"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="txtEditSuplier">
                       <Properties>
