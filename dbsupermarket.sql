@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2019 at 09:53 AM
+-- Generation Time: Jun 23, 2019 at 03:26 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -42,6 +42,20 @@ CREATE TABLE `akun` (
 
 INSERT INTO `akun` (`id_akun`, `username`, `pass`) VALUES
 (1, 'admin', 'asdfg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `anggota`
+--
+
+CREATE TABLE `anggota` (
+  `id_anggota` int(11) NOT NULL,
+  `nama_anggota` varchar(50) NOT NULL,
+  `almt_anggota` varchar(50) DEFAULT NULL,
+  `notelp_anggota` varchar(12) DEFAULT NULL,
+  `poin_anggota` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -172,7 +186,9 @@ INSERT INTO `suplier` (`id_suplier`, `nama_suplier`, `almt_suplier`, `kota_supli
 (1, 'PT Beiersdorf Indonesia', 'Jl. Raya Randuagug KM. 75', 'Malang', '08001164832', 0),
 (2, 'PT. AMIDIS TIRTA MULIA', '', 'Bandung', '', 0),
 (3, 'PT.CS2 Pola Sehat', 'JL.Lalalalalol', 'Bogor', '08001077777', 0),
-(4, 'PT. Samsung', '', 'Jakarta', '', 0);
+(4, 'PT. Samsung', '', 'Jakarta', '', 0),
+(5, 'GAGA', '', '', '', 0),
+(6, 'PT. Mayora Indah Tbk', '', 'Tangerang', '', 0);
 
 --
 -- Indexes for dumped tables
@@ -183,6 +199,12 @@ INSERT INTO `suplier` (`id_suplier`, `nama_suplier`, `almt_suplier`, `kota_supli
 --
 ALTER TABLE `akun`
   ADD PRIMARY KEY (`id_akun`);
+
+--
+-- Indexes for table `anggota`
+--
+ALTER TABLE `anggota`
+  ADD PRIMARY KEY (`id_anggota`);
 
 --
 -- Indexes for table `barang`
@@ -230,6 +252,12 @@ ALTER TABLE `akun`
   MODIFY `id_akun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `anggota`
+--
+ALTER TABLE `anggota`
+  MODIFY `id_anggota` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
@@ -257,7 +285,7 @@ ALTER TABLE `pemesanan`
 -- AUTO_INCREMENT for table `suplier`
 --
 ALTER TABLE `suplier`
-  MODIFY `id_suplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_suplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
