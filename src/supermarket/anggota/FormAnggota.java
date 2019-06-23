@@ -30,6 +30,8 @@ import supermarket.KoneksiMySQL;
  */
 public class FormAnggota extends javax.swing.JFrame {
 
+    Member mbr=new Member();
+    
     Connection con;
     ResultSet RsAnggota;
     Statement stm;
