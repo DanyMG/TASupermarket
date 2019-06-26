@@ -6,11 +6,12 @@
 
 package supermarket.anggota;
 
-import supermarket.karyawan.*;
+
 import javax.swing.JOptionPane;
-import supermarket.FormAnggota;
+
 import supermarket.barang.FormBarang;
 import supermarket.jamkerja.FormJamKerja;
+import supermarket.karyawan.FormKaryawan;
 import supermarket.suplier.FormSuplier;
 
 /**
@@ -25,8 +26,8 @@ public class FormtambahAnggota extends javax.swing.JFrame {
             
     public FormtambahAnggota(int lasId) {
         initComponents();
-        id=lasId++;
-        setField();
+        id=lasId+1;
+        setField(this.id);
     }
         
     private void setField(int id){
@@ -530,14 +531,7 @@ public class FormtambahAnggota extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormtambahAnggota().setVisible(true);
-            }
-        });
+        //</editor-fold>        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
