@@ -6,7 +6,10 @@
 
 package supermarket.barang;
 
-import supermarket.FormtambahSuplier;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import supermarket.suplier.FormtambahSuplier;
+//import supermarket.FormtambahSuplier;
 
 /**
  *
@@ -14,9 +17,40 @@ import supermarket.FormtambahSuplier;
  */
 public class FormBarang extends javax.swing.JFrame {
 
+    Goods brg=new Goods();
+    String[][] allGoods= brg.getAllGoods();
     /** Creates new form FormKaryawan */
     public FormBarang() {
         initComponents();
+        setTable(allGoods);
+    }
+    public void setColumnTable(DefaultTableModel model){        
+        model.addColumn("ID");        
+        model.addColumn("Nama");
+        model.addColumn("Jumlah");
+        model.addColumn("Harga Beli");
+        model.addColumn("Harga Jual");               
+        
+    }
+    public void setColumnModel(TableColumnModel columnModel){        
+        columnModel.getColumn(0).setPreferredWidth(5);
+        columnModel.getColumn(1).setPreferredWidth(100);
+        columnModel.getColumn(2).setPreferredWidth(200);
+        columnModel.getColumn(3).setPreferredWidth(75);
+     
+    }
+    public void setTable(String[][] data){
+        DefaultTableModel table= new DefaultTableModel();
+        setColumnTable(table);
+        jTable1.setModel(table);        
+        TableColumnModel columnModel=jTable1.getColumnModel();
+        setColumnModel(columnModel);        
+        jTable1.setColumnModel(columnModel);        
+        for (String[] data1 : data) {            
+            
+                table.addRow(new Object[]{data1[0], data1[1], data1[2], data1[3], data1[4]});                
+                      
+        }        
     }
 
     /** This method is called from within the constructor to
@@ -45,10 +79,14 @@ public class FormBarang extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jPanel10 = new javax.swing.JPanel();
-        txtsuplierbaru = new javax.swing.JLabel();
+        txtAddGood = new javax.swing.JLabel();
         txtkuncicari = new javax.swing.JTextField();
         txtcari = new javax.swing.JLabel();
         txtbatal = new javax.swing.JLabel();
+        txtEditGood = new javax.swing.JLabel();
+        txtBookGood = new javax.swing.JLabel();
+        txtSellGood = new javax.swing.JLabel();
+        txtRemoveGood = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -79,10 +117,10 @@ public class FormBarang extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(254, 151, 114));
+        jPanel4.setBackground(new java.awt.Color(52, 17, 9));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(52, 17, 9));
+        jLabel4.setForeground(new java.awt.Color(254, 151, 114));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Barang");
 
@@ -99,10 +137,10 @@ public class FormBarang extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel6.setBackground(new java.awt.Color(52, 17, 9));
+        jPanel6.setBackground(new java.awt.Color(254, 151, 114));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(254, 151, 114));
+        jLabel5.setForeground(new java.awt.Color(52, 17, 9));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Karyawan");
 
@@ -110,11 +148,11 @@ public class FormBarang extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -244,12 +282,12 @@ public class FormBarang extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(255, 229, 220));
 
-        txtsuplierbaru.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtsuplierbaru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new10_216291.png"))); // NOI18N
-        txtsuplierbaru.setText("Karyawan Baru");
-        txtsuplierbaru.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtAddGood.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtAddGood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new10_216291.png"))); // NOI18N
+        txtAddGood.setText("Barang Baru");
+        txtAddGood.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtsuplierbaruMouseClicked(evt);
+                txtAddGoodMouseClicked(evt);
             }
         });
 
@@ -263,25 +301,73 @@ public class FormBarang extends javax.swing.JFrame {
 
         txtbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_Delete_1493279.png"))); // NOI18N
 
+        txtEditGood.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtEditGood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new-24_103173.png"))); // NOI18N
+        txtEditGood.setText("Edit Barang");
+        txtEditGood.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtEditGoodMouseClicked(evt);
+            }
+        });
+
+        txtBookGood.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtBookGood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_add_126583.png"))); // NOI18N
+        txtBookGood.setText("Pesan Barang");
+        txtBookGood.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtBookGoodMouseClicked(evt);
+            }
+        });
+
+        txtSellGood.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtSellGood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_shopping-cart_216477.png"))); // NOI18N
+        txtSellGood.setText("Jual Barang");
+        txtSellGood.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtSellGoodMouseClicked(evt);
+            }
+        });
+
+        txtRemoveGood.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtRemoveGood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_trash_115789.png"))); // NOI18N
+        txtRemoveGood.setText("Buang Barang");
+        txtRemoveGood.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtRemoveGoodMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtsuplierbaru)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtAddGood)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEditGood)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBookGood)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSellGood)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtRemoveGood)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtcari)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtbatal)
-                .addGap(0, 450, Short.MAX_VALUE))
+                .addGap(0, 96, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtsuplierbaru, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtAddGood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEditGood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtBookGood)
+                .addComponent(txtSellGood)
+                .addComponent(txtRemoveGood))
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(txtbatal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -346,16 +432,41 @@ public class FormBarang extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtsuplierbaruMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtsuplierbaruMouseClicked
+    private void txtAddGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAddGoodMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new FormtambahSuplier().setVisible(true);
-    }//GEN-LAST:event_txtsuplierbaruMouseClicked
+        new FormBarangBaru2(brg.getLastId(allGoods)).setVisible(true);
+    }//GEN-LAST:event_txtAddGoodMouseClicked
 
     private void txtcariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtcariMouseClicked
         // TODO add your handling code here:
+       
 
     }//GEN-LAST:event_txtcariMouseClicked
+
+    private void txtEditGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtEditGoodMouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new FormEditBarang2().setVisible(true);
+    }//GEN-LAST:event_txtEditGoodMouseClicked
+
+    private void txtBookGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBookGoodMouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new FormPesanBarang2().setVisible(true);
+    }//GEN-LAST:event_txtBookGoodMouseClicked
+
+    private void txtSellGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSellGoodMouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+        //new ().setVisible(true);
+    }//GEN-LAST:event_txtSellGoodMouseClicked
+
+    private void txtRemoveGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRemoveGoodMouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new FormBuangBarang2().setVisible(true);
+    }//GEN-LAST:event_txtRemoveGoodMouseClicked
 
     /**
      * @param args the command line arguments
@@ -368,7 +479,7 @@ public class FormBarang extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -413,10 +524,14 @@ public class FormBarang extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel txtAddGood;
+    private javax.swing.JLabel txtBookGood;
+    private javax.swing.JLabel txtEditGood;
+    private javax.swing.JLabel txtRemoveGood;
+    private javax.swing.JLabel txtSellGood;
     private javax.swing.JLabel txtbatal;
     private javax.swing.JLabel txtcari;
     private javax.swing.JTextField txtkuncicari;
-    private javax.swing.JLabel txtsuplierbaru;
     // End of variables declaration//GEN-END:variables
 
 }

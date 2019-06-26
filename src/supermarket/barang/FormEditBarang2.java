@@ -24,24 +24,13 @@ import supermarket.KoneksiMySQL;
  */
 public class FormEditBarang2 extends javax.swing.JFrame {
 
-    Connection con;
-    ResultSet RsKaryawan;
-    Statement stm; 
-    /** Creates new form FormKaryawan */
+    
     public FormEditBarang2() {
         initComponents();
-        open_db();
+        
         setField();
     }
-    private void open_db(){
-        try{
-            KoneksiMySQL kon= new KoneksiMySQL("localhost", "root", "", "supermarket");
-            con=kon.getConnection();
-        }
-        catch(Exception e){
-            System.out.println("Error : "+e);
-        }
-    }
+   
     private void setField(){
         //Menyiapkan id karyawan baru
         try{
