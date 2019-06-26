@@ -390,10 +390,10 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnreset" min="-2" pref="115" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="txtidkaryawan" min="-2" pref="250" max="-2" attributes="0"/>
+                          <Component id="txtidbarang" min="-2" pref="250" max="-2" attributes="0"/>
                           <Component id="txtnama" min="-2" pref="250" max="-2" attributes="0"/>
-                          <Component id="txtalamat" min="-2" pref="250" max="-2" attributes="0"/>
-                          <Component id="txtkota" min="-2" pref="250" max="-2" attributes="0"/>
+                          <Component id="txthrgbeli" min="-2" pref="250" max="-2" attributes="0"/>
+                          <Component id="txthrgjual" min="-2" pref="250" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
                   </Group>
@@ -414,7 +414,7 @@
                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblidkaryawan" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtidkaryawan" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtidbarang" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -424,12 +424,12 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblalamat" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtalamat" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txthrgbeli" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblkota" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtkota" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txthrgjual" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -470,7 +470,7 @@
                 <Property name="text" type="java.lang.String" value="Nama Barang"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtidkaryawan">
+            <Component class="javax.swing.JTextField" name="txtidbarang">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="18" style="0"/>
@@ -496,7 +496,7 @@
                 <Property name="text" type="java.lang.String" value="Harga Beli"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtalamat">
+            <Component class="javax.swing.JTextField" name="txthrgbeli">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="18" style="0"/>
@@ -511,7 +511,7 @@
                 <Property name="text" type="java.lang.String" value="Harga Jual"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtkota">
+            <Component class="javax.swing.JTextField" name="txthrgjual">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="18" style="0"/>
