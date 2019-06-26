@@ -6,23 +6,14 @@
 
 package supermarket.anggota;
 
-import supermarket.karyawan.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableColumnModel;
-import javax.swing.table.TableColumn;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import supermarket.FormAnggota;
 import supermarket.barang.FormBarang;
 import supermarket.jamkerja.FormJamKerja;
+import supermarket.karyawan.FormtambahKaryawan;
 import supermarket.laporan.FormLaporan;
 import supermarket.suplier.FormSuplier;
-import supermarket.FormtambahSuplier;
-import supermarket.KoneksiMySQL;
 
 /**
  *
@@ -30,59 +21,41 @@ import supermarket.KoneksiMySQL;
  */
 public class FormAnggota extends javax.swing.JFrame {
 
-    Member mbr=new Member();
+    private Member mbr=new Member();
+    private String[][] allMData=mbr.getAllMember();
+    private String[] selMember;
     
-    Connection con;
-    ResultSet RsAnggota;
-    Statement stm;
-    String selectedEmployee;
-    /** Creates new form FormKaryawan */
     public FormAnggota() {
         initComponents();
-        open_db();
-        setTable();
+        setTable(allMData);
     }
-    private void open_db(){
-        try{
-            KoneksiMySQL kon= new KoneksiMySQL("localhost", "root", "", "supermarket");
-            con=kon.getConnection();
-        }
-        catch(Exception e){
-            System.out.println("Error : "+e);
-        }
+    public void setColumnTable(DefaultTableModel model){        
+        model.addColumn ("ID");
+        model.addColumn ("Nama");
+        model.addColumn ("Alamat");
+        model.addColumn ("Kota");
+        model.addColumn ("Nomor Telepon");
+        model.addColumn ("Poin");
     }
-    private void setTable(){
-        //Membuat tabel untuk menampilkan karyawan
-        DefaultTableModel model= new DefaultTableModel();        
-        //Menambahkan kolom
-        model.addColumn("ID");        
-        model.addColumn("Nama");
-        model.addColumn("Alamat");
-        model.addColumn("Kota");
-        model.addColumn("Nomor Telepon");               
-        tblanggota.setModel(model);
-        //Mengatur ukuran kolom
-        TableColumnModel columnModel=tblanggota.getColumnModel();
-        columnModel.getColumn(0).setMaxWidth(30);
+    public void setColumnModel(TableColumnModel columnModel){        
+        columnModel.getColumn(0).setPreferredWidth(5);
         columnModel.getColumn(1).setPreferredWidth(100);
         columnModel.getColumn(2).setPreferredWidth(200);
         columnModel.getColumn(3).setPreferredWidth(75);
         columnModel.getColumn(4).setPreferredWidth(100);
-        tblanggota.setColumnModel(columnModel);
-        //Membaca data karyawan
-        try{    
-            stm=con.createStatement();
-            RsAnggota=stm.executeQuery("select * from anggota");
-            while (RsAnggota.next())
-                model.addRow(new Object[]{          
-                    RsAnggota.getString("id_anggota"), RsAnggota.getString("nama_anggota"),
-                    RsAnggota.getString("almt_anggota"), RsAnggota.getString("kota_anggota"),
-                    RsAnggota.getString("notelp_anggota")
-                });
-            tblanggota.setModel(model);
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, "ERROR : " +e);
-        }
+    }
+    public void setTable(String[][] data){
+        DefaultTableModel table= new DefaultTableModel();
+        setColumnTable(table);
+        tblMember.setModel(table);        
+        TableColumnModel columnModel=tblMember.getColumnModel();
+        setColumnModel(columnModel);        
+        tblMember.setColumnModel(columnModel);        
+        for (String[] data1 : data) {            
+            if(Integer.parseInt(data1[5])==0){
+                table.addRow(new Object[]{data1[0], data1[1], data1[2], data1[3], data1[4]});                
+            }            
+        }        
     }
     /** This method is called from within the constructor to
      * initialize the form.
@@ -110,13 +83,13 @@ public class FormAnggota extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jPanel10 = new javax.swing.JPanel();
-        txtkaryawanbaru = new javax.swing.JLabel();
+        txtAddMember = new javax.swing.JLabel();
         txtkuncicari = new javax.swing.JTextField();
         txtcari = new javax.swing.JLabel();
         txtbatal = new javax.swing.JLabel();
-        txteditkaryawan = new javax.swing.JLabel();
+        txtEditMember = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblanggota = new javax.swing.JTable();
+        tblMember = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -340,12 +313,12 @@ public class FormAnggota extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(255, 229, 220));
 
-        txtkaryawanbaru.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtkaryawanbaru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new10_216291.png"))); // NOI18N
-        txtkaryawanbaru.setText("Anggota Baru");
-        txtkaryawanbaru.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtAddMember.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtAddMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new10_216291.png"))); // NOI18N
+        txtAddMember.setText("Anggota Baru");
+        txtAddMember.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtkaryawanbaruMouseClicked(evt);
+                txtAddMemberMouseClicked(evt);
             }
         });
 
@@ -359,12 +332,12 @@ public class FormAnggota extends javax.swing.JFrame {
 
         txtbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_Delete_1493279.png"))); // NOI18N
 
-        txteditkaryawan.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txteditkaryawan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new-24_103173.png"))); // NOI18N
-        txteditkaryawan.setText("Edit Anggota");
-        txteditkaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtEditMember.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtEditMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new-24_103173.png"))); // NOI18N
+        txtEditMember.setText("Edit Anggota");
+        txtEditMember.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txteditkaryawanMouseClicked(evt);
+                txtEditMemberMouseClicked(evt);
             }
         });
 
@@ -373,9 +346,9 @@ public class FormAnggota extends javax.swing.JFrame {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtkaryawanbaru)
+                .addComponent(txtAddMember)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txteditkaryawan)
+                .addComponent(txtEditMember)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -387,9 +360,9 @@ public class FormAnggota extends javax.swing.JFrame {
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtkaryawanbaru, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtAddMember, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(txteditkaryawan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(txtEditMember, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(txtbatal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -400,7 +373,7 @@ public class FormAnggota extends javax.swing.JFrame {
 
         jToolBar1.add(jPanel10);
 
-        tblanggota.setModel(new javax.swing.table.DefaultTableModel(
+        tblMember.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -411,18 +384,18 @@ public class FormAnggota extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
-        tblanggota.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblMember.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblanggotaMouseClicked(evt);
+                tblMemberMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblanggota);
-        if (tblanggota.getColumnModel().getColumnCount() > 0) {
-            tblanggota.getColumnModel().getColumn(0).setMinWidth(10);
-            tblanggota.getColumnModel().getColumn(1).setMinWidth(100);
-            tblanggota.getColumnModel().getColumn(2).setMinWidth(100);
-            tblanggota.getColumnModel().getColumn(3).setMinWidth(50);
-            tblanggota.getColumnModel().getColumn(4).setMaxWidth(50);
+        jScrollPane1.setViewportView(tblMember);
+        if (tblMember.getColumnModel().getColumnCount() > 0) {
+            tblMember.getColumnModel().getColumn(0).setMinWidth(10);
+            tblMember.getColumnModel().getColumn(1).setMinWidth(100);
+            tblMember.getColumnModel().getColumn(2).setMinWidth(100);
+            tblMember.getColumnModel().getColumn(3).setMinWidth(50);
+            tblMember.getColumnModel().getColumn(4).setMaxWidth(50);
         }
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -466,11 +439,11 @@ public class FormAnggota extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtkaryawanbaruMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtkaryawanbaruMouseClicked
+    private void txtAddMemberMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAddMemberMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new FormtambahKaryawan().setVisible(true);
-    }//GEN-LAST:event_txtkaryawanbaruMouseClicked
+        new FormtambahAnggota(mbr.getLastId(allMData)).setVisible(true);
+    }//GEN-LAST:event_txtAddMemberMouseClicked
 
     private void txtcariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtcariMouseClicked
         // TODO add your handling code here:
@@ -513,19 +486,19 @@ public class FormAnggota extends javax.swing.JFrame {
         new FormLaporan().setVisible(true);
     }//GEN-LAST:event_lblLaporanMouseClicked
 
-    private void txteditkaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txteditkaryawanMouseClicked
-        if(selectedEmployee!=null){
+    private void txtEditMemberMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtEditMemberMouseClicked
+        if(selMember!=null){
             this.setVisible(false);
-            new FormeditAnggota(selectedEmployee).setVisible(true);
+            new FormeditAnggota(selMember).setVisible(true);
         }
-        else JOptionPane.showMessageDialog(this, "Tidak ada karyawan yang dipilih.", "Alert", JOptionPane.WARNING_MESSAGE);
+        else JOptionPane.showMessageDialog(this, "Tidak ada anggota yang dipilih.", "Alert", JOptionPane.WARNING_MESSAGE);
         
-    }//GEN-LAST:event_txteditkaryawanMouseClicked
+    }//GEN-LAST:event_txtEditMemberMouseClicked
 
-    private void tblanggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblanggotaMouseClicked
-        selectedEmployee=tblanggota.getValueAt(tblanggota.getSelectedRow(),0).toString();
-        txtkuncicari.setText(selectedEmployee);
-    }//GEN-LAST:event_tblanggotaMouseClicked
+    private void tblMemberMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMemberMouseClicked
+        String selId=tblMember.getValueAt(tblMember.getSelectedRow(),0).toString();
+        selMember=mbr.getMember(allMData,Integer.parseInt(selId));        
+    }//GEN-LAST:event_tblMemberMouseClicked
 
     /**
      * @param args the command line arguments
@@ -588,11 +561,11 @@ public class FormAnggota extends javax.swing.JFrame {
     private javax.swing.JLabel lblKaryawan;
     private javax.swing.JLabel lblLaporan;
     private javax.swing.JLabel lblSuplier;
-    private javax.swing.JTable tblanggota;
+    private javax.swing.JTable tblMember;
+    private javax.swing.JLabel txtAddMember;
+    private javax.swing.JLabel txtEditMember;
     private javax.swing.JLabel txtbatal;
     private javax.swing.JLabel txtcari;
-    private javax.swing.JLabel txteditkaryawan;
-    private javax.swing.JLabel txtkaryawanbaru;
     private javax.swing.JTextField txtkuncicari;
     // End of variables declaration//GEN-END:variables
 
