@@ -6,8 +6,10 @@
 
 package supermarket.anggota;
 
+import javax.swing.JOptionPane;
 import supermarket.barang.FormBarang;
 import supermarket.jamkerja.FormJamKerja;
+import supermarket.karyawan.FormKaryawan;
 import supermarket.suplier.FormSuplier;
 
 /**
@@ -25,19 +27,17 @@ public class FormeditAnggota extends javax.swing.JFrame {
         setField(this.member);
     }
     
-    public void setField(String[] mData){
-       
+    public void setField(String[] mData){   
         txtIdMember.setText(mData[0]);         
-        txtnama.setText(mData[1]);
-        txtalamat.setText(mData[2]);
-        txtkota.setText(mData[3]);
-        txtnotelp.setText(mData[4]);         
-        }
+        txtName.setText(mData[1]);
+        txtAddr.setText(mData[2]);
+        txtCity.setText(mData[3]);
+        txtTelp.setText(mData[4]);         
+    }
     
-    private boolean checkEmptyField(){
+    private boolean isNameEmpty(String name){
         //Fungsi untuk mengembalikan nilai true jika ada field karyawan baru yang kosong
-        if(txtnama.getText().equals("")||txtalamat.getText().equals("")
-                ||txtkota.getText().equals("")||txtnotelp.getText().equals("")) return true;
+        if(name.equals("")) return true;
         else return false;
     }
    
@@ -417,11 +417,20 @@ public class FormeditAnggota extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseClicked
-            setField(); //Menyiapkan ulangsemua textfield jika tombol reset diklik
+            setField(this.member); //Menyiapkan ulangsemua textfield jika tombol reset diklik
     }//GEN-LAST:event_btnResetMouseClicked
 
     private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
-           
+           if(isNameEmpty(txtName.getText()))
+            JOptionPane.showMessageDialog(this, "Nama Anggota wajib diisi.");
+        else{
+            String[] editedMData=new String[]{txtIdMember.getText(), txtName.getText(), txtAddr.getText(), txtCity.getText(), txtTelp.getText()};
+            if(mbr.addMember(editedMData)){
+                JOptionPane.showMessageDialog(this, "Data member berhasil diedit.");
+                member=editedMData;
+                setField(member);
+            }else JOptionPane.showMessageDialog(this, "Data member gagal diedit.");
+        }  
     }//GEN-LAST:event_btnEditMouseClicked
 
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked

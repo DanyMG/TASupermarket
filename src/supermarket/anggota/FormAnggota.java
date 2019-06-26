@@ -11,7 +11,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import supermarket.barang.FormBarang;
 import supermarket.jamkerja.FormJamKerja;
-import supermarket.karyawan.FormtambahKaryawan;
 import supermarket.laporan.FormLaporan;
 import supermarket.suplier.FormSuplier;
 

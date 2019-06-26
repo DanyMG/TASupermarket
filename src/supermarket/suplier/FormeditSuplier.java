@@ -32,12 +32,6 @@ public class FormeditSuplier extends javax.swing.JFrame {
         txtkota.setText(sData[3]);
         txtnotelp.setText(sData[4]);
     }
-    public boolean checkEmptyField(){
-        //Fungsi untuk mengembalikan nilai true jika ada field karyawan baru yang kosong
-        if(txtnama.getText().equals("")||txtalamat.getText().equals("")
-                ||txtkota.getText().equals("")||txtnotelp.getText().equals("")) return true;
-        else return false;
-    }
     public boolean isNameEmpty(String nama){
         if(nama.equals("")) return true;
         else return false;
@@ -462,14 +456,13 @@ public class FormeditSuplier extends javax.swing.JFrame {
         if(isNameEmpty(txtnama.getText()))
             JOptionPane.showMessageDialog(this, "Nama suplier wajib diisi.");
         else{
-            String[] editedSData=new String[]{this.id, txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText()};
+            String[] editedSData=new String[]{txtidsuplier.getText(), txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText()};
             if(spl.addSuplier(editedSData)){
                 JOptionPane.showMessageDialog(this, "Data suplier berhasil diedit.");
                 suplier=editedSData;
                 setField(suplier);
             }else JOptionPane.showMessageDialog(this, "Data suplier gagal diedit.");
-        }
-        
+        }        
     }//GEN-LAST:event_btneditMouseClicked
 
     private void btnresetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMouseClicked

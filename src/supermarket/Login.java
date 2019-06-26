@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import supermarket.suplier.FormSuplier;
 
 /**
  *
@@ -113,7 +114,7 @@ public class Login extends javax.swing.JFrame {
                 if(RsUser.next()){
                     if(txtpass.getText().equals(RsUser.getString("pass"))){
                         this.setVisible(false);
-                        new Beranda().setVisible(true);
+                        new FormSuplier().setVisible(true);
                     }else JOptionPane.showMessageDialog(null, "Password salah!");
                 }else JOptionPane.showMessageDialog(null, "Username tidak tersedia");
             }catch(SQLException e){
@@ -133,7 +134,7 @@ public class Login extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

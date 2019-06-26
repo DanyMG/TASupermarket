@@ -81,4 +81,15 @@ public class Member {
         }        
         return member;
     }
+    public boolean editSuplier(String[] sData){        
+        try{
+            stm=con.createStatement();
+            stm.executeUpdate("UPDATE anggota SET nama_anggota = '"+sData[1]+"', almt_anggota = '"+sData[2]+"'"
+                    + ", notelp_anggota = '"+sData[3]+"' WHERE suplier.id_suplier = "+sData[0]+"");
+            return true;
+        }catch(SQLException e){
+            System.out.println("Error : "+e);
+            return false;
+        }
+    }
 }
