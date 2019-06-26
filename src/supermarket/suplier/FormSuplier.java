@@ -21,9 +21,9 @@ import supermarket.karyawan.FormKaryawan;
  */
 public class FormSuplier extends javax.swing.JFrame {
 
-    Suplier spl=new Suplier();
-    String[][] allSuplier=spl.getAllSuplier();
-    String[] selSuplier;
+    private Suplier spl=new Suplier();
+    private String[][] allSuplier=spl.getAllSuplier();
+    private String[] selSuplier;
     private TableRowSorter<TableModel> rowSorter;
     
     public FormSuplier() {

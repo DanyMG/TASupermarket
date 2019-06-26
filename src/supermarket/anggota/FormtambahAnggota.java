@@ -7,15 +7,11 @@
 package supermarket.anggota;
 
 import supermarket.karyawan.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import javax.swing.JOptionPane;
 import supermarket.FormAnggota;
 import supermarket.barang.FormBarang;
 import supermarket.jamkerja.FormJamKerja;
 import supermarket.suplier.FormSuplier;
-import supermarket.KoneksiMySQL;
 
 /**
  *
@@ -23,42 +19,26 @@ import supermarket.KoneksiMySQL;
  */
 public class FormtambahAnggota extends javax.swing.JFrame {
 
-    Connection con;
-    ResultSet RsKaryawan;
-    Statement stm; 
-    /** Creates new form FormKaryawan */
-    public FormtambahAnggota() {
+    Member mbr= new Member();
+    int id;
+    String[] member;
+            
+    public FormtambahAnggota(int lasId) {
         initComponents();
-        open_db();
+        id=lasId++;
         setField();
     }
-    private void open_db(){
-        try{
-            KoneksiMySQL kon= new KoneksiMySQL("localhost", "root", "", "supermarket");
-            con=kon.getConnection();
-        }
-        catch(Exception e){
-            System.out.println("Error : "+e);
-        }
-    }
-    private void setField(){
-        //Menyiapkan id karyawan baru
-        try{
-            stm=con.createStatement();
-            RsKaryawan=stm.executeQuery("select * from karyawan order by id_karyawan DESC");
-            if(RsKaryawan.next()){
-                String id=Integer.toString(RsKaryawan.getInt("id_karyawan")+1);
-                txtidkaryawan.setText(id);
-                
-            }else txtidkaryawan.setText("1");            
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, e);
-        }
-        //Mengkosongkan nama, alamat, kota, dan no telepon
+        
+    private void setField(int id){
+        txtidkaryawan.setText(Integer.toString(id));        
         txtnama.setText("");
         txtalamat.setText("");
         txtkota.setText("");
         txtnotelp.setText("");
+    }
+    public boolean isNameEmpty(){
+        if(txtnama.getText().equals("")) return true;
+        else return false;
     }
     private boolean isEditField(){
         //Fungsi untuk mengembalikan nilai true jika ada perubahan data
@@ -71,22 +51,7 @@ public class FormtambahAnggota extends javax.swing.JFrame {
         if(txtnama.getText().equals("")||txtalamat.getText().equals("")
                 ||txtkota.getText().equals("")||txtnotelp.getText().equals("")) return true;
         else return false;
-    }
-    private void addNewEmployee(String nama, String alamat, String kota, String no_telp){
-        //Prosedur untuk menambakan data karyawan baru ke database karyawan
-        try{
-            stm=con.createStatement();
-            stm.executeUpdate("INSERT INTO "
-                    + "karyawan(id_karyawan, nama_karyawan, almt_karyawan, kota_karyawan, notelp_karyawan) "
-                    + "VALUES (NULL,'"+nama+"', '"+alamat+"', '"+kota+"', '"+no_telp+"')");    
-            //Memberitahu jika penambahan karyawan baru berhasil
-            JOptionPane.showConfirmDialog(null, "Karyawan baru berhasil ditambahkan!", "Informasi", JOptionPane.DEFAULT_OPTION);
-            //Menyiapkan ulang textfield karyawan
-            setField();
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, e);
-        }
-    }
+    }    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -478,14 +443,19 @@ public class FormtambahAnggota extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnresetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMouseClicked
-            setField(); //Menyiapkan ulangsemua textfield jika tombol reset diklik
+            setField(this.id);
     }//GEN-LAST:event_btnresetMouseClicked
 
     private void btntambahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btntambahMouseClicked
-        if(checkEmptyField()) JOptionPane.showMessageDialog(this, "Tolong lengkapi data karyawan baru"); //Mengecek data kosong pada data karyawan baru
+        if(isNameEmpty()) JOptionPane.showMessageDialog(this, "Nama anggota wajib diisi.");
         else{
-            // Menambahkan karyawan baru ke database sesuai data yang diisikan
-            addNewEmployee(txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText());            
+            member=new String[]{Integer.toString(id),txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText(), "0"};
+            if(mbr.addMember(member)){
+                JOptionPane.showMessageDialog(this, "Data anggota berhasil ditambahkan.");
+                this.id++;
+                setField(id);
+            }
+            else JOptionPane.showMessageDialog(this, "Data anggota gagal ditambahkan.");
         }        
     }//GEN-LAST:event_btntambahMouseClicked
 

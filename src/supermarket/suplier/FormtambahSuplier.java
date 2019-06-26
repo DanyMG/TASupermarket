@@ -446,7 +446,7 @@ public class FormtambahSuplier extends javax.swing.JFrame {
                 this.id++;
                 setField(id);
             }
-            else JOptionPane.showMessageDialog(this, "Data suplier berhasil ditambahkan.");
+            else JOptionPane.showMessageDialog(this, "Data suplier gagal ditambahkan.");
         }        
     }//GEN-LAST:event_btntambahMouseClicked
 
