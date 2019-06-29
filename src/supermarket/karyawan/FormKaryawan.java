@@ -90,11 +90,10 @@ public class FormKaryawan extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jPanel10 = new javax.swing.JPanel();
         txtAddEmployee = new javax.swing.JLabel();
-        txtKeyWord = new javax.swing.JTextField();
-        lblSearch = new javax.swing.JLabel();
-        lblCancel = new javax.swing.JLabel();
         txtEditEmployee = new javax.swing.JLabel();
         txtDelEmployee = new javax.swing.JLabel();
+        txtKeyWord = new javax.swing.JTextField();
+        txtCari = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblkaryawan = new javax.swing.JTable();
 
@@ -308,21 +307,6 @@ public class FormKaryawan extends javax.swing.JFrame {
             }
         });
 
-        lblSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_11_Search_106236.png"))); // NOI18N
-        lblSearch.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblSearchMouseClicked(evt);
-            }
-        });
-
-        lblCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_Delete_1493279.png"))); // NOI18N
-        lblCancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblCancelMouseClicked(evt);
-            }
-        });
-
         txtEditEmployee.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtEditEmployee.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new-24_103173.png"))); // NOI18N
         txtEditEmployee.setText("Edit Karyawan");
@@ -341,6 +325,20 @@ public class FormKaryawan extends javax.swing.JFrame {
             }
         });
 
+        txtKeyWord.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtKeyWordKeyReleased(evt);
+            }
+        });
+
+        txtCari.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCari.setText("Cari :");
+        txtCari.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCariMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -351,27 +349,20 @@ public class FormKaryawan extends javax.swing.JFrame {
                 .addComponent(txtEditEmployee)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDelEmployee)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 229, Short.MAX_VALUE)
+                .addComponent(txtCari)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblSearch)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblCancel)
-                .addGap(0, 214, Short.MAX_VALUE))
+                .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(txtAddEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(txtEditEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtDelEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(lblCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(lblSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(txtDelEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCari)))
         );
 
         jToolBar1.add(jPanel10);
@@ -447,14 +438,6 @@ public class FormKaryawan extends javax.swing.JFrame {
         new FormtambahKaryawan(empl.getLastId(allEmployeeData)).setVisible(true);
     }//GEN-LAST:event_txtAddEmployeeMouseClicked
 
-    private void lblSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSearchMouseClicked
-        if(txtKeyWord.getText().equals("")) tblkaryawan.setRowSorter(null);
-        else{
-            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtKeyWord.getText()));
-            tblkaryawan.setRowSorter(rowSorter);
-        }        
-    }//GEN-LAST:event_lblSearchMouseClicked
-
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
         this.setVisible(false);
         new FormSuplier().setVisible(true);
@@ -493,10 +476,6 @@ public class FormKaryawan extends javax.swing.JFrame {
         selEmployeeData=empl.getEmployee(allEmployeeData, Integer.parseInt(tblkaryawan.getValueAt(tblkaryawan.getSelectedRow(), 0).toString()));
     }//GEN-LAST:event_tblkaryawanMouseClicked
 
-    private void lblCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCancelMouseClicked
-        tblkaryawan.setRowSorter(null);
-    }//GEN-LAST:event_lblCancelMouseClicked
-
     private void txtDelEmployeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDelEmployeeMouseClicked
         if(selEmployeeData!=null){
             if(empl.delEmployee(selEmployeeData)){
@@ -508,6 +487,18 @@ public class FormKaryawan extends javax.swing.JFrame {
         }
         else JOptionPane.showMessageDialog(this, "Tidak ada karyawan yang dipilih.", "Alert", JOptionPane.WARNING_MESSAGE);        
     }//GEN-LAST:event_txtDelEmployeeMouseClicked
+
+    private void txtKeyWordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyWordKeyReleased
+        if(txtKeyWord.getText().equals("")) tblkaryawan.setRowSorter(null);
+        else{
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtKeyWord.getText()));
+            tblkaryawan.setRowSorter(rowSorter);
+        }
+    }//GEN-LAST:event_txtKeyWordKeyReleased
+
+    private void txtCariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCariMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCariMouseClicked
 
     /**
      * @param args the command line arguments
@@ -559,14 +550,13 @@ public class FormKaryawan extends javax.swing.JFrame {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblAnggota;
     private javax.swing.JLabel lblBarang;
-    private javax.swing.JLabel lblCancel;
     private javax.swing.JLabel lblJamKerja;
     private javax.swing.JLabel lblKaryawan;
     private javax.swing.JLabel lblLaporan;
-    private javax.swing.JLabel lblSearch;
     private javax.swing.JLabel lblSuplier;
     private javax.swing.JTable tblkaryawan;
     private javax.swing.JLabel txtAddEmployee;
+    private javax.swing.JLabel txtCari;
     private javax.swing.JLabel txtDelEmployee;
     private javax.swing.JLabel txtEditEmployee;
     private javax.swing.JTextField txtKeyWord;

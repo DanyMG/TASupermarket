@@ -6,15 +6,17 @@
 
 package supermarket.jamkerja;
 
-import supermarket.FormtambahSuplier;
-
+import javax.swing.RowFilter;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import supermarket.suplier.FormSuplier;
 /**
  *
  * @author DanyMG
  */
 public class FormJamKerja extends javax.swing.JFrame {
 
-    /** Creates new form FormKaryawan */
+    private TableRowSorter<TableModel> rowSorter;
     public FormJamKerja() {
         initComponents();
     }
@@ -49,7 +51,7 @@ public class FormJamKerja extends javax.swing.JFrame {
         txtKeyWord = new javax.swing.JTextField();
         txtCari = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblShiftWork = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -290,7 +292,7 @@ public class FormJamKerja extends javax.swing.JFrame {
 
         jToolBar1.add(jPanel10);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblShiftWork.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -301,7 +303,7 @@ public class FormJamKerja extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblShiftWork);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -347,14 +349,14 @@ public class FormJamKerja extends javax.swing.JFrame {
     private void txtsuplierbaruMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtsuplierbaruMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new FormtambahSuplier().setVisible(true);
+        new FormSuplier().setVisible(true);
     }//GEN-LAST:event_txtsuplierbaruMouseClicked
 
     private void txtKeyWordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyWordKeyReleased
-        if(txtKeyWord.getText().equals("")) tblsuplier.setRowSorter(null);
+        if(txtKeyWord.getText().equals("")) tblShiftWork.setRowSorter(null);
         else{
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtKeyWord.getText()));
-            tblsuplier.setRowSorter(rowSorter);
+            tblShiftWork.setRowSorter(rowSorter);
         }
     }//GEN-LAST:event_txtKeyWordKeyReleased
 
@@ -416,8 +418,8 @@ public class FormJamKerja extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTable tblShiftWork;
     private javax.swing.JLabel txtCari;
     private javax.swing.JTextField txtKeyWord;
     private javax.swing.JLabel txtsuplierbaru;
