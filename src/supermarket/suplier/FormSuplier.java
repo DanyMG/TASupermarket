@@ -13,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import supermarket.anggota.FormAnggota;
+import supermarket.jamkerja.FormJamKerja2;
 import supermarket.karyawan.FormKaryawan;
 
 /**
@@ -70,17 +72,17 @@ public class FormSuplier extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         Psamping = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        lblsuplier = new javax.swing.JLabel();
+        lblSuplier = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        lblbarang = new javax.swing.JLabel();
+        lblBarang = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        lblkaryawan = new javax.swing.JLabel();
+        lblKaryawan = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
-        lblanggota = new javax.swing.JLabel();
+        lblAnggota = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        lbllaporan = new javax.swing.JLabel();
+        lblLaporan = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
-        lbljamkerja = new javax.swing.JLabel();
+        lblJamKerja = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jPanel10 = new javax.swing.JPanel();
@@ -101,33 +103,38 @@ public class FormSuplier extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(52, 17, 9));
 
-        lblsuplier.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblsuplier.setForeground(new java.awt.Color(254, 151, 114));
-        lblsuplier.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblsuplier.setText("Suplier");
+        lblSuplier.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblSuplier.setForeground(new java.awt.Color(254, 151, 114));
+        lblSuplier.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSuplier.setText("Suplier");
+        lblSuplier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSuplierMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblsuplier, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(lblSuplier, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(lblsuplier, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblSuplier, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(254, 151, 114));
 
-        lblbarang.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblbarang.setForeground(new java.awt.Color(52, 17, 9));
-        lblbarang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblbarang.setText("Barang");
-        lblbarang.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblBarang.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblBarang.setForeground(new java.awt.Color(52, 17, 9));
+        lblBarang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBarang.setText("Barang");
+        lblBarang.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblbarangMouseClicked(evt);
+                lblBarangMouseClicked(evt);
             }
         });
 
@@ -135,24 +142,24 @@ public class FormSuplier extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(lblBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(lblbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel6.setBackground(new java.awt.Color(254, 151, 114));
 
-        lblkaryawan.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblkaryawan.setForeground(new java.awt.Color(52, 17, 9));
-        lblkaryawan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblkaryawan.setText("Karyawan");
-        lblkaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblKaryawan.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblKaryawan.setForeground(new java.awt.Color(52, 17, 9));
+        lblKaryawan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblKaryawan.setText("Karyawan");
+        lblKaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblkaryawanMouseClicked(evt);
+                lblKaryawanMouseClicked(evt);
             }
         });
 
@@ -160,21 +167,26 @@ public class FormSuplier extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(lblKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(lblkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel7.setBackground(new java.awt.Color(254, 151, 114));
 
-        lblanggota.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblanggota.setForeground(new java.awt.Color(52, 17, 9));
-        lblanggota.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblanggota.setText("Anggota");
+        lblAnggota.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblAnggota.setForeground(new java.awt.Color(52, 17, 9));
+        lblAnggota.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAnggota.setText("Anggota");
+        lblAnggota.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAnggotaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -182,27 +194,21 @@ public class FormSuplier extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 160, Short.MAX_VALUE)
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(lblanggota)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(lblAnggota, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 75, Short.MAX_VALUE)
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(lblanggota)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(lblAnggota, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
         );
 
         jPanel8.setBackground(new java.awt.Color(254, 151, 114));
 
-        lbllaporan.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lbllaporan.setForeground(new java.awt.Color(52, 17, 9));
-        lbllaporan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbllaporan.setText("Laporan");
+        lblLaporan.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblLaporan.setForeground(new java.awt.Color(52, 17, 9));
+        lblLaporan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLaporan.setText("Laporan");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -210,27 +216,26 @@ public class FormSuplier extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 160, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(lbllaporan)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(lblLaporan, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 75, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(lbllaporan)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(lblLaporan, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
         );
 
         jPanel9.setBackground(new java.awt.Color(254, 151, 114));
 
-        lbljamkerja.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lbljamkerja.setForeground(new java.awt.Color(52, 17, 9));
-        lbljamkerja.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbljamkerja.setText("Jam Kerja");
+        lblJamKerja.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblJamKerja.setForeground(new java.awt.Color(52, 17, 9));
+        lblJamKerja.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblJamKerja.setText("Jam Kerja");
+        lblJamKerja.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblJamKerjaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -238,19 +243,13 @@ public class FormSuplier extends javax.swing.JFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 160, Short.MAX_VALUE)
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel9Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(lbljamkerja)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(lblJamKerja, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 75, Short.MAX_VALUE)
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel9Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(lbljamkerja)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(lblJamKerja, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout PsampingLayout = new javax.swing.GroupLayout(Psamping);
@@ -442,19 +441,33 @@ public class FormSuplier extends javax.swing.JFrame {
         selSuplier=spl.getSuplier(allSuplier, id);
     }//GEN-LAST:event_tblsuplierMouseClicked
 
-    private void lblbarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblbarangMouseClicked
+    private void lblBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBarangMouseClicked
         this.setVisible(false);
         new FormBarang().setVisible(true);
-    }//GEN-LAST:event_lblbarangMouseClicked
+    }//GEN-LAST:event_lblBarangMouseClicked
 
-    private void lblkaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblkaryawanMouseClicked
+    private void lblKaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKaryawanMouseClicked
         this.setVisible(false);
         new FormKaryawan().setVisible(true);
-    }//GEN-LAST:event_lblkaryawanMouseClicked
+    }//GEN-LAST:event_lblKaryawanMouseClicked
 
     private void lblCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCancelMouseClicked
         tblsuplier.setRowSorter(null);
     }//GEN-LAST:event_lblCancelMouseClicked
+
+    private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblSuplierMouseClicked
+
+    private void lblJamKerjaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblJamKerjaMouseClicked
+        this.setVisible(false);
+        new FormJamKerja2().setVisible(true);
+    }//GEN-LAST:event_lblJamKerjaMouseClicked
+
+    private void lblAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnggotaMouseClicked
+        this.setVisible(false);
+        new FormAnggota().setVisible(true);
+    }//GEN-LAST:event_lblAnggotaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -505,14 +518,14 @@ public class FormSuplier extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lblAnggota;
+    private javax.swing.JLabel lblBarang;
     private javax.swing.JLabel lblCancel;
+    private javax.swing.JLabel lblJamKerja;
+    private javax.swing.JLabel lblKaryawan;
+    private javax.swing.JLabel lblLaporan;
     private javax.swing.JLabel lblSearch;
-    private javax.swing.JLabel lblanggota;
-    private javax.swing.JLabel lblbarang;
-    private javax.swing.JLabel lbljamkerja;
-    private javax.swing.JLabel lblkaryawan;
-    private javax.swing.JLabel lbllaporan;
-    private javax.swing.JLabel lblsuplier;
+    private javax.swing.JLabel lblSuplier;
     private javax.swing.JTable tblsuplier;
     private javax.swing.JLabel txtAddSuplier;
     private javax.swing.JLabel txtEditSuplier;
