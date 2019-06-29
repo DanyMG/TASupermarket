@@ -6,15 +6,15 @@
 
 package supermarket.barang;
 
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import supermarket.anggota.FormAnggota;
-import supermarket.jamkerja.FormJamKerja;
 import supermarket.jamkerja.FormJamKerja2;
 import supermarket.karyawan.FormKaryawan;
 import supermarket.suplier.FormSuplier;
-import supermarket.suplier.FormtambahSuplier;
-//import supermarket.FormtambahSuplier;
 
 /**
  *
@@ -24,7 +24,9 @@ public class FormBarang extends javax.swing.JFrame {
 
     Goods brg=new Goods();
     String[][] allGoods= brg.getAllGoods();
-    /** Creates new form FormKaryawan */
+    String[] selGood;
+    private TableRowSorter<TableModel> rowSorter;
+    
     public FormBarang() {
         initComponents();
         setTable(allGoods);
@@ -47,10 +49,10 @@ public class FormBarang extends javax.swing.JFrame {
     public void setTable(String[][] data){
         DefaultTableModel table= new DefaultTableModel();
         setColumnTable(table);
-        jTable1.setModel(table);        
-        TableColumnModel columnModel=jTable1.getColumnModel();
+        tblGoods.setModel(table);        
+        TableColumnModel columnModel=tblGoods.getColumnModel();
         setColumnModel(columnModel);        
-        jTable1.setColumnModel(columnModel);        
+        tblGoods.setColumnModel(columnModel);        
         for (String[] data1 : data) {            
             
                 table.addRow(new Object[]{data1[0], data1[1], data1[2], data1[3], data1[4]});                
@@ -92,7 +94,7 @@ public class FormBarang extends javax.swing.JFrame {
         txtKeyWord = new javax.swing.JTextField();
         txtCari = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblGoods = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -381,7 +383,7 @@ public class FormBarang extends javax.swing.JFrame {
 
         jToolBar1.add(jPanel10);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblGoods.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -392,7 +394,7 @@ public class FormBarang extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblGoods);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -486,10 +488,10 @@ public class FormBarang extends javax.swing.JFrame {
     }//GEN-LAST:event_lblAnggotaMouseClicked
 
     private void txtKeyWordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyWordKeyReleased
-        if(txtKeyWord.getText().equals("")) tblsuplier.setRowSorter(null);
+        if(txtKeyWord.getText().equals("")) tblGoods.setRowSorter(null);
         else{
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtKeyWord.getText()));
-            tblsuplier.setRowSorter(rowSorter);
+            tblGoods.setRowSorter(rowSorter);
         }
     }//GEN-LAST:event_txtKeyWordKeyReleased
 
@@ -546,13 +548,13 @@ public class FormBarang extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblAnggota;
     private javax.swing.JLabel lblJamKerja;
     private javax.swing.JLabel lblKaryawan;
     private javax.swing.JLabel lblLaporan;
     private javax.swing.JLabel lblSuplier;
+    private javax.swing.JTable tblGoods;
     private javax.swing.JLabel txtAddGood;
     private javax.swing.JLabel txtBookGood;
     private javax.swing.JLabel txtCari;

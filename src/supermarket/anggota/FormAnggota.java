@@ -7,8 +7,11 @@
 package supermarket.anggota;
 
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import supermarket.barang.FormBarang;
 import supermarket.jamkerja.FormJamKerja;
 import supermarket.laporan.FormLaporan;
@@ -23,6 +26,7 @@ public class FormAnggota extends javax.swing.JFrame {
     private Member mbr=new Member();
     private String[][] allMData=mbr.getAllMember();
     private String[] selMember;
+    private TableRowSorter<TableModel> rowSorter;
     
     public FormAnggota() {
         initComponents();
@@ -465,10 +469,10 @@ public class FormAnggota extends javax.swing.JFrame {
     }//GEN-LAST:event_tblMemberMouseClicked
 
     private void txtKeyWordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyWordKeyReleased
-        if(txtKeyWord.getText().equals("")) tblsuplier.setRowSorter(null);
+        if(txtKeyWord.getText().equals("")) tblMember.setRowSorter(null);
         else{
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtKeyWord.getText()));
-            tblsuplier.setRowSorter(rowSorter);
+            tblMember.setRowSorter(rowSorter);
         }
     }//GEN-LAST:event_txtKeyWordKeyReleased
 
