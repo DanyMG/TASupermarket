@@ -85,13 +85,12 @@ public class FormBarang extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jPanel10 = new javax.swing.JPanel();
         txtAddGood = new javax.swing.JLabel();
-        txtkuncicari = new javax.swing.JTextField();
-        txtcari = new javax.swing.JLabel();
-        txtbatal = new javax.swing.JLabel();
         txtEditGood = new javax.swing.JLabel();
         txtBookGood = new javax.swing.JLabel();
         txtSellGood = new javax.swing.JLabel();
         txtRemoveGood = new javax.swing.JLabel();
+        txtKeyWord = new javax.swing.JTextField();
+        txtCari = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -298,16 +297,6 @@ public class FormBarang extends javax.swing.JFrame {
             }
         });
 
-        txtcari.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtcari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_11_Search_106236.png"))); // NOI18N
-        txtcari.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtcariMouseClicked(evt);
-            }
-        });
-
-        txtbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_Delete_1493279.png"))); // NOI18N
-
         txtEditGood.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtEditGood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new-24_103173.png"))); // NOI18N
         txtEditGood.setText("Edit Barang");
@@ -344,6 +333,20 @@ public class FormBarang extends javax.swing.JFrame {
             }
         });
 
+        txtKeyWord.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtKeyWordKeyReleased(evt);
+            }
+        });
+
+        txtCari.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCari.setText("Cari :");
+        txtCari.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCariMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -358,29 +361,22 @@ public class FormBarang extends javax.swing.JFrame {
                 .addComponent(txtSellGood)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtRemoveGood)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addComponent(txtCari)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtcari)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtbatal)
-                .addGap(0, 96, Short.MAX_VALUE))
+                .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(txtAddGood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(txtEditGood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtBookGood)
                 .addComponent(txtSellGood)
-                .addComponent(txtRemoveGood))
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtbatal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(txtRemoveGood)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCari)))
         );
 
         jToolBar1.add(jPanel10);
@@ -445,12 +441,6 @@ public class FormBarang extends javax.swing.JFrame {
         new FormBarangBaru2(brg.getLastId(allGoods)).setVisible(true);
     }//GEN-LAST:event_txtAddGoodMouseClicked
 
-    private void txtcariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtcariMouseClicked
-        // TODO add your handling code here:
-       
-
-    }//GEN-LAST:event_txtcariMouseClicked
-
     private void txtEditGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtEditGoodMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
@@ -494,6 +484,18 @@ public class FormBarang extends javax.swing.JFrame {
         this.setVisible(false);
         new FormAnggota().setVisible(true);
     }//GEN-LAST:event_lblAnggotaMouseClicked
+
+    private void txtKeyWordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyWordKeyReleased
+        if(txtKeyWord.getText().equals("")) tblsuplier.setRowSorter(null);
+        else{
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtKeyWord.getText()));
+            tblsuplier.setRowSorter(rowSorter);
+        }
+    }//GEN-LAST:event_txtKeyWordKeyReleased
+
+    private void txtCariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCariMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCariMouseClicked
 
     /**
      * @param args the command line arguments
@@ -553,12 +555,11 @@ public class FormBarang extends javax.swing.JFrame {
     private javax.swing.JLabel lblSuplier;
     private javax.swing.JLabel txtAddGood;
     private javax.swing.JLabel txtBookGood;
+    private javax.swing.JLabel txtCari;
     private javax.swing.JLabel txtEditGood;
+    private javax.swing.JTextField txtKeyWord;
     private javax.swing.JLabel txtRemoveGood;
     private javax.swing.JLabel txtSellGood;
-    private javax.swing.JLabel txtbatal;
-    private javax.swing.JLabel txtcari;
-    private javax.swing.JTextField txtkuncicari;
     // End of variables declaration//GEN-END:variables
 
 }
