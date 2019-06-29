@@ -83,12 +83,11 @@ public class FormAnggota extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jPanel10 = new javax.swing.JPanel();
         txtAddMember = new javax.swing.JLabel();
-        txtkuncicari = new javax.swing.JTextField();
-        txtcari = new javax.swing.JLabel();
-        txtbatal = new javax.swing.JLabel();
         txtEditMember = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMember = new javax.swing.JTable();
+        txtCari = new javax.swing.JLabel();
+        txtKeyWord = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -298,16 +297,6 @@ public class FormAnggota extends javax.swing.JFrame {
             }
         });
 
-        txtcari.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtcari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_11_Search_106236.png"))); // NOI18N
-        txtcari.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtcariMouseClicked(evt);
-            }
-        });
-
-        txtbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_Delete_1493279.png"))); // NOI18N
-
         txtEditMember.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtEditMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new-24_103173.png"))); // NOI18N
         txtEditMember.setText("Edit Anggota");
@@ -325,26 +314,13 @@ public class FormAnggota extends javax.swing.JFrame {
                 .addComponent(txtAddMember)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtEditMember)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtcari)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtbatal)
-                .addGap(0, 353, Short.MAX_VALUE))
+                .addContainerGap(370, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(txtAddMember, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(txtEditMember, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtbatal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jToolBar1.add(jPanel10);
@@ -374,6 +350,20 @@ public class FormAnggota extends javax.swing.JFrame {
             tblMember.getColumnModel().getColumn(4).setMaxWidth(50);
         }
 
+        txtCari.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCari.setText("Cari :");
+        txtCari.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCariMouseClicked(evt);
+            }
+        });
+
+        txtKeyWord.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtKeyWordKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -381,7 +371,12 @@ public class FormAnggota extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCari)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -389,7 +384,11 @@ public class FormAnggota extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCari)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
                 .addContainerGap())
@@ -420,11 +419,6 @@ public class FormAnggota extends javax.swing.JFrame {
         this.setVisible(false);
         new FormtambahAnggota(mbr.getLastId(allMData)).setVisible(true);
     }//GEN-LAST:event_txtAddMemberMouseClicked
-
-    private void txtcariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtcariMouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtcariMouseClicked
 
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
         // TODO add your handling code here:
@@ -469,6 +463,18 @@ public class FormAnggota extends javax.swing.JFrame {
         String selId=tblMember.getValueAt(tblMember.getSelectedRow(),0).toString();
         selMember=mbr.getMember(allMData,Integer.parseInt(selId));        
     }//GEN-LAST:event_tblMemberMouseClicked
+
+    private void txtKeyWordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyWordKeyReleased
+        if(txtKeyWord.getText().equals("")) tblsuplier.setRowSorter(null);
+        else{
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtKeyWord.getText()));
+            tblsuplier.setRowSorter(rowSorter);
+        }
+    }//GEN-LAST:event_txtKeyWordKeyReleased
+
+    private void txtCariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCariMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCariMouseClicked
 
     /**
      * @param args the command line arguments
@@ -533,10 +539,9 @@ public class FormAnggota extends javax.swing.JFrame {
     private javax.swing.JLabel lblSuplier;
     private javax.swing.JTable tblMember;
     private javax.swing.JLabel txtAddMember;
+    private javax.swing.JLabel txtCari;
     private javax.swing.JLabel txtEditMember;
-    private javax.swing.JLabel txtbatal;
-    private javax.swing.JLabel txtcari;
-    private javax.swing.JTextField txtkuncicari;
+    private javax.swing.JTextField txtKeyWord;
     // End of variables declaration//GEN-END:variables
 
 }

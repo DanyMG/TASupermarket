@@ -46,9 +46,8 @@ public class FormJamKerja extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jPanel10 = new javax.swing.JPanel();
         txtsuplierbaru = new javax.swing.JLabel();
-        txtkuncicari = new javax.swing.JTextField();
-        txtcari = new javax.swing.JLabel();
-        txtbatal = new javax.swing.JLabel();
+        txtKeyWord = new javax.swing.JTextField();
+        txtCari = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -253,15 +252,19 @@ public class FormJamKerja extends javax.swing.JFrame {
             }
         });
 
-        txtcari.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtcari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_11_Search_106236.png"))); // NOI18N
-        txtcari.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtcariMouseClicked(evt);
+        txtKeyWord.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtKeyWordKeyReleased(evt);
             }
         });
 
-        txtbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_Delete_1493279.png"))); // NOI18N
+        txtCari.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCari.setText("Cari :");
+        txtCari.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCariMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -269,25 +272,20 @@ public class FormJamKerja extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(txtsuplierbaru)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 471, Short.MAX_VALUE)
+                .addComponent(txtCari)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtcari)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtbatal)
-                .addGap(0, 450, Short.MAX_VALUE))
+                .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtsuplierbaru, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtkuncicari, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtbatal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtsuplierbaru)
+                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCari)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jToolBar1.add(jPanel10);
@@ -352,10 +350,17 @@ public class FormJamKerja extends javax.swing.JFrame {
         new FormtambahSuplier().setVisible(true);
     }//GEN-LAST:event_txtsuplierbaruMouseClicked
 
-    private void txtcariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtcariMouseClicked
-        // TODO add your handling code here:
+    private void txtKeyWordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyWordKeyReleased
+        if(txtKeyWord.getText().equals("")) tblsuplier.setRowSorter(null);
+        else{
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtKeyWord.getText()));
+            tblsuplier.setRowSorter(rowSorter);
+        }
+    }//GEN-LAST:event_txtKeyWordKeyReleased
 
-    }//GEN-LAST:event_txtcariMouseClicked
+    private void txtCariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCariMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCariMouseClicked
 
     /**
      * @param args the command line arguments
@@ -413,9 +418,8 @@ public class FormJamKerja extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JLabel txtbatal;
-    private javax.swing.JLabel txtcari;
-    private javax.swing.JTextField txtkuncicari;
+    private javax.swing.JLabel txtCari;
+    private javax.swing.JTextField txtKeyWord;
     private javax.swing.JLabel txtsuplierbaru;
     // End of variables declaration//GEN-END:variables
 

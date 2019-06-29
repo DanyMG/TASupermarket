@@ -14,7 +14,6 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import supermarket.anggota.FormAnggota;
 import supermarket.barang.FormBarang;
-import supermarket.jamkerja.FormJamKerja;
 import supermarket.jamkerja.FormJamKerja2;
 import supermarket.laporan.FormLaporan;
 import supermarket.suplier.FormSuplier;
