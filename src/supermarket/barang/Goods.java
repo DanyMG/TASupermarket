@@ -69,7 +69,7 @@ public class Goods {
             stm=con.createStatement();
             stm.executeUpdate("INSERT INTO "
                     + "barang(id_barang, nama_barang, jumlah, harga_beli, harga_jual) "
-                    + "VALUES (NULL,'"+newEData[1]+"', '"+newEData[2]+"', '"+newEData[3]+"', '"+newEData[4]+"'");
+                    + "VALUES (NULL,'"+newEData[1]+"', '"+newEData[2]+"', '"+newEData[3]+"', '"+newEData[4]+"')");
             return true;
         }catch(SQLException e){
             System.out.println("Error : "+e);
@@ -87,6 +87,20 @@ public class Goods {
             return true;
         }catch(SQLException e){
             System.out.println("Error : "+e);
+            return false;
+        }
+    }
+    public boolean discardGoods(String[] discard,String[] goods){
+        int jml=Integer.parseInt(goods[2])-Integer.parseInt(discard[4]);
+        try{
+            stm=con.createStatement();
+            stm.executeUpdate("INSERT INTO "
+                    + "pembuangan (id_pembuangan, id_barang, id_karyawan, tgl_pembuangan, jml_buang, ket_pembuangan) "
+                    + "VALUES (NULL,'"+discard[1]+"', '"+discard[2]+"', '"+discard[3]+"', '"+discard[4]+"', '"+discard[5]+"')");
+            stm.executeUpdate("UPDATE barang SET jumlah= '"+jml+"' WHERE barang.id_barang = "+goods[0]+"");
+            return true;
+        }catch(SQLException e){
+            System.out.println("Error discard : "+e);
             return false;
         }
     }
