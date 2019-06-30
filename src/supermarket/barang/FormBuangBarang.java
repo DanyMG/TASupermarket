@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import supermarket.FormAnggota;
 import supermarket.barang.FormBarang;
 import supermarket.jamkerja.FormJamKerja;
@@ -23,15 +25,30 @@ import supermarket.KoneksiMySQL;
  * @author DanyMG
  */
 public class FormBuangBarang extends javax.swing.JFrame {
-
+/*
+    Data barang dari form barang
+    Data Karyawan dari database
+    Setelah siap textfield automatis mengambil dari data barang
+    set table karyawan
+    set ID&nama karyawan dari table karyawan
+    text ID&nama karyawan seperti fungsi search 
+    */
     Connection con;
     ResultSet RsKaryawan;
     Statement stm; 
+    String[] selGoods;
+    private Employee empl= new Employee();
+    private String [][]allEmployeeData=empl.getAllEmployee();
+    private String[] selEmployeeData;
+    private TableRowSorter<TableModel> rowSorter;
     /** Creates new form FormKaryawan */
-    public FormBuangBarang() {
+    public FormBuangBarang(String[] selGoods) {
+        this.selGoods=selGoods;
         initComponents();
         open_db();
         setField();
+        setTable(allEmployeeData);
+        rowSorter=new TableRowSorter<>(tblkaryawan.getModel());
     }
     private void open_db(){
         try{
@@ -130,7 +147,7 @@ public class FormBuangBarang extends javax.swing.JFrame {
         txtbuang = new javax.swing.JTextField();
         txtjmlbuang = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblGoods = new javax.swing.JTable();
+        tblkaryawan = new javax.swing.JTable();
         txtidkaryawan1 = new javax.swing.JTextField();
         txtidkaryawan2 = new javax.swing.JTextField();
 
@@ -426,7 +443,7 @@ public class FormBuangBarang extends javax.swing.JFrame {
 
         txtjmlbuang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        tblGoods.setModel(new javax.swing.table.DefaultTableModel(
+        tblkaryawan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -437,12 +454,12 @@ public class FormBuangBarang extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblGoods.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblkaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblGoodsMouseClicked(evt);
+                tblkaryawanMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblGoods);
+        jScrollPane1.setViewportView(tblkaryawan);
 
         txtidkaryawan1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -619,9 +636,9 @@ public class FormBuangBarang extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtidbarangActionPerformed
 
-    private void tblGoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGoodsMouseClicked
-        selGood=brg.getGoods(allGoods, Integer.parseInt(tblGoods.getValueAt(tblGoods.getSelectedRow(), 0).toString()));
-    }//GEN-LAST:event_tblGoodsMouseClicked
+    private void tblkaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblkaryawanMouseClicked
+        selGood=brg.getGoods(allGoods, Integer.parseInt(tblkaryawan.getValueAt(tblkaryawan.getSelectedRow(), 0).toString()));
+    }//GEN-LAST:event_tblkaryawanMouseClicked
     
     /**
      * @param args the command line arguments
@@ -943,7 +960,7 @@ public class FormBuangBarang extends javax.swing.JFrame {
     private javax.swing.JLabel lblkembali;
     private javax.swing.JLabel lblkota;
     private javax.swing.JLabel lblnmkaryawan;
-    private javax.swing.JTable tblGoods;
+    private javax.swing.JTable tblkaryawan;
     private javax.swing.JTextField txtbuang;
     private javax.swing.JTextField txtidbarang;
     private javax.swing.JTextField txtidkaryawan;
