@@ -48,6 +48,16 @@ public class Goods {
         }
         return employee;
     }
+    public String[] getGoods(String[][] allGoods, int id){
+        String[] goods= new String[6];
+        for(String[] item:allGoods){
+            if(Integer.parseInt(item[0])==id){
+                goods=item;
+                break;
+            }
+        }        
+        return goods;
+    }
     public int countRowRs(ResultSet rs) throws SQLException{
         rs.last();
         int count=rs.getRow();
@@ -68,5 +78,16 @@ public class Goods {
     }
     public int getLastId(String[][] eData){             
         return Integer.parseInt(eData[eData.length-1][0]);
+    }
+    public boolean editGoods(String[] goods){
+        try{
+            stm=con.createStatement();
+            stm.executeUpdate("UPDATE barang SET nama_barang = '"+goods[1]+"', harga_beli = '"+goods[3]+"',"
+                    + " harga_jual = '"+goods[4]+"' WHERE barang.id_barang = "+goods[0]+"");
+            return true;
+        }catch(SQLException e){
+            System.out.println("Error : "+e);
+            return false;
+        }
     }
 }
