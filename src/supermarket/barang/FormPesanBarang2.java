@@ -22,13 +22,13 @@ import supermarket.KoneksiMySQL;
  *
  * @author DanyMG
  */
-public class FormBuangBarang extends javax.swing.JFrame {
+public class FormPesanBarang2 extends javax.swing.JFrame {
 
     Connection con;
     ResultSet RsKaryawan;
     Statement stm; 
     /** Creates new form FormKaryawan */
-    public FormBuangBarang() {
+    public FormPesanBarang2() {
         initComponents();
         open_db();
         setField();
@@ -121,18 +121,20 @@ public class FormBuangBarang extends javax.swing.JFrame {
         btntambah = new javax.swing.JToggleButton();
         btnreset = new javax.swing.JToggleButton();
         lblkembali = new javax.swing.JLabel();
+        cbnmBarang = new javax.swing.JComboBox<>();
+        cbnmKaryawan = new javax.swing.JComboBox<>();
+        cbnmSuplier1 = new javax.swing.JComboBox<>();
+        txtidpemesanan = new javax.swing.JTextField();
         txtidbarang = new javax.swing.JTextField();
         txtidkaryawan = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtidsuplier = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         datetglpesan = new com.toedter.calendar.JDateChooser();
         jLabel12 = new javax.swing.JLabel();
-        txtbuang = new javax.swing.JTextField();
-        txtjmlbuang = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblGoods = new javax.swing.JTable();
-        txtidkaryawan1 = new javax.swing.JTextField();
-        txtidkaryawan2 = new javax.swing.JTextField();
+        txtjmlpemesanan = new javax.swing.JTextField();
 
         cbnmSuplier.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cbnmSuplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Suplier" }));
@@ -357,10 +359,10 @@ public class FormBuangBarang extends javax.swing.JFrame {
         lblTambKaryawan.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblTambKaryawan.setForeground(new java.awt.Color(253, 77, 12));
         lblTambKaryawan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTambKaryawan.setText("Pembuangan Barang");
+        lblTambKaryawan.setText("Pemesanan Barang");
 
         lblidkaryawan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblidkaryawan.setText("ID Pembuangan");
+        lblidkaryawan.setText("ID Pemesanan");
 
         lblnmkaryawan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblnmkaryawan.setText("ID Barang");
@@ -372,7 +374,7 @@ public class FormBuangBarang extends javax.swing.JFrame {
         lblkota.setText("ID Karyawan");
 
         btntambah.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btntambah.setText("Buang");
+        btntambah.setText("Pesan");
         btntambah.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btntambahMouseClicked(evt);
@@ -395,6 +397,34 @@ public class FormBuangBarang extends javax.swing.JFrame {
             }
         });
 
+        cbnmBarang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbnmBarang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Barang" }));
+        cbnmBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbnmBarangActionPerformed(evt);
+            }
+        });
+
+        cbnmKaryawan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbnmKaryawan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Karyawan" }));
+        cbnmKaryawan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbnmKaryawanActionPerformed(evt);
+            }
+        });
+
+        cbnmSuplier1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbnmSuplier1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Suplier" }));
+        cbnmSuplier1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbnmSuplier1ActionPerformed(evt);
+            }
+        });
+
+        txtidpemesanan.setBackground(new java.awt.Color(240, 240, 240));
+        txtidpemesanan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtidpemesanan.setEnabled(false);
+
         txtidbarang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtidbarang.setEnabled(false);
         txtidbarang.addActionListener(new java.awt.event.ActionListener() {
@@ -410,43 +440,34 @@ public class FormBuangBarang extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(52, 21, 9));
         jLabel3.setText("Nama Karyawan");
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(52, 21, 9));
+        jLabel8.setText("ID Supplier");
+
+        txtidsuplier.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtidsuplier.setEnabled(false);
+        txtidsuplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtidsuplierActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(52, 21, 9));
+        jLabel10.setText("Nama Supplier");
+
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(52, 21, 9));
-        jLabel11.setText("Tgl Buang");
+        jLabel11.setText("Tgl Pemesanan");
 
         datetglpesan.setDateFormatString("d MMM yyyy");
         datetglpesan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(52, 21, 9));
-        jLabel12.setText("Jumlah Jumlah Buang");
+        jLabel12.setText("Jumlah Pemesanan");
 
-        txtbuang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtbuang.setEnabled(false);
-
-        txtjmlbuang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        tblGoods.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tblGoods.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblGoodsMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblGoods);
-
-        txtidkaryawan1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        txtidkaryawan2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtjmlpemesanan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -455,8 +476,11 @@ public class FormBuangBarang extends javax.swing.JFrame {
             .addComponent(lblTambKaryawan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblkembali))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(125, 125, 125)
+                        .addGap(150, 150, 150)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -464,75 +488,88 @@ public class FormBuangBarang extends javax.swing.JFrame {
                                     .addComponent(lblnmkaryawan)
                                     .addComponent(lblalamat)
                                     .addComponent(lblkota)
-                                    .addComponent(jLabel3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtidbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtidkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtbuang, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtidkaryawan1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txtidkaryawan2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel10)
                                     .addComponent(jLabel11))
-                                .addGap(132, 132, Short.MAX_VALUE)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(173, 213, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cbnmBarang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtidpemesanan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtidbarang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtidkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbnmKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtidsuplier, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbnmSuplier1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(datetglpesan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addComponent(btntambah, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(btnreset, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txtjmlbuang, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap(621, Short.MAX_VALUE)
-                        .addComponent(lblkembali)))
-                .addGap(119, 119, 119))
+                                        .addComponent(btnreset, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(txtjmlpemesanan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(2, 2, 2)))))
+                .addGap(60, 60, 60))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(65, 65, 65)
                 .addComponent(lblkembali)
-                .addGap(30, 30, 30)
-                .addComponent(lblTambKaryawan)
-                .addGap(30, 30, 30)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblidkaryawan)
-                    .addComponent(txtbuang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(75, 75, 75)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblTambKaryawan)
+                        .addGap(53, 53, 53)
+                        .addComponent(lblidkaryawan))
+                    .addComponent(txtidpemesanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblnmkaryawan)
                     .addComponent(txtidbarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblalamat)
+                    .addComponent(cbnmBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblkota)
                     .addComponent(txtidkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblkota)
-                    .addComponent(txtidkaryawan1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(cbnmKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtidsuplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtidkaryawan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(datetglpesan, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel10)
+                    .addComponent(cbnmSuplier1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12)
-                    .addComponent(txtjmlbuang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12)
+                        .addGap(16, 16, 16))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(datetglpesan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtjmlpemesanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btntambah)
-                    .addComponent(btnreset))
-                .addGap(115, 115, 115))
+                    .addComponent(btnreset)
+                    .addComponent(btntambah))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3);
@@ -610,18 +647,33 @@ public class FormBuangBarang extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lblkembaliMouseClicked
 
+    private void cbnmBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbnmBarangActionPerformed
+        // TODO add your handling code here:
+        setIdBarang();
+
+    }//GEN-LAST:event_cbnmBarangActionPerformed
+
+    private void cbnmKaryawanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbnmKaryawanActionPerformed
+        // TODO add your handling code here:
+        setIdKaryawan();
+    }//GEN-LAST:event_cbnmKaryawanActionPerformed
+
     private void cbnmSuplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbnmSuplierActionPerformed
         // TODO add your handling code here:
         setIdSuplier();
     }//GEN-LAST:event_cbnmSuplierActionPerformed
 
+    private void cbnmSuplier1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbnmSuplier1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbnmSuplier1ActionPerformed
+
     private void txtidbarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidbarangActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtidbarangActionPerformed
 
-    private void tblGoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGoodsMouseClicked
-        selGood=brg.getGoods(allGoods, Integer.parseInt(tblGoods.getValueAt(tblGoods.getSelectedRow(), 0).toString()));
-    }//GEN-LAST:event_tblGoodsMouseClicked
+    private void txtidsuplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidsuplierActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtidsuplierActionPerformed
     
     /**
      * @param args the command line arguments
@@ -640,254 +692,14 @@ public class FormBuangBarang extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormBuangBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormPesanBarang2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormBuangBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormPesanBarang2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormBuangBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormPesanBarang2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormBuangBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormPesanBarang2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -908,7 +720,7 @@ public class FormBuangBarang extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormBuangBarang().setVisible(true);
+                new FormPesanBarang2().setVisible(true);
             }
         });
     }
@@ -917,11 +729,16 @@ public class FormBuangBarang extends javax.swing.JFrame {
     private javax.swing.JPanel Psamping;
     private javax.swing.JToggleButton btnreset;
     private javax.swing.JToggleButton btntambah;
+    private javax.swing.JComboBox<String> cbnmBarang;
+    private javax.swing.JComboBox<String> cbnmKaryawan;
     private javax.swing.JComboBox<String> cbnmSuplier;
+    private javax.swing.JComboBox<String> cbnmSuplier1;
     private com.toedter.calendar.JDateChooser datetglpesan;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -930,7 +747,6 @@ public class FormBuangBarang extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAnggota;
     private javax.swing.JLabel lblBarang;
     private javax.swing.JLabel lblJamKerja;
@@ -943,13 +759,11 @@ public class FormBuangBarang extends javax.swing.JFrame {
     private javax.swing.JLabel lblkembali;
     private javax.swing.JLabel lblkota;
     private javax.swing.JLabel lblnmkaryawan;
-    private javax.swing.JTable tblGoods;
-    private javax.swing.JTextField txtbuang;
     private javax.swing.JTextField txtidbarang;
     private javax.swing.JTextField txtidkaryawan;
-    private javax.swing.JTextField txtidkaryawan1;
-    private javax.swing.JTextField txtidkaryawan2;
-    private javax.swing.JTextField txtjmlbuang;
+    private javax.swing.JTextField txtidpemesanan;
+    private javax.swing.JTextField txtidsuplier;
+    private javax.swing.JTextField txtjmlpemesanan;
     // End of variables declaration//GEN-END:variables
 
 }
