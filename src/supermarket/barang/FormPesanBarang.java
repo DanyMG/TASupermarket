@@ -6,86 +6,64 @@
 
 package supermarket.barang;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import supermarket.anggota.*;
 import supermarket.karyawan.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import javax.swing.JOptionPane;
-import supermarket.FormAnggota;
-import supermarket.barang.FormBarang;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import supermarket.jamkerja.FormJamKerja;
 import supermarket.suplier.FormSuplier;
-import supermarket.KoneksiMySQL;
+import supermarket.suplier.Suplier;
 
 /**
  *
  * @author DanyMG
  */
 public class FormPesanBarang extends javax.swing.JFrame {
-
-    Connection con;
-    ResultSet RsKaryawan;
-    Statement stm; 
-    /** Creates new form FormKaryawan */
-    public FormPesanBarang() {
+    
+    String[][] allGoods;
+    Employee employee=new Employee();
+    String[][] allEmployee=employee.getAllEmployee();
+    Suplier suplier=new Suplier();
+    String[][] allSuplier=suplier.getAllSuplier();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    public FormPesanBarang(String[][] allGoods) {
         initComponents();
-        open_db();
-        setField();
+        this.allGoods=allGoods;
+        setCbNameGoods();
+        setCbNameEmployee();
+        setCbNameSuplier();
+        AutoCompleteDecorator.decorate(cbNameGoods);
+        AutoCompleteDecorator.decorate(cbNameEmployee);
+        AutoCompleteDecorator.decorate(cbNameSuplier);
+        setField();        
     }
-    private void open_db(){
-        try{
-            KoneksiMySQL kon= new KoneksiMySQL("localhost", "root", "", "supermarket");
-            con=kon.getConnection();
+    public void setField(){
+        txtIdGoods.setText("");
+        cbNameGoods.setSelectedIndex(0);
+        txtIdEmployee.setText("");
+        cbNameEmployee.setSelectedIndex(0);
+        txtIdSuplier.setText("");
+        cbNameSuplier.setSelectedIndex(0);
+        dateOrder.setDate(new Date());
+        txtTotOrder.setText("");
+    }
+    public void setCbNameGoods(){
+        cbNameGoods.addItem("Pilih Barang...");
+        for(String[] data:this.allGoods){
+            cbNameGoods.addItem(data[1]);
         }
-        catch(Exception e){
-            System.out.println("Error : "+e);
+    }
+    public void setCbNameEmployee(){
+        cbNameEmployee.addItem("Pilih Karyawan...");
+        for(String[] data:this.allGoods){
+            cbNameEmployee.addItem(data[1]);
         }
     }
-    private void setField(){
-        //Menyiapkan id karyawan baru
-        try{
-            stm=con.createStatement();
-            RsKaryawan=stm.executeQuery("select * from karyawan order by id_karyawan DESC");
-            if(RsKaryawan.next()){
-                String id=Integer.toString(RsKaryawan.getInt("id_karyawan")+1);
-                txtidkaryawan.setText(id);
-                
-            }else txtidkaryawan.setText("1");            
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, e);
-        }
-        //Mengkosongkan nama, alamat, kota, dan no telepon
-        txtnama.setText("");
-        txtalamat.setText("");
-        txtkota.setText("");
-        txtnotelp.setText("");
-    }
-    private boolean isEditField(){
-        //Fungsi untuk mengembalikan nilai true jika ada perubahan data
-        if(txtnama.getText().equals("")&&txtalamat.getText().equals("")
-                &&txtkota.getText().equals("")&&txtnotelp.getText().equals("")) return false;
-        else return true;
-    }
-    private boolean checkEmptyField(){
-        //Fungsi untuk mengembalikan nilai true jika ada field karyawan baru yang kosong
-        if(txtnama.getText().equals("")||txtalamat.getText().equals("")
-                ||txtkota.getText().equals("")||txtnotelp.getText().equals("")) return true;
-        else return false;
-    }
-    private void addNewEmployee(String nama, String alamat, String kota, String no_telp){
-        //Prosedur untuk menambakan data karyawan baru ke database karyawan
-        try{
-            stm=con.createStatement();
-            stm.executeUpdate("INSERT INTO "
-                    + "karyawan(id_karyawan, nama_karyawan, almt_karyawan, kota_karyawan, notelp_karyawan) "
-                    + "VALUES (NULL,'"+nama+"', '"+alamat+"', '"+kota+"', '"+no_telp+"')");    
-            //Memberitahu jika penambahan karyawan baru berhasil
-            JOptionPane.showConfirmDialog(null, "Karyawan baru berhasil ditambahkan!", "Informasi", JOptionPane.DEFAULT_OPTION);
-            //Menyiapkan ulang textfield karyawan
-            setField();
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, e);
+    public void setCbNameSuplier(){
+        cbNameSuplier.addItem("Pilih Suplier...");
+        for(String[] data:this.allSuplier){
+            cbNameSuplier.addItem(data[1]);
         }
     }
     /** This method is called from within the constructor to
@@ -118,23 +96,23 @@ public class FormPesanBarang extends javax.swing.JFrame {
         lblnmkaryawan = new javax.swing.JLabel();
         lblalamat = new javax.swing.JLabel();
         lblkota = new javax.swing.JLabel();
-        btntambah = new javax.swing.JToggleButton();
-        btnreset = new javax.swing.JToggleButton();
-        lblkembali = new javax.swing.JLabel();
-        cbnmBarang = new javax.swing.JComboBox<>();
-        cbnmKaryawan = new javax.swing.JComboBox<>();
-        cbnmSuplier1 = new javax.swing.JComboBox<>();
+        btnOrder = new javax.swing.JToggleButton();
+        btnReset = new javax.swing.JToggleButton();
+        lblKembali = new javax.swing.JLabel();
+        cbNameGoods = new javax.swing.JComboBox<>();
+        cbNameEmployee = new javax.swing.JComboBox<>();
+        cbNameSuplier = new javax.swing.JComboBox<>();
         txtidpemesanan = new javax.swing.JTextField();
-        txtidbarang = new javax.swing.JTextField();
-        txtidkaryawan = new javax.swing.JTextField();
+        txtIdGoods = new javax.swing.JTextField();
+        txtIdEmployee = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtidsuplier = new javax.swing.JTextField();
+        txtIdSuplier = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        datetglpesan = new com.toedter.calendar.JDateChooser();
+        dateOrder = new com.toedter.calendar.JDateChooser();
         jLabel12 = new javax.swing.JLabel();
-        txtjmlpemesanan = new javax.swing.JTextField();
+        txtTotOrder = new javax.swing.JTextField();
 
         cbnmSuplier.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cbnmSuplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Suplier" }));
@@ -373,51 +351,51 @@ public class FormPesanBarang extends javax.swing.JFrame {
         lblkota.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblkota.setText("ID Karyawan");
 
-        btntambah.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btntambah.setText("Pesan");
-        btntambah.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnOrder.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnOrder.setText("Pesan");
+        btnOrder.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btntambahMouseClicked(evt);
+                btnOrderMouseClicked(evt);
             }
         });
 
-        btnreset.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnreset.setText("Reset");
-        btnreset.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnReset.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnReset.setText("Reset");
+        btnReset.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnresetMouseClicked(evt);
+                btnResetMouseClicked(evt);
             }
         });
 
-        lblkembali.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblkembali.setText("< Kembali");
-        lblkembali.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblKembali.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblKembali.setText("< Kembali");
+        lblKembali.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblkembaliMouseClicked(evt);
+                lblKembaliMouseClicked(evt);
             }
         });
 
-        cbnmBarang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbnmBarang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Barang" }));
-        cbnmBarang.addActionListener(new java.awt.event.ActionListener() {
+        cbNameGoods.setEditable(true);
+        cbNameGoods.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbNameGoods.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbnmBarangActionPerformed(evt);
+                cbNameGoodsActionPerformed(evt);
             }
         });
 
-        cbnmKaryawan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbnmKaryawan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Karyawan" }));
-        cbnmKaryawan.addActionListener(new java.awt.event.ActionListener() {
+        cbNameEmployee.setEditable(true);
+        cbNameEmployee.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbNameEmployee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbnmKaryawanActionPerformed(evt);
+                cbNameEmployeeActionPerformed(evt);
             }
         });
 
-        cbnmSuplier1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbnmSuplier1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Suplier" }));
-        cbnmSuplier1.addActionListener(new java.awt.event.ActionListener() {
+        cbNameSuplier.setEditable(true);
+        cbNameSuplier.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbNameSuplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbnmSuplier1ActionPerformed(evt);
+                cbNameSuplierActionPerformed(evt);
             }
         });
 
@@ -425,16 +403,16 @@ public class FormPesanBarang extends javax.swing.JFrame {
         txtidpemesanan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtidpemesanan.setEnabled(false);
 
-        txtidbarang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtidbarang.setEnabled(false);
-        txtidbarang.addActionListener(new java.awt.event.ActionListener() {
+        txtIdGoods.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtIdGoods.setEnabled(false);
+        txtIdGoods.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtidbarangActionPerformed(evt);
+                txtIdGoodsActionPerformed(evt);
             }
         });
 
-        txtidkaryawan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtidkaryawan.setEnabled(false);
+        txtIdEmployee.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtIdEmployee.setEnabled(false);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(52, 21, 9));
@@ -444,11 +422,11 @@ public class FormPesanBarang extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(52, 21, 9));
         jLabel8.setText("ID Supplier");
 
-        txtidsuplier.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtidsuplier.setEnabled(false);
-        txtidsuplier.addActionListener(new java.awt.event.ActionListener() {
+        txtIdSuplier.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtIdSuplier.setEnabled(false);
+        txtIdSuplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtidsuplierActionPerformed(evt);
+                txtIdSuplierActionPerformed(evt);
             }
         });
 
@@ -460,14 +438,14 @@ public class FormPesanBarang extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(52, 21, 9));
         jLabel11.setText("Tgl Pemesanan");
 
-        datetglpesan.setDateFormatString("d MMM yyyy");
-        datetglpesan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        dateOrder.setDateFormatString("d MMM yyyy");
+        dateOrder.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(52, 21, 9));
         jLabel12.setText("Jumlah Pemesanan");
 
-        txtjmlpemesanan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtTotOrder.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -478,7 +456,7 @@ public class FormPesanBarang extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblkembali))
+                        .addComponent(lblKembali))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(150, 150, 150)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -495,24 +473,24 @@ public class FormPesanBarang extends javax.swing.JFrame {
                                 .addGap(173, 213, Short.MAX_VALUE)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(cbnmBarang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cbNameGoods, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtidpemesanan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtidbarang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txtidkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbnmKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtidsuplier, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbnmSuplier1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(datetglpesan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtIdGoods, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtIdEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbNameEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtIdSuplier, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbNameSuplier, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dateOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(btntambah, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(btnreset, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(txtjmlpemesanan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtTotOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(2, 2, 2)))))
                 .addGap(60, 60, 60))
         );
@@ -520,7 +498,7 @@ public class FormPesanBarang extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addComponent(lblkembali)
+                .addComponent(lblKembali)
                 .addGap(75, 75, 75)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -531,15 +509,15 @@ public class FormPesanBarang extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblnmkaryawan)
-                    .addComponent(txtidbarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIdGoods, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblalamat)
-                    .addComponent(cbnmBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbNameGoods, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblkota)
-                    .addComponent(txtidkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIdEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -547,13 +525,13 @@ public class FormPesanBarang extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(cbnmKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbNameEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtidsuplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtIdSuplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(cbnmSuplier1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbNameSuplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -562,13 +540,13 @@ public class FormPesanBarang extends javax.swing.JFrame {
                         .addComponent(jLabel12)
                         .addGap(16, 16, 16))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(datetglpesan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dateOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtjmlpemesanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTotOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnreset)
-                    .addComponent(btntambah))
+                    .addComponent(btnReset)
+                    .addComponent(btnOrder))
                 .addContainerGap(92, Short.MAX_VALUE))
         );
 
@@ -592,17 +570,13 @@ public class FormPesanBarang extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnresetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMouseClicked
+    private void btnResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseClicked
             setField(); //Menyiapkan ulangsemua textfield jika tombol reset diklik
-    }//GEN-LAST:event_btnresetMouseClicked
+    }//GEN-LAST:event_btnResetMouseClicked
 
-    private void btntambahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btntambahMouseClicked
-        if(checkEmptyField()) JOptionPane.showMessageDialog(this, "Tolong lengkapi data karyawan baru"); //Mengecek data kosong pada data karyawan baru
-        else{
-            // Menambahkan karyawan baru ke database sesuai data yang diisikan
-            addNewEmployee(txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText());            
-        }        
-    }//GEN-LAST:event_btntambahMouseClicked
+    private void btnOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOrderMouseClicked
+            
+    }//GEN-LAST:event_btnOrderMouseClicked
 
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
         this.setVisible(false);
@@ -629,51 +603,35 @@ public class FormPesanBarang extends javax.swing.JFrame {
         new FormAnggota().setVisible(true);
     }//GEN-LAST:event_lblAnggotaMouseClicked
 
-    private void lblkembaliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblkembaliMouseClicked
-        // TODO add your handling code here:
-        if(!isEditField()){        
-            this.setVisible(false);
-            new FormKaryawan().setVisible(true);
-        }
-        else{
-            String[] pilihan= new String[2];
-            pilihan[0]="Ya";
-            pilihan[1]="Tidak";       
-            int pilih=JOptionPane.showOptionDialog(this, "Apa Anda yakin ingin kembali?\nJika Anda mengklik \"Yes\" maka data yang Anda inputkan akan tidak ditambahkan.","Kembali", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,pilihan,null);
-            if(JOptionPane.YES_OPTION==pilih){
-                this.setVisible(false);
-                new FormKaryawan().setVisible(true);
-            }
-        }
-    }//GEN-LAST:event_lblkembaliMouseClicked
+    private void lblKembaliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKembaliMouseClicked
+        this.setVisible(false);
+        new FormKaryawan().setVisible(true);       
+    }//GEN-LAST:event_lblKembaliMouseClicked
 
-    private void cbnmBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbnmBarangActionPerformed
-        // TODO add your handling code here:
-        setIdBarang();
+    private void cbNameGoodsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNameGoodsActionPerformed
+        
 
-    }//GEN-LAST:event_cbnmBarangActionPerformed
+    }//GEN-LAST:event_cbNameGoodsActionPerformed
 
-    private void cbnmKaryawanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbnmKaryawanActionPerformed
-        // TODO add your handling code here:
-        setIdKaryawan();
-    }//GEN-LAST:event_cbnmKaryawanActionPerformed
+    private void cbNameEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNameEmployeeActionPerformed
+        
+    }//GEN-LAST:event_cbNameEmployeeActionPerformed
 
     private void cbnmSuplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbnmSuplierActionPerformed
-        // TODO add your handling code here:
-        setIdSuplier();
+        
     }//GEN-LAST:event_cbnmSuplierActionPerformed
 
-    private void cbnmSuplier1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbnmSuplier1ActionPerformed
+    private void cbNameSuplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNameSuplierActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbnmSuplier1ActionPerformed
+    }//GEN-LAST:event_cbNameSuplierActionPerformed
 
-    private void txtidbarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidbarangActionPerformed
+    private void txtIdGoodsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdGoodsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtidbarangActionPerformed
+    }//GEN-LAST:event_txtIdGoodsActionPerformed
 
-    private void txtidsuplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidsuplierActionPerformed
+    private void txtIdSuplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdSuplierActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtidsuplierActionPerformed
+    }//GEN-LAST:event_txtIdSuplierActionPerformed
     
     /**
      * @param args the command line arguments
@@ -731,25 +689,18 @@ public class FormPesanBarang extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormPesanBarang().setVisible(true);
-            }
-        });
+        //</editor-fold>       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Psamping;
-    private javax.swing.JToggleButton btnreset;
-    private javax.swing.JToggleButton btntambah;
-    private javax.swing.JComboBox<String> cbnmBarang;
-    private javax.swing.JComboBox<String> cbnmKaryawan;
+    private javax.swing.JToggleButton btnOrder;
+    private javax.swing.JToggleButton btnReset;
+    private javax.swing.JComboBox<String> cbNameEmployee;
+    private javax.swing.JComboBox<String> cbNameGoods;
+    private javax.swing.JComboBox<String> cbNameSuplier;
     private javax.swing.JComboBox<String> cbnmSuplier;
-    private javax.swing.JComboBox<String> cbnmSuplier1;
-    private com.toedter.calendar.JDateChooser datetglpesan;
+    private com.toedter.calendar.JDateChooser dateOrder;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -767,19 +718,19 @@ public class FormPesanBarang extends javax.swing.JFrame {
     private javax.swing.JLabel lblBarang;
     private javax.swing.JLabel lblJamKerja;
     private javax.swing.JLabel lblKaryawan;
+    private javax.swing.JLabel lblKembali;
     private javax.swing.JLabel lblLaporan;
     private javax.swing.JLabel lblSuplier;
     private javax.swing.JLabel lblTambKaryawan;
     private javax.swing.JLabel lblalamat;
     private javax.swing.JLabel lblidkaryawan;
-    private javax.swing.JLabel lblkembali;
     private javax.swing.JLabel lblkota;
     private javax.swing.JLabel lblnmkaryawan;
-    private javax.swing.JTextField txtidbarang;
-    private javax.swing.JTextField txtidkaryawan;
+    private javax.swing.JTextField txtIdEmployee;
+    private javax.swing.JTextField txtIdGoods;
+    private javax.swing.JTextField txtIdSuplier;
+    private javax.swing.JTextField txtTotOrder;
     private javax.swing.JTextField txtidpemesanan;
-    private javax.swing.JTextField txtidsuplier;
-    private javax.swing.JTextField txtjmlpemesanan;
     // End of variables declaration//GEN-END:variables
 
 }
