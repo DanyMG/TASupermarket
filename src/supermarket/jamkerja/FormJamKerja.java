@@ -6,19 +6,71 @@
 
 package supermarket.jamkerja;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javafx.util.converter.LocalDateStringConverter;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import supermarket.anggota.FormAnggota;
+import supermarket.barang.FormBarang;
+import supermarket.karyawan.Employee;
+import supermarket.karyawan.FormKaryawan;
 import supermarket.suplier.FormSuplier;
+
 /**
  *
  * @author DanyMG
  */
 public class FormJamKerja extends javax.swing.JFrame {
-
+    Employee emp=new Employee();    
+    String[][] allEmployee=emp.getAllEmployee();
+    String[][] ftEmployee=emp.getAllFtEmployee(allEmployee);
+    String[][] ptEmployee=emp.getAllPtEmployee(allEmployee);
+    
+    ShiftWork sw=new ShiftWork();
+    String[][] allShiftWork=sw.getAllShiftWork();
+    
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    LocalDate localDate = LocalDate.now();
     private TableRowSorter<TableModel> rowSorter;
     public FormJamKerja() {
         initComponents();
+        if(allShiftWork==null) ///tambah jadwal
+        setTable(ftEmployee);
+    }
+    public void setColumnTable(DefaultTableModel model){        
+        model.addColumn ("Nama Karyawan");
+        model.addColumn ("Minggu");
+        model.addColumn ("Senin");
+        model.addColumn ("Selasa");
+        model.addColumn ("Rabu");
+        model.addColumn ("Kamis");
+        model.addColumn ("Jumat");
+        model.addColumn ("Sabtu");        
+    }
+    public void setColumnModel(TableColumnModel columnModel){        
+        columnModel.getColumn(0).setPreferredWidth(100);        
+    }
+    public void setTable(String[][] eData){       
+        DefaultTableModel table= new DefaultTableModel();
+        setColumnTable(table);
+        tblShiftWork.setModel(table);        
+        TableColumnModel columnModel=tblShiftWork.getColumnModel();
+        setColumnModel(columnModel);        
+        tblShiftWork.setColumnModel(columnModel);        
+          for (String[] data : eData) {
+              if(Integer.parseInt(data[6])==0) table.addRow(new Object[]{data[1]});          
+          }            
+//        for (String[] data : sfData) {            
+//            table.addRow(new Object[]{data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]});
+//        }        
+    }
+    public void filterTable(String kategori){
+        
     }
 
     /** This method is called from within the constructor to
@@ -33,25 +85,31 @@ public class FormJamKerja extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         Psamping = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblSuplier = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        lblBarang = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
+        lblAnggota = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        lblLaporan = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        lblJamKerja = new javax.swing.JLabel();
+        lblKaryawan = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
-        jPanel10 = new javax.swing.JPanel();
-        txtsuplierbaru = new javax.swing.JLabel();
-        txtKeyWord = new javax.swing.JTextField();
+        jPanel11 = new javax.swing.JPanel();
+        txtbarangbaru = new javax.swing.JLabel();
+        txtbarangbuang = new javax.swing.JLabel();
+        txteditkaryawan = new javax.swing.JLabel();
         txtCari = new javax.swing.JLabel();
+        txtKeyWord = new javax.swing.JTextField();
+        txtbarangbuang1 = new javax.swing.JLabel();
+        cbCategory = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblShiftWork = new javax.swing.JTable();
+        txtbarangbuang2 = new javax.swing.JLabel();
+        txtbarangbuang3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,70 +120,84 @@ public class FormJamKerja extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(254, 151, 114));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(52, 17, 9));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Suplier");
+        lblSuplier.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblSuplier.setForeground(new java.awt.Color(52, 17, 9));
+        lblSuplier.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSuplier.setText("Suplier");
+        lblSuplier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSuplierMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(lblSuplier, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblSuplier, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(254, 151, 114));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(52, 17, 9));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Barang");
+        jPanel6.setBackground(new java.awt.Color(254, 151, 114));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        jPanel6.setBackground(new java.awt.Color(52, 17, 9));
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(254, 151, 114));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Karyawan");
+        lblBarang.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblBarang.setForeground(new java.awt.Color(52, 17, 9));
+        lblBarang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBarang.setText("Barang");
+        lblBarang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBarangMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel7.setBackground(new java.awt.Color(254, 151, 114));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(52, 17, 9));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Anggota");
+        lblAnggota.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblAnggota.setForeground(new java.awt.Color(52, 17, 9));
+        lblAnggota.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAnggota.setText("Anggota");
+        lblAnggota.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAnggotaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -133,27 +205,21 @@ public class FormJamKerja extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 160, Short.MAX_VALUE)
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel7)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(lblAnggota, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 75, Short.MAX_VALUE)
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel7)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(lblAnggota, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
         );
 
         jPanel8.setBackground(new java.awt.Color(254, 151, 114));
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(52, 17, 9));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Laporan");
+        lblLaporan.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblLaporan.setForeground(new java.awt.Color(52, 17, 9));
+        lblLaporan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLaporan.setText("Laporan");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -161,27 +227,21 @@ public class FormJamKerja extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 160, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel8)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(lblLaporan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 75, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel8)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(lblLaporan, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
         );
 
-        jPanel9.setBackground(new java.awt.Color(254, 151, 114));
+        jPanel9.setBackground(new java.awt.Color(52, 17, 9));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(52, 17, 9));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Jam Kerja");
+        lblJamKerja.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblJamKerja.setForeground(new java.awt.Color(254, 151, 114));
+        lblJamKerja.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblJamKerja.setText("Jam Kerja");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -189,20 +249,24 @@ public class FormJamKerja extends javax.swing.JFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 160, Short.MAX_VALUE)
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel9Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel6)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(lblJamKerja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 75, Short.MAX_VALUE)
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel9Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel6)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(lblJamKerja, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
         );
+
+        lblKaryawan.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblKaryawan.setForeground(new java.awt.Color(52, 17, 9));
+        lblKaryawan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblKaryawan.setText("Karyawan");
+        lblKaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblKaryawanMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout PsampingLayout = new javax.swing.GroupLayout(Psamping);
         Psamping.setLayout(PsampingLayout);
@@ -212,10 +276,10 @@ public class FormJamKerja extends javax.swing.JFrame {
             .addGroup(PsampingLayout.createSequentialGroup()
                 .addGroup(PsampingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         PsampingLayout.setVerticalGroup(
@@ -225,7 +289,7 @@ public class FormJamKerja extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -243,20 +307,26 @@ public class FormJamKerja extends javax.swing.JFrame {
         jToolBar1.setBackground(new java.awt.Color(255, 229, 220));
         jToolBar1.setRollover(true);
 
-        jPanel10.setBackground(new java.awt.Color(255, 229, 220));
+        jPanel11.setBackground(new java.awt.Color(255, 229, 220));
 
-        txtsuplierbaru.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtsuplierbaru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new10_216291.png"))); // NOI18N
-        txtsuplierbaru.setText("Karyawan Baru");
-        txtsuplierbaru.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtbarangbaru.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtbarangbaru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new10_216291.png"))); // NOI18N
+        txtbarangbaru.setText("Jam Kerja Baru");
+        txtbarangbaru.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtsuplierbaruMouseClicked(evt);
+                txtbarangbaruMouseClicked(evt);
             }
         });
 
-        txtKeyWord.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtKeyWordKeyReleased(evt);
+        txtbarangbuang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_trash_115789.png"))); // NOI18N
+        txtbarangbuang.setText("Hapus Jam Kerja");
+
+        txteditkaryawan.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txteditkaryawan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new-24_103173.png"))); // NOI18N
+        txteditkaryawan.setText("Edit Jam Kerja");
+        txteditkaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txteditkaryawanMouseClicked(evt);
             }
         });
 
@@ -268,29 +338,55 @@ public class FormJamKerja extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtsuplierbaru)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 471, Short.MAX_VALUE)
+        txtKeyWord.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtKeyWordKeyReleased(evt);
+            }
+        });
+
+        txtbarangbuang1.setText("Kategori :");
+
+        cbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full Time", "Part Time" }));
+        cbCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCategoryActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addComponent(txtbarangbuang1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(txtbarangbaru)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txteditkaryawan)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtbarangbuang)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
                 .addComponent(txtCari)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtsuplierbaru)
-                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtCari)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCari))
+            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(cbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtbarangbuang1)
+                .addComponent(txtbarangbaru, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(txtbarangbuang)
+                .addComponent(txteditkaryawan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jToolBar1.add(jPanel10);
+        jToolBar1.add(jPanel11);
 
         tblShiftWork.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -305,6 +401,12 @@ public class FormJamKerja extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblShiftWork);
 
+        txtbarangbuang2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtbarangbuang2.setText("<-");
+
+        txtbarangbuang3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtbarangbuang3.setText("->");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -313,7 +415,12 @@ public class FormJamKerja extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(txtbarangbuang2)
+                        .addGap(253, 253, 253)
+                        .addComponent(txtbarangbuang3)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -321,8 +428,12 @@ public class FormJamKerja extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtbarangbuang2)
+                    .addComponent(txtbarangbuang3))
+                .addGap(7, 7, 7)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -346,11 +457,24 @@ public class FormJamKerja extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtsuplierbaruMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtsuplierbaruMouseClicked
+    private void txtbarangbaruMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtbarangbaruMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new FormSuplier().setVisible(true);
-    }//GEN-LAST:event_txtsuplierbaruMouseClicked
+        new FormBarangBaru().setVisible(true);
+    }//GEN-LAST:event_txtbarangbaruMouseClicked
+
+    private void txteditkaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txteditkaryawanMouseClicked
+        if(selectedEmployee!=null){
+            this.setVisible(false);
+            new FormeditAnggota(selectedEmployee).setVisible(true);
+        }
+        else JOptionPane.showMessageDialog(this, "Tidak ada karyawan yang dipilih.", "Alert", JOptionPane.WARNING_MESSAGE);
+
+    }//GEN-LAST:event_txteditkaryawanMouseClicked
+
+    private void txtCariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCariMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCariMouseClicked
 
     private void txtKeyWordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyWordKeyReleased
         if(txtKeyWord.getText().equals("")) tblShiftWork.setRowSorter(null);
@@ -360,9 +484,32 @@ public class FormJamKerja extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtKeyWordKeyReleased
 
-    private void txtCariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCariMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCariMouseClicked
+    private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
+        this.setVisible(false);
+        new FormSuplier().setVisible(true);
+    }//GEN-LAST:event_lblSuplierMouseClicked
+
+    private void lblBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBarangMouseClicked
+        this.setVisible(false);
+        new FormBarang().setVisible(true);
+    }//GEN-LAST:event_lblBarangMouseClicked
+
+    private void lblKaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKaryawanMouseClicked
+        this.setVisible(false);
+        new FormKaryawan().setVisible(true);
+    }//GEN-LAST:event_lblKaryawanMouseClicked
+
+    private void lblAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnggotaMouseClicked
+        this.setVisible(false);
+        new FormAnggota().setVisible(true);
+    }//GEN-LAST:event_lblAnggotaMouseClicked
+
+    private void cbCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoryActionPerformed
+        if(cbCategory.getSelectedItem().toString().equals("Full Time")){
+            setTable(ftEmployee);
+        }
+        else setTable(ptEmployee);        
+    }//GEN-LAST:event_cbCategoryActionPerformed
 
     /**
      * @param args the command line arguments
@@ -375,7 +522,7 @@ public class FormJamKerja extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -391,6 +538,20 @@ public class FormJamKerja extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -402,14 +563,9 @@ public class FormJamKerja extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Psamping;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JComboBox<String> cbCategory;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -419,10 +575,21 @@ public class FormJamKerja extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lblAnggota;
+    private javax.swing.JLabel lblBarang;
+    private javax.swing.JLabel lblJamKerja;
+    private javax.swing.JLabel lblKaryawan;
+    private javax.swing.JLabel lblLaporan;
+    private javax.swing.JLabel lblSuplier;
     private javax.swing.JTable tblShiftWork;
     private javax.swing.JLabel txtCari;
     private javax.swing.JTextField txtKeyWord;
-    private javax.swing.JLabel txtsuplierbaru;
+    private javax.swing.JLabel txtbarangbaru;
+    private javax.swing.JLabel txtbarangbuang;
+    private javax.swing.JLabel txtbarangbuang1;
+    private javax.swing.JLabel txtbarangbuang2;
+    private javax.swing.JLabel txtbarangbuang3;
+    private javax.swing.JLabel txteditkaryawan;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -410,15 +410,15 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="txtKeyWord" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="txtCari" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="txtAddGood" alignment="3" max="32767" attributes="0"/>
                               <Component id="txtEditGood" alignment="3" max="32767" attributes="0"/>
                               <Component id="txtBookGood" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtSellGood" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtRemoveGood" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="3" groupAlignment="3" attributes="0">
-                                  <Component id="txtKeyWord" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                                  <Component id="txtCari" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -532,6 +532,9 @@
                       </Table>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblGoodsMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

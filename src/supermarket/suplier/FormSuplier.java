@@ -14,7 +14,7 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import supermarket.anggota.FormAnggota;
-import supermarket.jamkerja.FormJamKerja2;
+import supermarket.jamkerja.FormJamKerja;
 import supermarket.karyawan.FormKaryawan;
 
 /**
@@ -438,7 +438,7 @@ public class FormSuplier extends javax.swing.JFrame {
 
     private void lblJamKerjaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblJamKerjaMouseClicked
         this.setVisible(false);
-        new FormJamKerja2().setVisible(true);
+        new FormJamKerja().setVisible(true);
     }//GEN-LAST:event_lblJamKerjaMouseClicked
 
     private void lblAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnggotaMouseClicked
