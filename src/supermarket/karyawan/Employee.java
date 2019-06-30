@@ -80,7 +80,39 @@ public class Employee {
         int count=rs.getRow();
         rs.beforeFirst();
         return count;
-    }    
+    } 
+    public String[][]getAllFtEmployee(String[][] allEmployee){
+        String[][] ftEmployee=new String[countEmployee("Full Time", allEmployee)][7];
+        int i=0;     
+        for(String[] employee:allEmployee){
+            if(employee[5].equals("Full Time")){
+                ftEmployee[i]=employee;
+                i++;
+            }
+        }
+        
+        return ftEmployee;
+    }
+    public String[][]getAllPtEmployee(String[][] allEmployee){
+        String[][] ftEmployee=new String[countEmployee("Part Time", allEmployee)][7];
+        int i=0;     
+        for(String[] employee:allEmployee){
+            if(employee[5].equals("Part Time")){
+                ftEmployee[i]=employee;
+                i++;
+            }
+        }
+        
+        return ftEmployee;
+    }
+    public int countEmployee(String kategori,String[][] allEmployee){
+        int count=0;
+        for(String[] employee:allEmployee){
+            if(employee[5].equals(kategori)) count++;
+        }
+        return count;
+    }
+       
     public boolean editEmployee(String[] eData){
         try{
             stm=con.createStatement();
