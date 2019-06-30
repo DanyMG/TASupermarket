@@ -6,6 +6,7 @@
 
 package supermarket.barang;
 
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -14,6 +15,7 @@ import javax.swing.table.TableRowSorter;
 import supermarket.anggota.FormAnggota;
 import supermarket.jamkerja.FormJamKerja;
 import supermarket.karyawan.FormKaryawan;
+import supermarket.karyawan.FormeditKaryawan;
 import supermarket.suplier.FormSuplier;
 
 /**
@@ -450,8 +452,11 @@ public class FormBarang extends javax.swing.JFrame {
 
     private void txtEditGoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtEditGoodsMouseClicked
         // TODO add your handling code here:
-        this.setVisible(false);
-        new FormEditBarang(selGood).setVisible(true);
+        if(selGood!=null){
+            this.setVisible(false);
+            new FormEditBarang(selGood).setVisible(true);
+        }
+        else JOptionPane.showMessageDialog(this, "Tidak ada barang yang dipilih.", "Alert", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_txtEditGoodsMouseClicked
 
     private void txtOrderGoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtOrderGoodsMouseClicked
@@ -468,8 +473,11 @@ public class FormBarang extends javax.swing.JFrame {
 
     private void txtRemoveGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRemoveGoodMouseClicked
         // TODO add your handling code here:
-        this.setVisible(false);
-        new FormBuangBarang().setVisible(true);
+        if(selGood!=null){
+            this.setVisible(false);
+            new FormBuangBarang(selGood).setVisible(true);
+        }
+        else JOptionPane.showMessageDialog(this, "Tidak ada barang yang dipilih.", "Alert", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_txtRemoveGoodMouseClicked
 
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked

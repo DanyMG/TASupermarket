@@ -402,7 +402,6 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblidkaryawan" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblnmkaryawan" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblalamat" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblkota" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -412,21 +411,21 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                               <Component id="txtidbarang" min="-2" pref="250" max="-2" attributes="0"/>
+                                              <Component id="txtnamabarang" min="-2" pref="250" max="-2" attributes="0"/>
                                               <Component id="txtidkaryawan" min="-2" pref="250" max="-2" attributes="0"/>
-                                              <Component id="txtbuang" min="-2" pref="250" max="-2" attributes="0"/>
-                                              <Component id="txtidkaryawan1" min="-2" pref="250" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="txtidkaryawan2" alignment="1" min="-2" pref="250" max="-2" attributes="0"/>
+                                          <Component id="txtnamakaryawan" alignment="1" min="-2" pref="250" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="173" pref="132" max="32767" attributes="0"/>
+                                      <EmptySpace min="173" pref="194" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="datetglpesan" min="-2" pref="250" max="-2" attributes="0"/>
+                                          <Component id="datetglbuang" min="-2" pref="250" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="btntambah" min="-2" pref="115" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -434,6 +433,7 @@
                                           </Group>
                                           <Component id="txtjmlbuang" min="-2" pref="250" max="-2" attributes="0"/>
                                           <Component id="jScrollPane1" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
+                                          <Component id="txtketerangan" min="-2" pref="250" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -454,12 +454,7 @@
                       <Component id="lblkembali" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="lblTambKaryawan" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblidkaryawan" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtbuang" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblnmkaryawan" min="-2" max="-2" attributes="0"/>
                           <Component id="txtidbarang" min="-2" max="-2" attributes="0"/>
@@ -467,31 +462,36 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblalamat" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtidkaryawan" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtnamabarang" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblkota" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtidkaryawan1" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtidkaryawan" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtidkaryawan2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtnamakaryawan" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="91" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="datetglpesan" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="jLabel11" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtjmlbuang" min="-2" max="-2" attributes="0"/>
+                          <Component id="datetglbuang" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="txtjmlbuang" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtketerangan" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="11" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btntambah" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnreset" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -512,14 +512,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="Pembuangan Barang"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="lblidkaryawan">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="18" style="0"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="ID Pembuangan"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblnmkaryawan">
@@ -590,7 +582,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtidbarangActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtidkaryawan">
+            <Component class="javax.swing.JTextField" name="txtnamabarang">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -620,7 +612,7 @@
                 <Property name="text" type="java.lang.String" value="Tgl Buang"/>
               </Properties>
             </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="datetglpesan">
+            <Component class="com.toedter.calendar.JDateChooser" name="datetglbuang">
               <Properties>
                 <Property name="dateFormatString" type="java.lang.String" value="d MMM yyyy"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -636,15 +628,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="9" green="15" red="34" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Jumlah Jumlah Buang"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="txtbuang">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0"/>
-                </Property>
-                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" value="Jumlah Buang"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtjmlbuang">
@@ -653,6 +637,9 @@
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtjmlbuangActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
               <AuxValues>
@@ -678,19 +665,40 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JTextField" name="txtidkaryawan1">
+            <Component class="javax.swing.JTextField" name="txtidkaryawan">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtidkaryawan2">
+            <Component class="javax.swing.JTextField" name="txtnamakaryawan">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel13">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="18" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="9" green="15" red="34" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Keterangan"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtketerangan">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtketeranganActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
