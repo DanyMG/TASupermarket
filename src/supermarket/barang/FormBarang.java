@@ -445,13 +445,13 @@ public class FormBarang extends javax.swing.JFrame {
     private void txtAddGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAddGoodMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new FormBarangBaru2(brg.getLastId(allGoods)).setVisible(true);
+        new FormBarangBaru(brg.getLastId(allGoods)).setVisible(true);
     }//GEN-LAST:event_txtAddGoodMouseClicked
 
     private void txtEditGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtEditGoodMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new FormEditBarang2().setVisible(true);
+        new FormEditBarang().setVisible(true);
     }//GEN-LAST:event_txtEditGoodMouseClicked
 
     private void txtBookGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBookGoodMouseClicked
@@ -469,7 +469,7 @@ public class FormBarang extends javax.swing.JFrame {
     private void txtRemoveGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRemoveGoodMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new FormBuangBarang2().setVisible(true);
+        new FormBuangBarang().setVisible(true);
     }//GEN-LAST:event_txtRemoveGoodMouseClicked
 
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
