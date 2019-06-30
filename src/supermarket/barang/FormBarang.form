@@ -391,13 +391,13 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtAddGood" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtAddGoods" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtEditGood" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtEditGoods" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtBookGood" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtOrderGoods" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtSellGood" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtSaleGood" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtRemoveGood" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="111" max="32767" attributes="0"/>
@@ -414,17 +414,17 @@
                               <Component id="txtCari" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtAddGood" alignment="3" max="32767" attributes="0"/>
-                              <Component id="txtEditGood" alignment="3" max="32767" attributes="0"/>
-                              <Component id="txtBookGood" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtSellGood" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtAddGoods" alignment="3" max="32767" attributes="0"/>
+                              <Component id="txtEditGoods" alignment="3" max="32767" attributes="0"/>
+                              <Component id="txtOrderGoods" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtSaleGood" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtRemoveGood" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="txtAddGood">
+                    <Component class="javax.swing.JLabel" name="txtAddGoods">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="12" style="0"/>
@@ -435,10 +435,10 @@
                         <Property name="text" type="java.lang.String" value="Barang Baru"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtAddGoodMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtAddGoodsMouseClicked"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="txtEditGood">
+                    <Component class="javax.swing.JLabel" name="txtEditGoods">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="12" style="0"/>
@@ -449,10 +449,10 @@
                         <Property name="text" type="java.lang.String" value="Edit Barang"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtEditGoodMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtEditGoodsMouseClicked"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="txtBookGood">
+                    <Component class="javax.swing.JLabel" name="txtOrderGoods">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="12" style="0"/>
@@ -463,10 +463,10 @@
                         <Property name="text" type="java.lang.String" value="Pesan Barang"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtBookGoodMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtOrderGoodsMouseClicked"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="txtSellGood">
+                    <Component class="javax.swing.JLabel" name="txtSaleGood">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="12" style="0"/>
@@ -477,7 +477,7 @@
                         <Property name="text" type="java.lang.String" value="Jual Barang"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtSellGoodMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtSaleGoodMouseClicked"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="txtRemoveGood">

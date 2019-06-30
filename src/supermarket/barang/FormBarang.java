@@ -86,10 +86,10 @@ public class FormBarang extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jPanel10 = new javax.swing.JPanel();
-        txtAddGood = new javax.swing.JLabel();
-        txtEditGood = new javax.swing.JLabel();
-        txtBookGood = new javax.swing.JLabel();
-        txtSellGood = new javax.swing.JLabel();
+        txtAddGoods = new javax.swing.JLabel();
+        txtEditGoods = new javax.swing.JLabel();
+        txtOrderGoods = new javax.swing.JLabel();
+        txtSaleGood = new javax.swing.JLabel();
         txtRemoveGood = new javax.swing.JLabel();
         txtKeyWord = new javax.swing.JTextField();
         txtCari = new javax.swing.JLabel();
@@ -290,39 +290,39 @@ public class FormBarang extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(255, 229, 220));
 
-        txtAddGood.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtAddGood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new10_216291.png"))); // NOI18N
-        txtAddGood.setText("Barang Baru");
-        txtAddGood.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtAddGoods.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtAddGoods.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new10_216291.png"))); // NOI18N
+        txtAddGoods.setText("Barang Baru");
+        txtAddGoods.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtAddGoodMouseClicked(evt);
+                txtAddGoodsMouseClicked(evt);
             }
         });
 
-        txtEditGood.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtEditGood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new-24_103173.png"))); // NOI18N
-        txtEditGood.setText("Edit Barang");
-        txtEditGood.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtEditGoods.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtEditGoods.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new-24_103173.png"))); // NOI18N
+        txtEditGoods.setText("Edit Barang");
+        txtEditGoods.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtEditGoodMouseClicked(evt);
+                txtEditGoodsMouseClicked(evt);
             }
         });
 
-        txtBookGood.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtBookGood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_add_126583.png"))); // NOI18N
-        txtBookGood.setText("Pesan Barang");
-        txtBookGood.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtOrderGoods.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtOrderGoods.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_add_126583.png"))); // NOI18N
+        txtOrderGoods.setText("Pesan Barang");
+        txtOrderGoods.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtBookGoodMouseClicked(evt);
+                txtOrderGoodsMouseClicked(evt);
             }
         });
 
-        txtSellGood.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtSellGood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_shopping-cart_216477.png"))); // NOI18N
-        txtSellGood.setText("Jual Barang");
-        txtSellGood.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtSaleGood.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtSaleGood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_shopping-cart_216477.png"))); // NOI18N
+        txtSaleGood.setText("Jual Barang");
+        txtSaleGood.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtSellGoodMouseClicked(evt);
+                txtSaleGoodMouseClicked(evt);
             }
         });
 
@@ -354,13 +354,13 @@ public class FormBarang extends javax.swing.JFrame {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(txtAddGood)
+                .addComponent(txtAddGoods)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEditGood)
+                .addComponent(txtEditGoods)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBookGood)
+                .addComponent(txtOrderGoods)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtSellGood)
+                .addComponent(txtSaleGood)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtRemoveGood)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
@@ -374,10 +374,10 @@ public class FormBarang extends javax.swing.JFrame {
                 .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(txtCari))
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtAddGood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtEditGood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtBookGood)
-                .addComponent(txtSellGood)
+                .addComponent(txtAddGoods, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtEditGoods, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtOrderGoods)
+                .addComponent(txtSaleGood)
                 .addComponent(txtRemoveGood))
         );
 
@@ -442,34 +442,34 @@ public class FormBarang extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtAddGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAddGoodMouseClicked
+    private void txtAddGoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAddGoodsMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
         new FormBarangBaru(brg.getLastId(allGoods)).setVisible(true);
-    }//GEN-LAST:event_txtAddGoodMouseClicked
+    }//GEN-LAST:event_txtAddGoodsMouseClicked
 
-    private void txtEditGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtEditGoodMouseClicked
+    private void txtEditGoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtEditGoodsMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new FormEditBarang().setVisible(true);
-    }//GEN-LAST:event_txtEditGoodMouseClicked
+        new FormEditBarang(selGood).setVisible(true);
+    }//GEN-LAST:event_txtEditGoodsMouseClicked
 
-    private void txtBookGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBookGoodMouseClicked
+    private void txtOrderGoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtOrderGoodsMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
         new FormPesanBarang2().setVisible(true);
-    }//GEN-LAST:event_txtBookGoodMouseClicked
+    }//GEN-LAST:event_txtOrderGoodsMouseClicked
 
-    private void txtSellGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSellGoodMouseClicked
+    private void txtSaleGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSaleGoodMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
         //new ().setVisible(true);
-    }//GEN-LAST:event_txtSellGoodMouseClicked
+    }//GEN-LAST:event_txtSaleGoodMouseClicked
 
     private void txtRemoveGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRemoveGoodMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new FormBuangBarang().setVisible(true);
+        new FormBuangBarang2().setVisible(true);
     }//GEN-LAST:event_txtRemoveGoodMouseClicked
 
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
@@ -505,7 +505,7 @@ public class FormBarang extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCariMouseClicked
 
     private void tblGoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGoodsMouseClicked
-        // TODO add your handling code here:
+        selGood=brg.getGoods(allGoods, Integer.parseInt(tblGoods.getValueAt(tblGoods.getSelectedRow(), 0).toString()));
     }//GEN-LAST:event_tblGoodsMouseClicked
 
     /**
@@ -564,13 +564,13 @@ public class FormBarang extends javax.swing.JFrame {
     private javax.swing.JLabel lblLaporan;
     private javax.swing.JLabel lblSuplier;
     private javax.swing.JTable tblGoods;
-    private javax.swing.JLabel txtAddGood;
-    private javax.swing.JLabel txtBookGood;
+    private javax.swing.JLabel txtAddGoods;
     private javax.swing.JLabel txtCari;
-    private javax.swing.JLabel txtEditGood;
+    private javax.swing.JLabel txtEditGoods;
     private javax.swing.JTextField txtKeyWord;
+    private javax.swing.JLabel txtOrderGoods;
     private javax.swing.JLabel txtRemoveGood;
-    private javax.swing.JLabel txtSellGood;
+    private javax.swing.JLabel txtSaleGood;
     // End of variables declaration//GEN-END:variables
 
 }

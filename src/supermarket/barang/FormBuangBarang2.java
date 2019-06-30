@@ -6,39 +6,88 @@
 
 package supermarket.barang;
 
+import supermarket.anggota.*;
+import supermarket.karyawan.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
-import supermarket.anggota.FormAnggota;
+import supermarket.FormAnggota;
+import supermarket.barang.FormBarang;
 import supermarket.jamkerja.FormJamKerja;
-import supermarket.karyawan.FormKaryawan;
 import supermarket.suplier.FormSuplier;
+import supermarket.KoneksiMySQL;
 
 /**
  *
  * @author DanyMG
  */
-public class FormEditBarang extends javax.swing.JFrame {
-    
-    Goods brg = new Goods();
-    String[] goods;
-    
-    public FormEditBarang(String[] goods) {
+public class FormBuangBarang2 extends javax.swing.JFrame {
+
+    Connection con;
+    ResultSet RsKaryawan;
+    Statement stm; 
+    /** Creates new form FormKaryawan */
+    public FormBuangBarang2() {
         initComponents();
-        this.goods=goods;        
-        setField(this.goods);
-    } 
-   
-    public void setField(String[] goods){        
-        txtidbarang.setText(goods[0]);
-        txtnama.setText(goods[1]);
-        txthrgbeli.setText(goods[3]);
-        txthrgjual.setText(goods[4]);
-             
+        open_db();
+        setField();
     }
-    public boolean isNameEmpty(String nama){        
-        if(nama.equals("")) return true;
+    private void open_db(){
+        try{
+            KoneksiMySQL kon= new KoneksiMySQL("localhost", "root", "", "supermarket");
+            con=kon.getConnection();
+        }
+        catch(Exception e){
+            System.out.println("Error : "+e);
+        }
+    }
+    private void setField(){
+        //Menyiapkan id karyawan baru
+        try{
+            stm=con.createStatement();
+            RsKaryawan=stm.executeQuery("select * from karyawan order by id_karyawan DESC");
+            if(RsKaryawan.next()){
+                String id=Integer.toString(RsKaryawan.getInt("id_karyawan")+1);
+                txtidkaryawan.setText(id);
+                
+            }else txtidkaryawan.setText("1");            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e);
+        }
+        //Mengkosongkan nama, alamat, kota, dan no telepon
+        txtnama.setText("");
+        txtalamat.setText("");
+        txtkota.setText("");
+        txtnotelp.setText("");
+    }
+    private boolean isEditField(){
+        //Fungsi untuk mengembalikan nilai true jika ada perubahan data
+        if(txtnama.getText().equals("")&&txtalamat.getText().equals("")
+                &&txtkota.getText().equals("")&&txtnotelp.getText().equals("")) return false;
+        else return true;
+    }
+    private boolean checkEmptyField(){
+        //Fungsi untuk mengembalikan nilai true jika ada field karyawan baru yang kosong
+        if(txtnama.getText().equals("")||txtalamat.getText().equals("")
+                ||txtkota.getText().equals("")||txtnotelp.getText().equals("")) return true;
         else return false;
-    }  
-    
+    }
+    private void addNewEmployee(String nama, String alamat, String kota, String no_telp){
+        //Prosedur untuk menambakan data karyawan baru ke database karyawan
+        try{
+            stm=con.createStatement();
+            stm.executeUpdate("INSERT INTO "
+                    + "karyawan(id_karyawan, nama_karyawan, almt_karyawan, kota_karyawan, notelp_karyawan) "
+                    + "VALUES (NULL,'"+nama+"', '"+alamat+"', '"+kota+"', '"+no_telp+"')");    
+            //Memberitahu jika penambahan karyawan baru berhasil
+            JOptionPane.showConfirmDialog(null, "Karyawan baru berhasil ditambahkan!", "Informasi", JOptionPane.DEFAULT_OPTION);
+            //Menyiapkan ulang textfield karyawan
+            setField();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e);
+        }
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -48,6 +97,7 @@ public class FormEditBarang extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        cbnmSuplier = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         Psamping = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -64,17 +114,31 @@ public class FormEditBarang extends javax.swing.JFrame {
         lblJamKerja = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         lblTambKaryawan = new javax.swing.JLabel();
-        lblidbarang = new javax.swing.JLabel();
-        lblnamabrg = new javax.swing.JLabel();
-        txtidbarang = new javax.swing.JTextField();
-        txtnama = new javax.swing.JTextField();
-        lblhrgbeli = new javax.swing.JLabel();
-        txthrgbeli = new javax.swing.JTextField();
-        lblhrgjual = new javax.swing.JLabel();
-        txthrgjual = new javax.swing.JTextField();
-        btnEdit = new javax.swing.JToggleButton();
-        btnReset = new javax.swing.JToggleButton();
+        lblidkaryawan = new javax.swing.JLabel();
+        lblnmkaryawan = new javax.swing.JLabel();
+        lblalamat = new javax.swing.JLabel();
+        lblkota = new javax.swing.JLabel();
+        btntambah = new javax.swing.JToggleButton();
+        btnreset = new javax.swing.JToggleButton();
         lblkembali = new javax.swing.JLabel();
+        cbnmKaryawan = new javax.swing.JComboBox<>();
+        txtidbarang = new javax.swing.JTextField();
+        txtidkaryawan = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        datetglpesan = new com.toedter.calendar.JDateChooser();
+        jLabel12 = new javax.swing.JLabel();
+        txtbuang = new javax.swing.JTextField();
+        cbnamabarang = new javax.swing.JComboBox<>();
+        txtjmlbuang = new javax.swing.JTextField();
+
+        cbnmSuplier.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbnmSuplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Suplier" }));
+        cbnmSuplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbnmSuplierActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -291,47 +355,33 @@ public class FormEditBarang extends javax.swing.JFrame {
         lblTambKaryawan.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblTambKaryawan.setForeground(new java.awt.Color(253, 77, 12));
         lblTambKaryawan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTambKaryawan.setText("Edit Barang");
+        lblTambKaryawan.setText("Pembuangan Barang");
 
-        lblidbarang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblidbarang.setText("ID Barang");
+        lblidkaryawan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblidkaryawan.setText("ID Pembuangan");
 
-        lblnamabrg.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblnamabrg.setText("Nama Barang");
+        lblnmkaryawan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblnmkaryawan.setText("ID Barang");
 
-        txtidbarang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtidbarang.setEnabled(false);
+        lblalamat.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblalamat.setText("Nama Barang");
 
-        txtnama.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtnama.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtnamaActionPerformed(evt);
+        lblkota.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblkota.setText("ID Karyawan");
+
+        btntambah.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btntambah.setText("Buang");
+        btntambah.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btntambahMouseClicked(evt);
             }
         });
 
-        lblhrgbeli.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblhrgbeli.setText("Harga Beli");
-
-        txthrgbeli.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        lblhrgjual.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblhrgjual.setText("Harga Jual");
-
-        txthrgjual.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        btnEdit.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnEdit.setText("Edit");
-        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnreset.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnreset.setText("Reset");
+        btnreset.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditMouseClicked(evt);
-            }
-        });
-
-        btnReset.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnReset.setText("Reset");
-        btnReset.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnResetMouseClicked(evt);
+                btnresetMouseClicked(evt);
             }
         });
 
@@ -343,32 +393,81 @@ public class FormEditBarang extends javax.swing.JFrame {
             }
         });
 
+        cbnmKaryawan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbnmKaryawan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Karyawan" }));
+        cbnmKaryawan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbnmKaryawanActionPerformed(evt);
+            }
+        });
+
+        txtidbarang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtidbarang.setEnabled(false);
+        txtidbarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtidbarangActionPerformed(evt);
+            }
+        });
+
+        txtidkaryawan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtidkaryawan.setEnabled(false);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(52, 21, 9));
+        jLabel3.setText("Nama Karyawan");
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(52, 21, 9));
+        jLabel11.setText("Tgl Buang");
+
+        datetglpesan.setDateFormatString("d MMM yyyy");
+        datetglpesan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(52, 21, 9));
+        jLabel12.setText("Jumlah Jumlah Buang");
+
+        txtbuang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtbuang.setEnabled(false);
+
+        cbnamabarang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbnamabarang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        txtjmlbuang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblTambKaryawan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblidbarang)
-                    .addComponent(lblnamabrg)
-                    .addComponent(lblhrgbeli)
-                    .addComponent(lblhrgjual))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtidbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtnama, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txthrgbeli, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txthrgjual, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(150, 150, 150))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblkembali)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblkembali))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblidkaryawan)
+                            .addComponent(lblnmkaryawan)
+                            .addComponent(lblalamat)
+                            .addComponent(lblkota)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtidbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtidkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbnmKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(datetglpesan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtbuang, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbnamabarang, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(btntambah, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnreset, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtjmlbuang, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(60, 60, 60))
         );
         jPanel3Layout.setVerticalGroup(
@@ -378,27 +477,41 @@ public class FormEditBarang extends javax.swing.JFrame {
                 .addComponent(lblkembali)
                 .addGap(75, 75, 75)
                 .addComponent(lblTambKaryawan)
-                .addGap(50, 50, 50)
+                .addGap(53, 53, 53)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblidbarang)
+                    .addComponent(lblidkaryawan)
+                    .addComponent(txtbuang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblnmkaryawan)
                     .addComponent(txtidbarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblnamabrg)
-                    .addComponent(txtnama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblalamat)
+                    .addComponent(cbnamabarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblhrgbeli)
-                    .addComponent(txthrgbeli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblkota)
+                    .addComponent(txtidkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(cbnmKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(datetglpesan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(txtjmlbuang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblhrgjual)
-                    .addComponent(txthrgjual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnReset)
-                    .addComponent(btnEdit))
-                .addContainerGap(186, Short.MAX_VALUE))
+                    .addComponent(btntambah)
+                    .addComponent(btnreset))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3);
@@ -421,23 +534,17 @@ public class FormEditBarang extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseClicked
-            setField(goods); //Menyiapkan ulangsemua textfield jika tombol reset diklik
-    }//GEN-LAST:event_btnResetMouseClicked
+    private void btnresetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMouseClicked
+            setField(); //Menyiapkan ulangsemua textfield jika tombol reset diklik
+    }//GEN-LAST:event_btnresetMouseClicked
 
-    private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
-        if(isNameEmpty(txtnama.getText()))            
-            JOptionPane.showMessageDialog(this, "Nama barang dan harga wajib diisi.");
+    private void btntambahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btntambahMouseClicked
+        if(checkEmptyField()) JOptionPane.showMessageDialog(this, "Tolong lengkapi data karyawan baru"); //Mengecek data kosong pada data karyawan baru
         else{
-            String[]editedEData=new String[]{txtidbarang.getText(), txtnama.getText(), this.goods[2], txthrgbeli.getText(), txthrgjual.getText()};
-            if(brg.editGoods(editedEData)){
-                JOptionPane.showMessageDialog(this, "Data barang berhasil diedit.");
-                goods=editedEData;
-                setField(goods);
-            }
-            else JOptionPane.showMessageDialog(this, "Data barang gagal diedit.");
-        }       
-    }//GEN-LAST:event_btnEditMouseClicked
+            // Menambahkan karyawan baru ke database sesuai data yang diisikan
+            addNewEmployee(txtnama.getText(), txtalamat.getText(), txtkota.getText(), txtnotelp.getText());            
+        }        
+    }//GEN-LAST:event_btntambahMouseClicked
 
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
         this.setVisible(false);
@@ -466,15 +573,35 @@ public class FormEditBarang extends javax.swing.JFrame {
 
     private void lblkembaliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblkembaliMouseClicked
         // TODO add your handling code here:
-              
-        this.setVisible(false);
-        new FormBarang().setVisible(true);
-       
+        if(!isEditField()){        
+            this.setVisible(false);
+            new FormKaryawan().setVisible(true);
+        }
+        else{
+            String[] pilihan= new String[2];
+            pilihan[0]="Ya";
+            pilihan[1]="Tidak";       
+            int pilih=JOptionPane.showOptionDialog(this, "Apa Anda yakin ingin kembali?\nJika Anda mengklik \"Yes\" maka data yang Anda inputkan akan tidak ditambahkan.","Kembali", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,pilihan,null);
+            if(JOptionPane.YES_OPTION==pilih){
+                this.setVisible(false);
+                new FormKaryawan().setVisible(true);
+            }
+        }
     }//GEN-LAST:event_lblkembaliMouseClicked
 
-    private void txtnamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnamaActionPerformed
+    private void cbnmKaryawanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbnmKaryawanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtnamaActionPerformed
+        setIdKaryawan();
+    }//GEN-LAST:event_cbnmKaryawanActionPerformed
+
+    private void cbnmSuplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbnmSuplierActionPerformed
+        // TODO add your handling code here:
+        setIdSuplier();
+    }//GEN-LAST:event_cbnmSuplierActionPerformed
+
+    private void txtidbarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidbarangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtidbarangActionPerformed
     
     /**
      * @param args the command line arguments
@@ -493,13 +620,13 @@ public class FormEditBarang extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormEditBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormBuangBarang2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormEditBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormBuangBarang2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormEditBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormBuangBarang2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormEditBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormBuangBarang2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -517,7 +644,102 @@ public class FormEditBarang extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -536,13 +758,24 @@ public class FormEditBarang extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new FormBuangBarang2().setVisible(true);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Psamping;
-    private javax.swing.JToggleButton btnEdit;
-    private javax.swing.JToggleButton btnReset;
+    private javax.swing.JToggleButton btnreset;
+    private javax.swing.JToggleButton btntambah;
+    private javax.swing.JComboBox<String> cbnamabarang;
+    private javax.swing.JComboBox<String> cbnmKaryawan;
+    private javax.swing.JComboBox<String> cbnmSuplier;
+    private com.toedter.calendar.JDateChooser datetglpesan;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -558,15 +791,15 @@ public class FormEditBarang extends javax.swing.JFrame {
     private javax.swing.JLabel lblLaporan;
     private javax.swing.JLabel lblSuplier;
     private javax.swing.JLabel lblTambKaryawan;
-    private javax.swing.JLabel lblhrgbeli;
-    private javax.swing.JLabel lblhrgjual;
-    private javax.swing.JLabel lblidbarang;
+    private javax.swing.JLabel lblalamat;
+    private javax.swing.JLabel lblidkaryawan;
     private javax.swing.JLabel lblkembali;
-    private javax.swing.JLabel lblnamabrg;
-    private javax.swing.JTextField txthrgbeli;
-    private javax.swing.JTextField txthrgjual;
+    private javax.swing.JLabel lblkota;
+    private javax.swing.JLabel lblnmkaryawan;
+    private javax.swing.JTextField txtbuang;
     private javax.swing.JTextField txtidbarang;
-    private javax.swing.JTextField txtnama;
+    private javax.swing.JTextField txtidkaryawan;
+    private javax.swing.JTextField txtjmlbuang;
     // End of variables declaration//GEN-END:variables
 
 }
