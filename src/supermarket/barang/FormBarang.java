@@ -457,7 +457,7 @@ public class FormBarang extends javax.swing.JFrame {
     private void txtOrderGoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtOrderGoodsMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new FormPesanBarang2().setVisible(true);
+        new FormPesanBarang().setVisible(true);
     }//GEN-LAST:event_txtOrderGoodsMouseClicked
 
     private void txtSaleGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSaleGoodMouseClicked
@@ -469,7 +469,7 @@ public class FormBarang extends javax.swing.JFrame {
     private void txtRemoveGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRemoveGoodMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new FormBuangBarang2().setVisible(true);
+        new FormBuangBarang().setVisible(true);
     }//GEN-LAST:event_txtRemoveGoodMouseClicked
 
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
