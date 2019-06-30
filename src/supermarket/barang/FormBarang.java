@@ -12,7 +12,7 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import supermarket.anggota.FormAnggota;
-import supermarket.jamkerja.FormJamKerja2;
+import supermarket.jamkerja.FormJamKerja;
 import supermarket.karyawan.FormKaryawan;
 import supermarket.suplier.FormSuplier;
 
@@ -371,14 +371,14 @@ public class FormBarang extends javax.swing.JFrame {
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCari))
+            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(txtAddGood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtEditGood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtBookGood)
                 .addComponent(txtSellGood)
-                .addComponent(txtRemoveGood)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCari)))
+                .addComponent(txtRemoveGood))
         );
 
         jToolBar1.add(jPanel10);
@@ -394,6 +394,11 @@ public class FormBarang extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblGoods.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblGoodsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblGoods);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -479,7 +484,7 @@ public class FormBarang extends javax.swing.JFrame {
 
     private void lblJamKerjaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblJamKerjaMouseClicked
         this.setVisible(false);
-        new FormJamKerja2().setVisible(true);
+        new FormJamKerja().setVisible(true);
     }//GEN-LAST:event_lblJamKerjaMouseClicked
 
     private void lblAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnggotaMouseClicked
@@ -498,6 +503,10 @@ public class FormBarang extends javax.swing.JFrame {
     private void txtCariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCariMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCariMouseClicked
+
+    private void tblGoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGoodsMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblGoodsMouseClicked
 
     /**
      * @param args the command line arguments
