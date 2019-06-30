@@ -399,7 +399,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="lblkembali" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblKembali" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
@@ -418,19 +418,19 @@
                                       <EmptySpace min="173" pref="213" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="cbnmBarang" alignment="1" min="-2" pref="250" max="-2" attributes="0"/>
+                                              <Component id="cbNameGoods" alignment="1" min="-2" pref="250" max="-2" attributes="0"/>
                                               <Component id="txtidpemesanan" alignment="1" min="-2" pref="250" max="-2" attributes="0"/>
-                                              <Component id="txtidbarang" alignment="1" min="-2" pref="250" max="-2" attributes="0"/>
+                                              <Component id="txtIdGoods" alignment="1" min="-2" pref="250" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="txtidkaryawan" min="-2" pref="250" max="-2" attributes="0"/>
-                                          <Component id="cbnmKaryawan" min="-2" pref="250" max="-2" attributes="0"/>
-                                          <Component id="txtidsuplier" min="-2" pref="250" max="-2" attributes="0"/>
-                                          <Component id="cbnmSuplier1" min="-2" pref="250" max="-2" attributes="0"/>
-                                          <Component id="datetglpesan" min="-2" pref="250" max="-2" attributes="0"/>
+                                          <Component id="txtIdEmployee" min="-2" pref="250" max="-2" attributes="0"/>
+                                          <Component id="cbNameEmployee" min="-2" pref="250" max="-2" attributes="0"/>
+                                          <Component id="txtIdSuplier" min="-2" pref="250" max="-2" attributes="0"/>
+                                          <Component id="cbNameSuplier" min="-2" pref="250" max="-2" attributes="0"/>
+                                          <Component id="dateOrder" min="-2" pref="250" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="btntambah" min="-2" pref="115" max="-2" attributes="0"/>
+                                              <Component id="btnOrder" min="-2" pref="115" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="btnreset" min="-2" pref="115" max="-2" attributes="0"/>
+                                              <Component id="btnReset" min="-2" pref="115" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -440,7 +440,7 @@
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="txtjmlpemesanan" min="-2" pref="250" max="-2" attributes="0"/>
+                                      <Component id="txtTotOrder" min="-2" pref="250" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -454,7 +454,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                      <Component id="lblkembali" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblKembali" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
@@ -467,17 +467,17 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblnmkaryawan" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtidbarang" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtIdGoods" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblalamat" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbnmBarang" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbNameGoods" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblkota" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtidkaryawan" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtIdEmployee" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -487,15 +487,15 @@
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="cbnmKaryawan" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbNameEmployee" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtidsuplier" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtIdSuplier" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbnmSuplier1" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbNameSuplier" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -506,15 +506,15 @@
                               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="datetglpesan" min="-2" max="-2" attributes="0"/>
+                              <Component id="dateOrder" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtjmlpemesanan" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTotOrder" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnreset" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btntambah" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnReset" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnOrder" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="92" max="32767" attributes="0"/>
                   </Group>
@@ -566,7 +566,7 @@
                 <Property name="text" type="java.lang.String" value="ID Karyawan"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JToggleButton" name="btntambah">
+            <Component class="javax.swing.JToggleButton" name="btnOrder">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="18" style="0"/>
@@ -574,10 +574,10 @@
                 <Property name="text" type="java.lang.String" value="Pesan"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btntambahMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnOrderMouseClicked"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JToggleButton" name="btnreset">
+            <Component class="javax.swing.JToggleButton" name="btnReset">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="18" style="0"/>
@@ -585,10 +585,10 @@
                 <Property name="text" type="java.lang.String" value="Reset"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnresetMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnResetMouseClicked"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblkembali">
+            <Component class="javax.swing.JLabel" name="lblKembali">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -596,58 +596,55 @@
                 <Property name="text" type="java.lang.String" value="&lt; Kembali"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblkembaliMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblKembaliMouseClicked"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cbnmBarang">
+            <Component class="javax.swing.JComboBox" name="cbNameGoods">
               <Properties>
+                <Property name="editable" type="boolean" value="true"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="1">
-                    <StringItem index="0" value="Pilih Barang"/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbnmBarangActionPerformed"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="cbnmKaryawan">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0"/>
-                </Property>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="1">
-                    <StringItem index="0" value="Pilih Karyawan"/>
-                  </StringArray>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbnmKaryawanActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbNameGoodsActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cbnmSuplier1">
+            <Component class="javax.swing.JComboBox" name="cbNameEmployee">
               <Properties>
+                <Property name="editable" type="boolean" value="true"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="1">
-                    <StringItem index="0" value="Pilih Suplier"/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbnmSuplier1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbNameEmployeeActionPerformed"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="cbNameSuplier">
+              <Properties>
+                <Property name="editable" type="boolean" value="true"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
+                </Property>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbNameSuplierActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -664,7 +661,7 @@
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtidbarang">
+            <Component class="javax.swing.JTextField" name="txtIdGoods">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -672,10 +669,10 @@
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtidbarangActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIdGoodsActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtidkaryawan">
+            <Component class="javax.swing.JTextField" name="txtIdEmployee">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -705,7 +702,7 @@
                 <Property name="text" type="java.lang.String" value="ID Supplier"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtidsuplier">
+            <Component class="javax.swing.JTextField" name="txtIdSuplier">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -713,7 +710,7 @@
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtidsuplierActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIdSuplierActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel10">
@@ -738,7 +735,7 @@
                 <Property name="text" type="java.lang.String" value="Tgl Pemesanan"/>
               </Properties>
             </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="datetglpesan">
+            <Component class="com.toedter.calendar.JDateChooser" name="dateOrder">
               <Properties>
                 <Property name="dateFormatString" type="java.lang.String" value="d MMM yyyy"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -757,7 +754,7 @@
                 <Property name="text" type="java.lang.String" value="Jumlah Pemesanan"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtjmlpemesanan">
+            <Component class="javax.swing.JTextField" name="txtTotOrder">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
