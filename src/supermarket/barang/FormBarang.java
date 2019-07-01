@@ -55,7 +55,6 @@ public class FormBarang extends javax.swing.JFrame {
         setColumnModel(columnModel);        
         tblGoods.setColumnModel(columnModel);        
         for (String[] data1 : data) {            
-            
                 table.addRow(new Object[]{data1[0], data1[1], data1[2], data1[3], data1[4]});                
                       
         }        
@@ -465,9 +464,9 @@ public class FormBarang extends javax.swing.JFrame {
     }//GEN-LAST:event_txtOrderGoodsMouseClicked
 
     private void txtSaleGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSaleGoodMouseClicked
-        // TODO add your handling code here:
         this.setVisible(false);
-        //new ().setVisible(true);
+        new FormPenjualanBarang(allGoods).setVisible(true);
+        
     }//GEN-LAST:event_txtSaleGoodMouseClicked
 
     private void txtRemoveGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRemoveGoodMouseClicked
