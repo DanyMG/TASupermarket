@@ -117,6 +117,13 @@ public class Goods {
             System.out.println("Error discard : "+e);
             return false;
         }
-        
+    }
+    public int getTotalPrice(String[][] allSaleGoods){
+        int Total=0;
+        for(String[]data:allSaleGoods){
+            if(data[3]!=null){
+                Total+=Integer.parseInt(data[3]);
+            }else break;
+        } return Total;
     }
 }
