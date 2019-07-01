@@ -8,6 +8,7 @@ package supermarket.barang;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import supermarket.anggota.*;
 import supermarket.karyawan.*;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -20,14 +21,18 @@ import supermarket.suplier.Suplier;
  * @author DanyMG
  */
 public class FormPesanBarang extends javax.swing.JFrame {
-    
+    Goods goods=new Goods();
+    String[] selGoods,selEmployee,selSuplier;
     String[][] allGoods;
     Employee employee=new Employee();
     String[][] allEmployee=employee.getAllEmployee();
     Suplier suplier=new Suplier();
     String[][] allSuplier=suplier.getAllSuplier();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    public FormPesanBarang(String[][] allGoods) {
+    int idGoods,idEmployee,idSuplier;
+    
+    
+    public FormPesanBarang(String[][] allGoods) {   
         initComponents();
         this.allGoods=allGoods;
         setCbNameGoods();
@@ -36,7 +41,8 @@ public class FormPesanBarang extends javax.swing.JFrame {
         AutoCompleteDecorator.decorate(cbNameGoods);
         AutoCompleteDecorator.decorate(cbNameEmployee);
         AutoCompleteDecorator.decorate(cbNameSuplier);
-        setField();        
+        setField();     
+        
     }
     public void setField(){
         txtIdGoods.setText("");
@@ -45,25 +51,33 @@ public class FormPesanBarang extends javax.swing.JFrame {
         cbNameEmployee.setSelectedIndex(0);
         txtIdSuplier.setText("");
         cbNameSuplier.setSelectedIndex(0);
-        dateOrder.setDate(new Date());
+        dateOrder.setDate(null);
         txtTotOrder.setText("");
     }
     public void setCbNameGoods(){
         cbNameGoods.addItem("Pilih Barang...");
-        for(String[] data:this.allGoods){
+        for(String[] data:this.allGoods){            
             cbNameGoods.addItem(data[1]);
         }
     }
     public void setCbNameEmployee(){
         cbNameEmployee.addItem("Pilih Karyawan...");
-        for(String[] data:this.allGoods){
-            cbNameEmployee.addItem(data[1]);
+        for(String[] data:this.allEmployee){
+            if(Integer.parseInt(data[6])==0) cbNameEmployee.addItem(data[1]);
         }
     }
     public void setCbNameSuplier(){
         cbNameSuplier.addItem("Pilih Suplier...");
         for(String[] data:this.allSuplier){
             cbNameSuplier.addItem(data[1]);
+        }
+    }
+    public boolean isAnyEmpty() {
+        if (txtIdGoods.getText().equals("0") || txtIdEmployee.getText().equals("0") || txtIdSuplier.getText().equals("0") 
+                || dateOrder.getDate() == null || txtTotOrder.getText().equals("")){
+            return true;
+        } else {
+            return false;
         }
     }
     /** This method is called from within the constructor to
@@ -92,7 +106,6 @@ public class FormPesanBarang extends javax.swing.JFrame {
         lblJamKerja = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         lblTambKaryawan = new javax.swing.JLabel();
-        lblidkaryawan = new javax.swing.JLabel();
         lblnmkaryawan = new javax.swing.JLabel();
         lblalamat = new javax.swing.JLabel();
         lblkota = new javax.swing.JLabel();
@@ -102,7 +115,6 @@ public class FormPesanBarang extends javax.swing.JFrame {
         cbNameGoods = new javax.swing.JComboBox<>();
         cbNameEmployee = new javax.swing.JComboBox<>();
         cbNameSuplier = new javax.swing.JComboBox<>();
-        txtidpemesanan = new javax.swing.JTextField();
         txtIdGoods = new javax.swing.JTextField();
         txtIdEmployee = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -339,9 +351,6 @@ public class FormPesanBarang extends javax.swing.JFrame {
         lblTambKaryawan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTambKaryawan.setText("Pemesanan Barang");
 
-        lblidkaryawan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblidkaryawan.setText("ID Pemesanan");
-
         lblnmkaryawan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblnmkaryawan.setText("ID Barang");
 
@@ -399,10 +408,6 @@ public class FormPesanBarang extends javax.swing.JFrame {
             }
         });
 
-        txtidpemesanan.setBackground(new java.awt.Color(240, 240, 240));
-        txtidpemesanan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtidpemesanan.setEnabled(false);
-
         txtIdGoods.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtIdGoods.setEnabled(false);
         txtIdGoods.addActionListener(new java.awt.event.ActionListener() {
@@ -413,6 +418,11 @@ public class FormPesanBarang extends javax.swing.JFrame {
 
         txtIdEmployee.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtIdEmployee.setEnabled(false);
+        txtIdEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdEmployeeActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(52, 21, 9));
@@ -462,7 +472,6 @@ public class FormPesanBarang extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblidkaryawan)
                                     .addComponent(lblnmkaryawan)
                                     .addComponent(lblalamat)
                                     .addComponent(lblkota)
@@ -474,7 +483,6 @@ public class FormPesanBarang extends javax.swing.JFrame {
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(cbNameGoods, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtidpemesanan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtIdGoods, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txtIdEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cbNameEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -499,26 +507,21 @@ public class FormPesanBarang extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(65, 65, 65)
                 .addComponent(lblKembali)
-                .addGap(75, 75, 75)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblTambKaryawan)
-                        .addGap(53, 53, 53)
-                        .addComponent(lblidkaryawan))
-                    .addComponent(txtidpemesanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(60, 60, 60)
+                .addComponent(lblTambKaryawan)
+                .addGap(65, 65, 65)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblnmkaryawan)
                     .addComponent(txtIdGoods, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblalamat)
                     .addComponent(cbNameGoods, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblkota)
                     .addComponent(txtIdEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -526,28 +529,28 @@ public class FormPesanBarang extends javax.swing.JFrame {
                         .addComponent(jLabel8))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(cbNameEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtIdSuplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addComponent(cbNameSuplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12)
                         .addGap(16, 16, 16))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(dateOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtTotOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnReset)
                     .addComponent(btnOrder))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3);
@@ -575,7 +578,16 @@ public class FormPesanBarang extends javax.swing.JFrame {
     }//GEN-LAST:event_btnResetMouseClicked
 
     private void btnOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOrderMouseClicked
-            
+       if (isAnyEmpty()) {
+            JOptionPane.showMessageDialog(this, "Lengkapi data pesan barang.");
+       }else{
+            String[] order = new String[]{null, txtIdGoods.getText(), txtIdEmployee.getText(), txtIdSuplier.getText(),
+                       sdf.format(dateOrder.getDate()),txtTotOrder.getText()};
+            if(goods.orderGoods(order, selGoods)){
+                JOptionPane.showMessageDialog(this, "Data pemesanan barang berhasil ditambahkan.");
+                setField();
+            }else JOptionPane.showMessageDialog(this, "Data pemesanan barang gagal ditambahkan.");
+       }
     }//GEN-LAST:event_btnOrderMouseClicked
 
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
@@ -605,16 +617,19 @@ public class FormPesanBarang extends javax.swing.JFrame {
 
     private void lblKembaliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKembaliMouseClicked
         this.setVisible(false);
-        new FormKaryawan().setVisible(true);       
+        new FormBarang().setVisible(true);       
     }//GEN-LAST:event_lblKembaliMouseClicked
 
     private void cbNameGoodsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNameGoodsActionPerformed
-        
-
+        idGoods=cbNameGoods.getSelectedIndex();
+        txtIdGoods.setText(Integer.toString(idGoods));
+        this.selGoods=goods.getGoods(allGoods, idGoods);
     }//GEN-LAST:event_cbNameGoodsActionPerformed
 
     private void cbNameEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNameEmployeeActionPerformed
-        
+        idEmployee=cbNameEmployee.getSelectedIndex();
+        txtIdEmployee.setText(Integer.toString(idEmployee));
+        this.selEmployee=employee.getEmployee(allEmployee, idEmployee);
     }//GEN-LAST:event_cbNameEmployeeActionPerformed
 
     private void cbnmSuplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbnmSuplierActionPerformed
@@ -622,7 +637,9 @@ public class FormPesanBarang extends javax.swing.JFrame {
     }//GEN-LAST:event_cbnmSuplierActionPerformed
 
     private void cbNameSuplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNameSuplierActionPerformed
-        // TODO add your handling code here:
+        idSuplier=cbNameSuplier.getSelectedIndex();
+        txtIdSuplier.setText(Integer.toString(idSuplier));
+        this.selSuplier=suplier.getSuplier(allSuplier, idSuplier);
     }//GEN-LAST:event_cbNameSuplierActionPerformed
 
     private void txtIdGoodsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdGoodsActionPerformed
@@ -632,6 +649,10 @@ public class FormPesanBarang extends javax.swing.JFrame {
     private void txtIdSuplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdSuplierActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdSuplierActionPerformed
+
+    private void txtIdEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdEmployeeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdEmployeeActionPerformed
     
     /**
      * @param args the command line arguments
@@ -723,14 +744,12 @@ public class FormPesanBarang extends javax.swing.JFrame {
     private javax.swing.JLabel lblSuplier;
     private javax.swing.JLabel lblTambKaryawan;
     private javax.swing.JLabel lblalamat;
-    private javax.swing.JLabel lblidkaryawan;
     private javax.swing.JLabel lblkota;
     private javax.swing.JLabel lblnmkaryawan;
     private javax.swing.JTextField txtIdEmployee;
     private javax.swing.JTextField txtIdGoods;
     private javax.swing.JTextField txtIdSuplier;
     private javax.swing.JTextField txtTotOrder;
-    private javax.swing.JTextField txtidpemesanan;
     // End of variables declaration//GEN-END:variables
 
 }

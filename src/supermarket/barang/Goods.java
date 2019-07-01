@@ -104,4 +104,19 @@ public class Goods {
             return false;
         }
     }
+    public boolean orderGoods(String[] order,String[] goods){
+        int jml=Integer.parseInt(goods[2])+Integer.parseInt(order[5]);
+        try{
+            stm=con.createStatement();
+            stm.executeUpdate("INSERT INTO "
+                    + "pemesanan (id_pemesanan, id_barang, id_karyawan, id_suplier, tgl_pemesanan, jml_pesanan) "
+                    + "VALUES (NULL,'"+order[1]+"', '"+order[2]+"', '"+order[3]+"', '"+order[4]+"', '"+order[5]+"')");
+            stm.executeUpdate("UPDATE barang SET jumlah= '"+jml+"' WHERE barang.id_barang = "+goods[0]+"");
+            return true;            
+        }catch(SQLException e){
+            System.out.println("Error discard : "+e);
+            return false;
+        }
+        
+    }
 }
