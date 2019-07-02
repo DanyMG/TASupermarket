@@ -31,6 +31,7 @@ public class FormBarang extends javax.swing.JFrame {
     public FormBarang() {
         initComponents();
         setTable(allGoods);
+        rowSorter=new TableRowSorter<>(tblGoods.getModel());
     }
     public void setColumnTable(DefaultTableModel model){        
         model.addColumn("ID");        
@@ -309,7 +310,7 @@ public class FormBarang extends javax.swing.JFrame {
         });
 
         txtOrderGoods.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtOrderGoods.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_add_126583.png"))); // NOI18N
+        txtOrderGoods.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_reservation_4172165.png"))); // NOI18N
         txtOrderGoods.setText("Pesan Barang");
         txtOrderGoods.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
