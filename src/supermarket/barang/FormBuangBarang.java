@@ -7,10 +7,7 @@ package supermarket.barang;
 
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import supermarket.anggota.FormAnggota;
 import supermarket.jamkerja.FormJamKerja;
 import supermarket.karyawan.Employee;
@@ -32,59 +29,40 @@ public class FormBuangBarang extends javax.swing.JFrame {
     text ID&nama karyawan seperti fungsi search 
      */
     Goods brg=new Goods();
-    String[] selGoods;
-    private Employee empl = new Employee();
-    private String[][] allEmployeeData = empl.getAllEmployee();
+    String[] selGoods, selEmployee;
+    Employee employee=new Employee();
+    String[][] allEmployee=employee.getAllEmployee();
     private String[] selEmployeeData;
-
-    private TableRowSorter<TableModel> rowSorter;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    int idEmployee;
 
     public FormBuangBarang(String[] selGoods) {
         initComponents();
         this.selGoods = selGoods;
-        setField(this.selGoods);
-        setTable(allEmployeeData);
-        rowSorter = new TableRowSorter<>(tblkaryawan.getModel());
+        setCbNameEmployee();
+        //AutoCompleteDecorator.decorate(cbNameEmployee);
+        setField();
     }
 
-    public void setColumnTable(DefaultTableModel model) {
-        model.addColumn("ID");
-        model.addColumn("Nama");
-    }
-
-    public void setColumnModel(TableColumnModel columnModel) {
-        columnModel.getColumn(0).setPreferredWidth(5);
-        columnModel.getColumn(1).setPreferredWidth(100);
-
-    }
-
-    public void setTable(String[][] data) {
-        DefaultTableModel table = new DefaultTableModel();
-        setColumnTable(table);
-        tblkaryawan.setModel(table);
-        TableColumnModel columnModel = tblkaryawan.getColumnModel();
-        setColumnModel(columnModel);
-        tblkaryawan.setColumnModel(columnModel);
-        for (String[] data1 : data) {
-            if (Integer.parseInt(data1[6]) == 0) {
-                table.addRow(new Object[]{data1[0], data1[1]});
-            }
-        }
-    }
-
-    public void setField(String[] selGoods) {
+    public void setField() {
         txtIdGoods.setText(selGoods[0]);
-        txtnamabarang.setText(selGoods[1]);
+        txtNameGoods.setText(selGoods[1]);
         txtIdEmployee.setText("");
-        txtnamakaryawan.setText("");
+        cbNameEmployee.setSelectedIndex(0);
         dateDiscard.setDate(null);
         txtTotDiscard.setText("");
         txtExplanation.setText("");
     }
+    
+    public void setCbNameEmployee(){
+        cbNameEmployee.addItem("");
+        for(String[] data:this.allEmployee){
+            if(Integer.parseInt(data[6])==0) cbNameEmployee.addItem(data[1]);
+        }
+    }
 
     public boolean isAnyEmpty() {
-        if (txtIdEmployee.getText().equals("") || txtnamakaryawan.getText().equals("")
+        if (txtIdEmployee.getText().equals("") || txtNameGoods.getText().equals("")
                 || dateDiscard.getDate() == null || txtTotDiscard.getText().equals("")
                 || txtExplanation.getText().equals("")) {
             return true;
@@ -138,8 +116,8 @@ public class FormBuangBarang extends javax.swing.JFrame {
         txtIdEmployee = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         txtExplanation = new javax.swing.JTextField();
-        cbNameGoods = new javax.swing.JComboBox<>();
         cbNameEmployee = new javax.swing.JComboBox<>();
+        txtNameGoods = new javax.swing.JTextField();
 
         cbnmSuplier.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cbnmSuplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Suplier" }));
@@ -448,11 +426,20 @@ public class FormBuangBarang extends javax.swing.JFrame {
             }
         });
 
-        cbNameGoods.setEditable(true);
-        cbNameGoods.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
         cbNameEmployee.setEditable(true);
         cbNameEmployee.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbNameEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbNameEmployeeActionPerformed(evt);
+            }
+        });
+
+        txtNameGoods.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtNameGoods.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNameGoodsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -470,14 +457,15 @@ public class FormBuangBarang extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtIdGoods, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                    .addComponent(txtIdEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                    .addComponent(cbNameGoods, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(179, 179, 179)
-                                .addComponent(cbNameEmployee, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(cbNameEmployee, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNameGoods, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtIdGoods, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                        .addComponent(txtIdEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
@@ -512,7 +500,7 @@ public class FormBuangBarang extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblalamat)
-                    .addComponent(cbNameGoods, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNameGoods, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblkota)
@@ -561,8 +549,8 @@ public class FormBuangBarang extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnresetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMouseClicked
-        setField(selGoods);
-        tblkaryawan.setRowSorter(null);
+        setField();
+        
     }//GEN-LAST:event_btnresetMouseClicked
 
     private void btnDiscardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDiscardMouseClicked
@@ -571,13 +559,11 @@ public class FormBuangBarang extends javax.swing.JFrame {
         } else {
             String[] discard = new String[]{null, txtIdGoods.getText(), txtIdEmployee.getText(),
                   sdf.format(dateDiscard.getDate()), txtTotDiscard.getText(), txtExplanation.getText()};
-            System.out.println(discard[4]);
-            System.out.println(this.selGoods[2]);
             if(isTotDiscardValid(Integer.parseInt(discard[4]),Integer.parseInt(this.selGoods[2]))){
                 System.out.println("Salah");
                 if (brg.discardGoods(discard,this.selGoods)) {
                     JOptionPane.showMessageDialog(this, "Data buang barang berhasil ditambahkan.");
-                    setField(this.selGoods);
+                    setField();
                 } else {
                     JOptionPane.showMessageDialog(this, "Data buang barang gagal ditambahkan.");
                 }
@@ -636,6 +622,16 @@ public class FormBuangBarang extends javax.swing.JFrame {
     private void txtIdEmployeeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdEmployeeKeyReleased
 
     }//GEN-LAST:event_txtIdEmployeeKeyReleased
+
+    private void txtNameGoodsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameGoodsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNameGoodsActionPerformed
+
+    private void cbNameEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNameEmployeeActionPerformed
+        idEmployee=cbNameEmployee.getSelectedIndex();
+        txtIdEmployee.setText(Integer.toString(idEmployee));
+        this.selEmployee=employee.getEmployee(allEmployee, idEmployee);
+    }//GEN-LAST:event_cbNameEmployeeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1693,7 +1689,6 @@ public class FormBuangBarang extends javax.swing.JFrame {
     private javax.swing.JToggleButton btnDiscard;
     private javax.swing.JToggleButton btnreset;
     private javax.swing.JComboBox<String> cbNameEmployee;
-    private javax.swing.JComboBox<String> cbNameGoods;
     private javax.swing.JComboBox<String> cbnmSuplier;
     private com.toedter.calendar.JDateChooser dateDiscard;
     private javax.swing.JLabel jLabel11;
@@ -1722,6 +1717,7 @@ public class FormBuangBarang extends javax.swing.JFrame {
     private javax.swing.JTextField txtExplanation;
     private javax.swing.JTextField txtIdEmployee;
     private javax.swing.JTextField txtIdGoods;
+    private javax.swing.JTextField txtNameGoods;
     private javax.swing.JTextField txtTotDiscard;
     // End of variables declaration//GEN-END:variables
 
