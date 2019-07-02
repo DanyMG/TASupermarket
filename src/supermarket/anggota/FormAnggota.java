@@ -31,6 +31,7 @@ public class FormAnggota extends javax.swing.JFrame {
     public FormAnggota() {
         initComponents();
         setTable(allMData);
+        rowSorter=new TableRowSorter<>(tblMember.getModel());
     }
     public void setColumnTable(DefaultTableModel model){        
         model.addColumn ("ID");
