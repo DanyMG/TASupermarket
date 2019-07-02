@@ -118,12 +118,30 @@ public class Goods {
             return false;
         }
     }
-    public int getTotalPrice(String[][] allSaleGoods){
-        int Total=0;
-        for(String[]data:allSaleGoods){
-            if(data[3]!=null){
-                Total+=Integer.parseInt(data[3]);
-            }else break;
-        } return Total;
+    public boolean addSaleBill(String[] saleBill,String[][] saleBillDetails){
+        try{
+            stm=con.createStatement();
+            if(saleBill[1].equals("")){
+                stm.executeUpdate("INSERT INTO "
+                    + "penjualan (id_penjualan, id_anggota, tanggal_penjualan, total_tagihan) "
+                    + "VALUES (NULL,NULL, '"+saleBill[2]+"', '"+saleBill[3]+"')");
+            }else{
+                stm.executeUpdate("INSERT INTO "
+                    + "penjualan (id_penjualan, id_anggota, tanggal_penjualan, total_tagihan) "
+                    + "VALUES (NULL,'"+saleBill[1]+"', '"+saleBill[2]+"', '"+saleBill[3]+"')");
+            }            
+            con.setAutoCommit(false);
+            stm=con.createStatement();  
+            System.out.println(saleBillDetails.length);
+            for(int i=0;i<saleBillDetails.length;i++){
+                stm.addBatch("INSERT INTO penjualan_barang (id_penjualan, id_barang, jml_penjualan, total_harga) "
+                    + "VALUES ('"+saleBillDetails[0]+"', '"+saleBillDetails[1]+"', '"+saleBillDetails[2]+"', '"+saleBillDetails[3]+"')");
+            }
+            stm.executeBatch();
+            return true;            
+        }catch(SQLException e){
+            System.out.println("Error discard : "+e);
+            return false;
+        }
     }
 }

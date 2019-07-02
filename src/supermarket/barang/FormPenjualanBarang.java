@@ -7,7 +7,10 @@ package supermarket.barang;
 
 import com.sun.xml.internal.fastinfoset.util.StringArray;
 import java.sql.Array;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -28,6 +31,7 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
     
     DefaultTableModel tblModel= new DefaultTableModel();
     private int selRow;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     
     public FormPenjualanBarang(String[][]allGoods) {
         initComponents();
@@ -69,7 +73,7 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
         txtSumGoods.setText("");
         txtIdGoods.setText("");
         cbNameGoods.setSelectedIndex(0);
-        txtTotPrice.setText("");
+        txtTotBill.setText("");
         txtIdMember.setEnabled(false);
         
     }
@@ -80,6 +84,23 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
         int tot=Integer.parseInt(saleGoods[4])*Integer.parseInt(txtSumGoods.getText());
         tblModel.addRow(new Object[]{saleGoods[1],saleGoods[4],txtSumGoods.getText(),Integer.toString(tot)});
     }
+    public int getTotalBill(){
+        int total=0;        
+        for(int i=0;i<tblSale.getRowCount();i++){
+            total+=Integer.parseInt(tblModel.getValueAt(i, 3).toString());
+        } 
+        return total;
+    }
+    public void setAllSaleGoods(){
+        allSaleGoods=new String[tblSale.getRowCount()][4];
+        for(int i=0;i<tblSale.getRowCount();i++){
+            allSaleGoods[i]=new String[]{
+                tblSale.getValueAt(i, 0).toString(),tblSale.getValueAt(i, 1).toString(),
+                tblSale.getValueAt(i, 2).toString(),tblSale.getValueAt(i, 3).toString()
+            };
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,7 +136,7 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
         lblkembali = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSale = new javax.swing.JTable();
-        btnreset2 = new javax.swing.JToggleButton();
+        btnPrint = new javax.swing.JToggleButton();
         btnaddSaleGoods = new javax.swing.JToggleButton();
         rbMember = new javax.swing.JRadioButton();
         rbNonMember = new javax.swing.JRadioButton();
@@ -126,7 +147,7 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
         lblidkaryawan1 = new javax.swing.JLabel();
         txtIdGoods = new javax.swing.JTextField();
         cbNameGoods = new javax.swing.JComboBox<>();
-        txtTotPrice = new javax.swing.JTextField();
+        txtTotBill = new javax.swing.JTextField();
         lblidkaryawan2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -406,11 +427,11 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblSale);
 
-        btnreset2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnreset2.setText("Cetak");
-        btnreset2.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnPrint.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnPrint.setText("Cetak");
+        btnPrint.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnreset2MouseClicked(evt);
+                btnPrintMouseClicked(evt);
             }
         });
 
@@ -479,10 +500,10 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
             }
         });
 
-        txtTotPrice.setEnabled(false);
+        txtTotBill.setEnabled(false);
 
         lblidkaryawan2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblidkaryawan2.setText("Total Harga");
+        lblidkaryawan2.setText("Total Tagihan");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -535,8 +556,8 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
                                         .addComponent(txtIdMember)
                                         .addComponent(txtNameMember)))
                                 .addComponent(btnreset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnreset2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtTotPrice, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addComponent(btnPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtTotBill, javax.swing.GroupLayout.Alignment.TRAILING))
                             .addComponent(lblidkaryawan2))))
                 .addGap(30, 30, 30))
         );
@@ -564,11 +585,11 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(lblidkaryawan2)
                         .addGap(11, 11, 11)
-                        .addComponent(txtTotPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTotBill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnreset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnreset2))
+                        .addComponent(btnPrint))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -639,6 +660,7 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
     private void btndelSaleGoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btndelSaleGoodsMouseClicked
         tblModel.removeRow(tblSale.getSelectedRow());
         tblSale.clearSelection();
+        txtTotBill.setText(Integer.toString(getTotalBill()));
     }//GEN-LAST:event_btndelSaleGoodsMouseClicked
 
     private void btndelSaleGoodsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndelSaleGoodsActionPerformed
@@ -664,12 +686,21 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
         selRow=tblSale.getSelectedRow();
     }//GEN-LAST:event_tblSaleMouseClicked
 
-    private void btnreset2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnreset2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnreset2MouseClicked
+    private void btnPrintMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseClicked
+       setAllSaleGoods();
+       String[] saleBill;
+       if(txtIdMember.getText().equals("")) saleBill=new String[]{null,"-1",sdf.format(new Date()),Integer.toString(getTotalBill())};
+       else saleBill=new String[]{null,txtIdMember.getText(),sdf.format(new Date()),Integer.toString(getTotalBill())};
+       
+       if(goods.addSaleBill(saleBill, allSaleGoods)){
+           setField();
+           JOptionPane.showMessageDialog(this, "Data penjualan barang berhasil ditambahkan.", "Alert", JOptionPane.WARNING_MESSAGE);
+       }else JOptionPane.showMessageDialog(this, "Data penjualan barang gagal ditambahkan.", "Alert", JOptionPane.WARNING_MESSAGE);
+    }//GEN-LAST:event_btnPrintMouseClicked
 
     private void btnaddSaleGoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnaddSaleGoodsMouseClicked
-        addSaleTable();
+       addSaleTable();        
+       txtTotBill.setText(Integer.toString(getTotalBill()));
        cbNameGoods.setSelectedIndex(0);
        txtSumGoods.setText("");
     }//GEN-LAST:event_btnaddSaleGoodsMouseClicked
@@ -736,10 +767,10 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Psamping;
     private javax.swing.ButtonGroup btnGroupMember;
+    private javax.swing.JToggleButton btnPrint;
     private javax.swing.JToggleButton btnaddSaleGoods;
     private javax.swing.JToggleButton btndelSaleGoods;
     private javax.swing.JToggleButton btnreset;
-    private javax.swing.JToggleButton btnreset2;
     private javax.swing.JComboBox<String> cbNameGoods;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -771,6 +802,6 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
     private javax.swing.JTextField txtIdMember;
     private javax.swing.JTextField txtNameMember;
     private javax.swing.JTextField txtSumGoods;
-    private javax.swing.JTextField txtTotPrice;
+    private javax.swing.JTextField txtTotBill;
     // End of variables declaration//GEN-END:variables
 }
