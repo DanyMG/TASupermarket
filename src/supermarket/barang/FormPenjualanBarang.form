@@ -481,11 +481,13 @@
                           <Component id="jScrollPane1" pref="384" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" max="-2" attributes="0">
-                          <Component id="lblidkaryawan" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblidkaryawan1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="cbNameGoods" alignment="0" min="-2" pref="31" max="-2" attributes="0"/>
-                          <Component id="txtIdGoods" alignment="0" pref="31" max="32767" attributes="0"/>
+                          <Component id="txtIdGoods" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblidkaryawan" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblidkaryawan1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
