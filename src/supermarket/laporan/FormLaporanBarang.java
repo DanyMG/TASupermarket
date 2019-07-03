@@ -7,9 +7,15 @@
 package supermarket.laporan;
 
 
+import java.awt.Toolkit;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import supermarket.anggota.FormAnggota;
 import supermarket.barang.FormBarang;
-import supermarket.jamkerja.FormJamKerja;
 import supermarket.karyawan.FormKaryawan;
 import supermarket.suplier.FormSuplier;
 
@@ -17,13 +23,57 @@ import supermarket.suplier.FormSuplier;
  *
  * @author DanyMG
  */
-public class FormLaporan extends javax.swing.JFrame {
+public class FormLaporanBarang extends javax.swing.JFrame {
 
-    /** Creates new form FormKaryawan */
-    public FormLaporan() {
-        initComponents();
+    SimpleDateFormat sdf = new SimpleDateFormat("dd");
+    Date[] allDay;
+    Date today=new Date();
+    Calendar cal=Calendar.getInstance();
+    DefaultTableModel table= new DefaultTableModel();
+    
+    public FormLaporanBarang() {
+        initComponents();        
+        setAllDayOfMount(today);        
+        setColumnTable(table);
+        setTable();
     }
-
+    public void setAllDayOfMount(Date day){
+        cal.setTime(day);
+        allDay=new Date[cal.getActualMaximum(Calendar.DAY_OF_MONTH)];
+        for(int i=0;i<allDay.length;i++){
+            if(i==0) allDay[0]=getFirstDayOfMount();
+            else{
+                cal.setTime(allDay[i-1]);
+                cal.add(Calendar.DATE, 1);
+                allDay[i]=cal.getTime();
+            }            
+            System.out.println(allDay[i]);
+        }
+    }
+    public Date getFirstDayOfMount(){        
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+        return cal.getTime();
+    }
+    public void setColumnTable(DefaultTableModel model){
+        model.setColumnCount(0);
+        model.addColumn ("Nama Barang");
+        for(int i=0;i<allDay.length;i++){
+            model.addColumn(sdf.format(allDay[i]));
+        }        
+    }
+    public void setColumnModel(TableColumnModel columnModel){        
+        columnModel.getColumn(0).setPreferredWidth(100);        
+    }
+    public void setTable(){        
+        tbl.setModel(table);        
+        TableColumnModel columnModel=tbl.getColumnModel();
+        setColumnModel(columnModel);        
+        tbl.setColumnModel(columnModel); 
+        table.setRowCount(0);
+        System.out.println("bacot");
+    }
+    
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -50,8 +100,9 @@ public class FormLaporan extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         lblTambKaryawan = new javax.swing.JLabel();
         btnreset = new javax.swing.JToggleButton();
-        btnreset1 = new javax.swing.JToggleButton();
-        btnreset2 = new javax.swing.JToggleButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -257,7 +308,7 @@ public class FormLaporan extends javax.swing.JFrame {
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 170, Short.MAX_VALUE))
+                .addGap(0, 176, Short.MAX_VALUE))
         );
 
         jPanel1.add(Psamping);
@@ -268,39 +319,38 @@ public class FormLaporan extends javax.swing.JFrame {
         lblTambKaryawan.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblTambKaryawan.setForeground(new java.awt.Color(253, 77, 12));
         lblTambKaryawan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTambKaryawan.setText("Laporan");
+        lblTambKaryawan.setText("Laporan Barang");
 
         btnreset.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnreset.setText("Barang");
+        btnreset.setText("Export");
         btnreset.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnresetMouseClicked(evt);
             }
         });
 
-        btnreset1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnreset1.setText("Keuangan");
-        btnreset1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnreset1MouseClicked(evt);
+        tbl.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
-        });
-        btnreset1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnreset1ActionPerformed(evt);
+        ));
+        tbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblkaryawanMouseClicked(evt);
             }
         });
 
-        btnreset2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnreset2.setText("Karyawan");
-        btnreset2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("<Kembali");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnreset2MouseClicked(evt);
-            }
-        });
-        btnreset2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnreset2ActionPerformed(evt);
+                jLabel1MouseClicked(evt);
             }
         });
 
@@ -308,27 +358,32 @@ public class FormLaporan extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTambKaryawan, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(259, 259, 259)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnreset2, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnreset1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnreset, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(259, 259, 259)
+                        .addComponent(btnreset, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(697, 697, 697)
+                        .addComponent(jLabel1)))
+                .addContainerGap(47, Short.MAX_VALUE))
+            .addComponent(lblTambKaryawan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(150, 150, 150)
+                .addGap(65, 65, 65)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTambKaryawan)
-                .addGap(30, 30, 30)
-                .addComponent(btnreset, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(btnreset1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(btnreset2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addGap(36, 36, 36)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btnreset, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3);
@@ -351,53 +406,39 @@ public class FormLaporan extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
-        this.setVisible(false);
-        new FormSuplier().setVisible(true);
-    }//GEN-LAST:event_lblSuplierMouseClicked
-
-    private void lblBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBarangMouseClicked
-        this.setVisible(false);
-        new FormBarang().setVisible(true);
-    }//GEN-LAST:event_lblBarangMouseClicked
-
-    private void lblKaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKaryawanMouseClicked
-        this.setVisible(false);
-        new FormKaryawan().setVisible(true);
-    }//GEN-LAST:event_lblKaryawanMouseClicked
-
-    private void lblAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnggotaMouseClicked
-        this.setVisible(false);
-        new FormAnggota().setVisible(true);
-    }//GEN-LAST:event_lblAnggotaMouseClicked
+    private void btnresetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMouseClicked
+         //Menyiapkan ulangsemua textfield jika tombol reset diklik
+    }//GEN-LAST:event_btnresetMouseClicked
 
     private void lblJamKerjaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblJamKerjaMouseClicked
         this.setVisible(false);
         new FormJamKerja().setVisible(true);
     }//GEN-LAST:event_lblJamKerjaMouseClicked
 
-    private void btnresetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMouseClicked
+    private void lblAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnggotaMouseClicked
         this.setVisible(false);
-        new FormLaporanBarang().setVisible(true);
-    }//GEN-LAST:event_btnresetMouseClicked
+        new FormAnggota().setVisible(true);
+    }//GEN-LAST:event_lblAnggotaMouseClicked
 
-    private void btnreset1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnreset1MouseClicked
-       this.setVisible(false);
-       new FormLaporanKeuangan().setVisible(true);
-    }//GEN-LAST:event_btnreset1MouseClicked
-
-    private void btnreset1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnreset1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnreset1ActionPerformed
-
-    private void btnreset2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnreset2MouseClicked
+    private void lblKaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKaryawanMouseClicked
         this.setVisible(false);
-        new FormLaporanKaryawan().setVisible(true);
-    }//GEN-LAST:event_btnreset2MouseClicked
+        new FormKaryawan().setVisible(true);
+    }//GEN-LAST:event_lblKaryawanMouseClicked
 
-    private void btnreset2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnreset2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnreset2ActionPerformed
+    private void lblBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBarangMouseClicked
+        this.setVisible(false);
+        new FormBarang().setVisible(true);
+    }//GEN-LAST:event_lblBarangMouseClicked
+
+    private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
+        this.setVisible(false);
+        new FormSuplier().setVisible(true);
+    }//GEN-LAST:event_lblSuplierMouseClicked
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        this.setVisible(false);
+        new FormLaporan().setVisible(true);
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -416,21 +457,23 @@ public class FormLaporan extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormLaporan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLaporanBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormLaporan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLaporanBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormLaporan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLaporanBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormLaporan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLaporanBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormLaporan().setVisible(true);
+                new FormLaporanBarang().setVisible(true);
             }
         });
     }
@@ -438,8 +481,7 @@ public class FormLaporan extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Psamping;
     private javax.swing.JToggleButton btnreset;
-    private javax.swing.JToggleButton btnreset1;
-    private javax.swing.JToggleButton btnreset2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -448,6 +490,7 @@ public class FormLaporan extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAnggota;
     private javax.swing.JLabel lblBarang;
     private javax.swing.JLabel lblJamKerja;
@@ -455,6 +498,7 @@ public class FormLaporan extends javax.swing.JFrame {
     private javax.swing.JLabel lblLaporan;
     private javax.swing.JLabel lblSuplier;
     private javax.swing.JLabel lblTambKaryawan;
+    private javax.swing.JTable tbl;
     // End of variables declaration//GEN-END:variables
 
 }
