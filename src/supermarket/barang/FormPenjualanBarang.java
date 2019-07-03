@@ -28,6 +28,7 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
     private Goods goods=new Goods();
     private String[][] allGoods,allSaleGoods;
     private String[] saleGoods;
+    private String [][]allbill = goods.getAllBill();
     
     DefaultTableModel tblModel= new DefaultTableModel();
     private int selRow;
@@ -41,7 +42,8 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
         setField();
         AutoCompleteDecorator.decorate(cbNameGoods);
     }
-     public void setColumnTable(DefaultTableModel model){               
+     public void setColumnTable(DefaultTableModel model){          
+        model.addColumn("ID");
         model.addColumn("Nama");
         model.addColumn("Harga");
         model.addColumn("Jumlah Barang");
@@ -49,9 +51,10 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
         
     }
     public void setColumnModel(TableColumnModel columnModel){   
-        columnModel.getColumn(0).setPreferredWidth(200);
-        columnModel.getColumn(1).setPreferredWidth(100);
-        columnModel.getColumn(2).setPreferredWidth(50);     
+        columnModel.getColumn(0).setPreferredWidth(20);
+        columnModel.getColumn(1).setPreferredWidth(200);
+        columnModel.getColumn(2).setPreferredWidth(100);
+        columnModel.getColumn(3).setPreferredWidth(50);     
     }
     public void setTable(String[][]allSaleGoods){        
         setColumnTable(tblModel);
@@ -82,22 +85,32 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
     }
     public void addSaleTable(){
         int tot=Integer.parseInt(saleGoods[4])*Integer.parseInt(txtSumGoods.getText());
-        tblModel.addRow(new Object[]{saleGoods[1],saleGoods[4],txtSumGoods.getText(),Integer.toString(tot)});
+        tblModel.addRow(new Object[]{saleGoods[0],saleGoods[1],saleGoods[4],txtSumGoods.getText(),Integer.toString(tot)});
     }
     public int getTotalBill(){
         int total=0;        
         for(int i=0;i<tblSale.getRowCount();i++){
-            total+=Integer.parseInt(tblModel.getValueAt(i, 3).toString());
+            total+=Integer.parseInt(tblModel.getValueAt(i, 4).toString());
         } 
         return total;
     }
     public void setAllSaleGoods(){
-        allSaleGoods=new String[tblSale.getRowCount()][4];
+        allSaleGoods=new String[tblSale.getRowCount()][6];
         for(int i=0;i<tblSale.getRowCount();i++){
-            allSaleGoods[i]=new String[]{
-                tblSale.getValueAt(i, 0).toString(),tblSale.getValueAt(i, 1).toString(),
-                tblSale.getValueAt(i, 2).toString(),tblSale.getValueAt(i, 3).toString()
-            };
+            if(txtIdMember.getText().equals("")){
+                allSaleGoods[i]=new String[]{    
+                    Integer.toString(goods.getLastId(allbill)+1),"6",
+                    sdf.format(new Date()),tblSale.getValueAt(i,0).toString(),
+                    tblSale.getValueAt(i,3).toString(),tblSale.getValueAt(i,4).toString()
+                };
+            }else{
+                allSaleGoods[i]=new String[]{    
+                Integer.toString(goods.getLastId(allbill)),txtIdMember.getText(),
+                sdf.format(new Date()),tblSale.getValueAt(i,0).toString(),
+                tblSale.getValueAt(i,3).toString(),tblSale.getValueAt(i,4).toString()
+                };
+            }
+            
         }
     }
     
@@ -688,12 +701,11 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
 
     private void btnPrintMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseClicked
        setAllSaleGoods();
-       String[] saleBill;
-       if(txtIdMember.getText().equals("")) saleBill=new String[]{null,"-1",sdf.format(new Date()),Integer.toString(getTotalBill())};
-       else saleBill=new String[]{null,txtIdMember.getText(),sdf.format(new Date()),Integer.toString(getTotalBill())};
-       
-       if(goods.addSaleBill(saleBill, allSaleGoods)){
+      
+       if(goods.addSaleBill(allSaleGoods)){
+           allbill=goods.getAllBill();
            setField();
+           resetTable();
            JOptionPane.showMessageDialog(this, "Data penjualan barang berhasil ditambahkan.", "Alert", JOptionPane.WARNING_MESSAGE);
        }else JOptionPane.showMessageDialog(this, "Data penjualan barang gagal ditambahkan.", "Alert", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_btnPrintMouseClicked

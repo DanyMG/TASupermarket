@@ -30,15 +30,19 @@ public class Member {
             System.out.println("Error : "+e);
         }
     }
-     public int getLastId(String[][] mData){             
-        return Integer.parseInt(mData[mData.length-1][0]);
+     public int getLastId(String[][] eData){ 
+        if(eData.length==0){
+            return 0;
+        }else{
+            return Integer.parseInt(eData[eData.length-1][0]);
+        }
     }
     public boolean addMember(String[] mData){
          try{
             stm=con.createStatement();
             stm.executeUpdate("INSERT INTO anggota"
-                    + "(id_anggota, nama_anggota, almt_anggota, notelp_anggota, poin_anggota) "
-                    + "VALUES (NULL,'"+mData[1]+"', '"+mData[2]+"', '"+mData[3]+"', '"+mData[4]+"')");
+                    + "(id_anggota, nama_anggota, almt_anggota, kota_anggota, notelp_anggota, poin_anggota) "
+                    + "VALUES (NULL,'"+mData[1]+"', '"+mData[2]+"', '"+mData[3]+"', '"+mData[4]+"', '"+mData[5]+"')");
             return true;
         }catch(SQLException e){
             System.out.println("Error : "+e);
@@ -62,8 +66,9 @@ public class Member {
               member[i][0]=RsSuplier.getString("id_anggota");
               member[i][1]=RsSuplier.getString("nama_anggota");
               member[i][2]=RsSuplier.getString("almt_anggota");
-              member[i][3]=RsSuplier.getString("notelp_anggota");
-              member[i][4]=RsSuplier.getString("poin_anggota");                
+              member[i][3]=RsSuplier.getString("kota_anggota");
+              member[i][4]=RsSuplier.getString("notelp_anggota");
+              member[i][5]=RsSuplier.getString("poin_anggota");                
           }            
       }catch(SQLException e){
           System.out.println("Error : "+e);
@@ -84,8 +89,8 @@ public class Member {
     public boolean editSuplier(String[] sData){        
         try{
             stm=con.createStatement();
-            stm.executeUpdate("UPDATE anggota SET nama_anggota = '"+sData[1]+"', almt_anggota = '"+sData[2]+"'"
-                    + ", notelp_anggota = '"+sData[3]+"' WHERE suplier.id_suplier = "+sData[0]+"");
+            stm.executeUpdate("UPDATE anggota SET nama_anggota = '"+sData[1]+"', almt_anggota = '"+sData[2]+"', kota_anggota = '"+sData[3]+"'"
+                    + ", notelp_anggota = '"+sData[4]+"' WHERE suplier.id_suplier = "+sData[0]+"");
             return true;
         }catch(SQLException e){
             System.out.println("Error : "+e);
