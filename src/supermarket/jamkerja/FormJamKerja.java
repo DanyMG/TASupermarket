@@ -8,6 +8,8 @@ package supermarket.jamkerja;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import javafx.util.converter.LocalDateStringConverter;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -35,22 +37,27 @@ public class FormJamKerja extends javax.swing.JFrame {
     String[][] allShiftWork=sw.getAllShiftWork();
     
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-    LocalDate localDate = LocalDate.now();
+    Calendar calendar=Calendar.getInstance();
+    Date today=new Date();
+    Date firsDayWeek,lastDayWeek;
+    
+    
     private TableRowSorter<TableModel> rowSorter;
     public FormJamKerja() {
         initComponents();
+        calendar.setTime(today);
         if(allShiftWork==null) ///tambah jadwal
         setTable(ftEmployee);
     }
     public void setColumnTable(DefaultTableModel model){        
-        model.addColumn ("Nama Karyawan");
-        model.addColumn ("Minggu");
+        model.addColumn ("Nama Karyawan");        
         model.addColumn ("Senin");
         model.addColumn ("Selasa");
         model.addColumn ("Rabu");
         model.addColumn ("Kamis");
         model.addColumn ("Jumat");
-        model.addColumn ("Sabtu");        
+        model.addColumn ("Sabtu");
+        model.addColumn ("Minggu");
     }
     public void setColumnModel(TableColumnModel columnModel){        
         columnModel.getColumn(0).setPreferredWidth(100);        

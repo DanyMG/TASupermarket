@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 23, 2019 at 03:26 PM
+-- Generation Time: Jul 03, 2019 at 08:14 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -76,9 +76,35 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id_barang`, `nama_barang`, `jumlah`, `harga_beli`, `harga_jual`) VALUES
-(1, 'NIVEA MEN Black&White Invisible 50ml', 9, 15000, 18000),
-(2, 'ROMA CREAM CRACKERS 135g', 50, 8000, 10000),
+(1, 'NIVEA MEN Black&White Invisible 50ml', 8, 15000, 18000),
+(2, 'ROMA CREAM CRACKERS 135g', 50, 9000, 11000),
 (3, 'DAISHA LIP BALM 10g', 0, 35000, 40000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jadwal`
+--
+
+CREATE TABLE `jadwal` (
+  `id_jadwal` int(11) NOT NULL,
+  `tgl_jadwal` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jadwal_karyawan`
+--
+
+CREATE TABLE `jadwal_karyawan` (
+  `id_jk` int(11) NOT NULL,
+  `id_jadwal` int(11) NOT NULL,
+  `id_karyawan` int(11) NOT NULL,
+  `waktu_mulai` int(11) NOT NULL,
+  `waktu_selesai` int(11) NOT NULL,
+  `nama_jk` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -135,6 +161,14 @@ CREATE TABLE `pembuangan` (
   `ket_pembuangan` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `pembuangan`
+--
+
+INSERT INTO `pembuangan` (`id_pembuangan`, `id_barang`, `id_karyawan`, `tgl_pembuangan`, `jml_buang`, `ket_pembuangan`) VALUES
+(1, 1, 1, '2019-06-30', 1, 'kadaluarsa'),
+(2, 1, 1, '2019-06-30', 1, 'bosok');
+
 -- --------------------------------------------------------
 
 --
@@ -162,6 +196,21 @@ INSERT INTO `pemesanan` (`id_pemesanan`, `id_barang`, `id_karyawan`, `id_suplier
 (4, 1, 1, 1, '2019-03-27', 200, 'Tunggu'),
 (5, 1, 1, 1, '2019-03-26', 50, 'Tunggu'),
 (6, 2, 1, 2, '2019-03-27', 50, 'Tunggu');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `penjualan`
+--
+
+CREATE TABLE `penjualan` (
+  `id_penjualan` int(11) NOT NULL,
+  `id_anggota` int(11) DEFAULT NULL,
+  `tgl_penjualan` date NOT NULL,
+  `id_barang` int(11) NOT NULL,
+  `jml_penjualan` int(11) NOT NULL,
+  `tot_harga` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -213,6 +262,20 @@ ALTER TABLE `barang`
   ADD PRIMARY KEY (`id_barang`);
 
 --
+-- Indexes for table `jadwal`
+--
+ALTER TABLE `jadwal`
+  ADD PRIMARY KEY (`id_jadwal`);
+
+--
+-- Indexes for table `jadwal_karyawan`
+--
+ALTER TABLE `jadwal_karyawan`
+  ADD PRIMARY KEY (`id_jk`),
+  ADD KEY `id_jadwal` (`id_jadwal`),
+  ADD KEY `id_karyawan` (`id_karyawan`);
+
+--
 -- Indexes for table `karyawan`
 --
 ALTER TABLE `karyawan`
@@ -234,6 +297,14 @@ ALTER TABLE `pemesanan`
   ADD KEY `id_barang` (`id_barang`),
   ADD KEY `id_karyawan` (`id_karyawan`),
   ADD KEY `id_suplier` (`id_suplier`);
+
+--
+-- Indexes for table `penjualan`
+--
+ALTER TABLE `penjualan`
+  ADD PRIMARY KEY (`id_penjualan`),
+  ADD KEY `id_anggota` (`id_anggota`),
+  ADD KEY `id_barang` (`id_barang`);
 
 --
 -- Indexes for table `suplier`
@@ -273,7 +344,7 @@ ALTER TABLE `karyawan`
 -- AUTO_INCREMENT for table `pembuangan`
 --
 ALTER TABLE `pembuangan`
-  MODIFY `id_pembuangan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pembuangan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pemesanan`
@@ -292,6 +363,13 @@ ALTER TABLE `suplier`
 --
 
 --
+-- Constraints for table `jadwal_karyawan`
+--
+ALTER TABLE `jadwal_karyawan`
+  ADD CONSTRAINT `jadwal_karyawan_ibfk_1` FOREIGN KEY (`id_jadwal`) REFERENCES `jadwal` (`id_jadwal`),
+  ADD CONSTRAINT `jadwal_karyawan_ibfk_2` FOREIGN KEY (`id_karyawan`) REFERENCES `karyawan` (`id_karyawan`);
+
+--
 -- Constraints for table `pembuangan`
 --
 ALTER TABLE `pembuangan`
@@ -305,6 +383,13 @@ ALTER TABLE `pemesanan`
   ADD CONSTRAINT `pemesanan_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`),
   ADD CONSTRAINT `pemesanan_ibfk_2` FOREIGN KEY (`id_karyawan`) REFERENCES `karyawan` (`id_karyawan`),
   ADD CONSTRAINT `pemesanan_ibfk_3` FOREIGN KEY (`id_suplier`) REFERENCES `suplier` (`id_suplier`);
+
+--
+-- Constraints for table `penjualan`
+--
+ALTER TABLE `penjualan`
+  ADD CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`),
+  ADD CONSTRAINT `penjualan_ibfk_2` FOREIGN KEY (`id_anggota`) REFERENCES `anggota` (`id_anggota`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
