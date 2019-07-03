@@ -7,10 +7,8 @@
 package supermarket.jamkerja;
 
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
-import javax.swing.JOptionPane;
+import java.util.Locale;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -27,67 +25,76 @@ import supermarket.suplier.FormSuplier;
  * @author DanyMG
  */
 public class FormJadwal extends javax.swing.JFrame {
-    Employee emp=new Employee();    
-    String[][] allEmployee=emp.getAllEmployee();
-    String[][] ftEmployee=emp.getAllFtEmployee(allEmployee);
-    String[][] ptEmployee=emp.getAllPtEmployee(allEmployee);
+    private Employee emp=new Employee();    
+    private String[][] allEmployee=emp.getAllEmployee();
+    private String[][] ftEmployee=emp.getAllFtEmployee(allEmployee);
+    private String[][] ptEmployee=emp.getAllPtEmployee(allEmployee);
     
-    Schedule schedule=new Schedule();
-    String[][] allShiftWork=schedule.getAllShiftWork();
+    private Schedule schedule=new Schedule();
+    private String[][] allSchedule=schedule.getAllSchedule();
+    private String[][] allEmployeeSchedule=schedule.getAllEmployeeSchedule();
+    private String[] selEmployeeSchedule;
         
-    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM");
-    Calendar calendar=Calendar.getInstance();
-    Date today=new Date(),iDay=today;    
-    Date[] allDayOfWeek=new Date[7];
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM");    
+    private Date today=new Date();
+    private Date[] allDaysOfWeek=schedule.getDaysOfWeek(today);
     
-    DefaultTableModel table= new DefaultTableModel();
+    private DefaultTableModel table= new DefaultTableModel();
     
     private TableRowSorter<TableModel> rowSorter;
     public FormJadwal() {
-        initComponents();        
-        setAllDayOfWeek(getFirstDayOfWeek(today));
-        setColumnTable(table);
-        setTable(ftEmployee);
+        initComponents();
+        setCbActivities();
+        setWeekRange(allDaysOfWeek);
+        setTable(allDaysOfWeek, ftEmployee, allSchedule, allEmployeeSchedule);
+        rowSorter=new TableRowSorter<>(tblSchedule.getModel());
     }
-    public void setAllDayOfWeek(Date firstDayOfWeek){
-        allDayOfWeek[0]=firstDayOfWeek;
-        for(int i=1;i<7;i++){
-            calendar.setTime(allDayOfWeek[i-1]);
-            calendar.add(Calendar.DATE, 1);
-            allDayOfWeek[i]=calendar.getTime();
-        }
+    public void setCbActivities(){
+        cbActivities.addItem("");
+        cbActivities.addItem("Pagi");
+        cbActivities.addItem("Siang");
+        cbActivities.addItem("Full");
+        cbActivities.addItem("Awal");
+        cbActivities.addItem("Sakit");
+        cbActivities.addItem("Cuti");
     }
-    public Date getFirstDayOfWeek(Date index){
-        calendar.setTime(iDay);
-        int i=calendar.get(Calendar.DAY_OF_WEEK)-calendar.getFirstDayOfWeek();
-        System.out.println(-i);
-        calendar.add(Calendar.DATE,-i);
-        return calendar.getTime();        
-    }    
-    public void setColumnTable(DefaultTableModel model){
-        model.setColumnCount(0);
-        model.addColumn ("Nama Karyawan");
-        model.addColumn ("Min "+sdf.format(allDayOfWeek[0]));        
-        model.addColumn ("Sen "+sdf.format(allDayOfWeek[1]));
-        model.addColumn ("Sel "+sdf.format(allDayOfWeek[2]));
-        model.addColumn ("Rab "+sdf.format(allDayOfWeek[3]));
-        model.addColumn ("Kam "+sdf.format(allDayOfWeek[4]));
-        model.addColumn ("Jum "+sdf.format(allDayOfWeek[5]));
-        model.addColumn ("Sab "+sdf.format(allDayOfWeek[6]));
-        
+    public void setField(String[] eSchedule){
+        txtEmployeeId.setText(eSchedule[0]);
+        txtDate.setText(eSchedule[1]);
+        txtStart.setText(eSchedule[2]);
+        txtEnd.setText(eSchedule[3]);
+        cbActivities.setSelectedItem(eSchedule[4]);
+    }
+    public void setWeekRange(Date[] allDaysOfWeek){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM",Locale.US);        
+        lblWeekRange.setText(sdf.format(allDaysOfWeek[0])+" - "+sdf.format(allDaysOfWeek[allDaysOfWeek.length-1]));
+    }
+    public void setColumnTable(Date[] allDaysOfWeek){
+        table.setColumnCount(0);
+        table.addColumn ("Id");
+        table.addColumn ("Nama Karyawan");
+        table.addColumn ("Min "+sdf.format(allDaysOfWeek[0]));     
+        table.addColumn ("Sen "+sdf.format(allDaysOfWeek[1]));
+        table.addColumn ("Sel "+sdf.format(allDaysOfWeek[2]));
+        table.addColumn ("Rab "+sdf.format(allDaysOfWeek[3]));
+        table.addColumn ("Kam "+sdf.format(allDaysOfWeek[4]));
+        table.addColumn ("Jum "+sdf.format(allDaysOfWeek[5]));
+        table.addColumn ("Sab "+sdf.format(allDaysOfWeek[6]));        
     }
     public void setColumnModel(TableColumnModel columnModel){        
-        columnModel.getColumn(0).setPreferredWidth(100);        
+        columnModel.getColumn(0).setPreferredWidth(20);
+        columnModel.getColumn(1).setPreferredWidth(150);
     }
-    public void setTable(String[][] employee){        
-        tblSchedule.setModel(table);        
+    public void setTable(Date[] allDaysOfWeek, String[][] employee, String [][] allSchedule, String[][] allEmployeeSchedule){
+        setColumnTable(allDaysOfWeek);
+        tblSchedule.setModel(table);
         TableColumnModel columnModel=tblSchedule.getColumnModel();
         setColumnModel(columnModel);        
         tblSchedule.setColumnModel(columnModel); 
         table.setRowCount(0);
         for (String[] data1 : employee) {            
             if(Integer.parseInt(data1[6])==0){
-                table.addRow(new Object[]{data1[1], null, null, null, null, null, null, null});                
+                table.addRow(new Object[]{data1[0],data1[1], null, null, null, null, null, null, null});
             }            
         } 
     }
@@ -121,17 +128,24 @@ public class FormJadwal extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jPanel11 = new javax.swing.JPanel();
-        txtbarangbaru = new javax.swing.JLabel();
-        txtbarangbuang = new javax.swing.JLabel();
-        txteditkaryawan = new javax.swing.JLabel();
         txtCari = new javax.swing.JLabel();
         txtKeyWord = new javax.swing.JTextField();
-        txtbarangbuang1 = new javax.swing.JLabel();
         cbCategory = new javax.swing.JComboBox<>();
+        lblPrevWeek = new javax.swing.JLabel();
+        lblWeekRange = new javax.swing.JLabel();
+        lblNextWeek = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSchedule = new javax.swing.JTable();
-        txtPrevWeek = new javax.swing.JLabel();
-        txtNextWeek = new javax.swing.JLabel();
+        lblidkaryawan = new javax.swing.JLabel();
+        lblnTanggal = new javax.swing.JLabel();
+        txtEmployeeId = new javax.swing.JTextField();
+        txtDate = new javax.swing.JTextField();
+        lblWaktu = new javax.swing.JLabel();
+        lblkota = new javax.swing.JLabel();
+        lblnotelp = new javax.swing.JLabel();
+        cbActivities = new javax.swing.JComboBox<>();
+        txtEnd = new javax.swing.JTextField();
+        txtStart = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -331,27 +345,6 @@ public class FormJadwal extends javax.swing.JFrame {
 
         jPanel11.setBackground(new java.awt.Color(255, 229, 220));
 
-        txtbarangbaru.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtbarangbaru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new10_216291.png"))); // NOI18N
-        txtbarangbaru.setText("Jam Kerja Baru");
-        txtbarangbaru.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtbarangbaruMouseClicked(evt);
-            }
-        });
-
-        txtbarangbuang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_trash_115789.png"))); // NOI18N
-        txtbarangbuang.setText("Hapus Jam Kerja");
-
-        txteditkaryawan.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txteditkaryawan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_new-24_103173.png"))); // NOI18N
-        txteditkaryawan.setText("Edit Jam Kerja");
-        txteditkaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txteditkaryawanMouseClicked(evt);
-            }
-        });
-
         txtCari.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtCari.setText("Cari :");
         txtCari.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -366,12 +359,30 @@ public class FormJadwal extends javax.swing.JFrame {
             }
         });
 
-        txtbarangbuang1.setText("Kategori :");
-
         cbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full Time", "Part Time" }));
         cbCategory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbCategoryActionPerformed(evt);
+            }
+        });
+
+        lblPrevWeek.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblPrevWeek.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_back_126585.png"))); // NOI18N
+        lblPrevWeek.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblPrevWeekMouseClicked(evt);
+            }
+        });
+
+        lblWeekRange.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblWeekRange.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblWeekRange.setText("Tanggal");
+
+        lblNextWeek.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblNextWeek.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supermarket/gambar/iconfinder_forward_126569.png"))); // NOI18N
+        lblNextWeek.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblNextWeekMouseClicked(evt);
             }
         });
 
@@ -380,32 +391,32 @@ public class FormJadwal extends javax.swing.JFrame {
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addComponent(txtbarangbuang1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(txtbarangbaru)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txteditkaryawan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtbarangbuang)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 317, Short.MAX_VALUE)
                 .addComponent(txtCari)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblPrevWeek)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblWeekRange, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNextWeek))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(txtCari))
-            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(cbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(txtbarangbuang1)
-                .addComponent(txtbarangbaru, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtbarangbuang)
-                .addComponent(txteditkaryawan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtKeyWord, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCari))
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPrevWeek, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblNextWeek))
+                        .addComponent(lblWeekRange)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jToolBar1.add(jPanel11);
@@ -421,23 +432,41 @@ public class FormJadwal extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblSchedule.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblScheduleMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblSchedule);
 
-        txtPrevWeek.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        txtPrevWeek.setText("<-");
-        txtPrevWeek.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtPrevWeekMouseClicked(evt);
-            }
-        });
+        lblidkaryawan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblidkaryawan.setText("ID Karyawan");
 
-        txtNextWeek.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        txtNextWeek.setText("->");
-        txtNextWeek.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtNextWeekMouseClicked(evt);
-            }
-        });
+        lblnTanggal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblnTanggal.setText("Tanggal");
+
+        txtEmployeeId.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtEmployeeId.setEnabled(false);
+
+        txtDate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtDate.setEnabled(false);
+
+        lblWaktu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblWaktu.setText("Waktu");
+
+        lblkota.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblkota.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblkota.setText("sampai");
+
+        lblnotelp.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblnotelp.setText("Nama Kegiatan");
+
+        cbActivities.setEditable(true);
+        cbActivities.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        txtEnd.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        txtStart.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -448,11 +477,30 @@ public class FormJadwal extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(txtPrevWeek)
-                        .addGap(157, 157, 157)
-                        .addComponent(txtNextWeek)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblidkaryawan)
+                            .addComponent(lblnTanggal))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtEmployeeId)
+                            .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblnotelp)
+                            .addComponent(lblWaktu))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(txtStart, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblkota, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbActivities, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -460,13 +508,29 @@ public class FormJadwal extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPrevWeek)
-                    .addComponent(txtNextWeek))
-                .addGap(7, 7, 7)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblidkaryawan)
+                            .addComponent(txtEmployeeId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblnTanggal)
+                            .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblkota)
+                            .addComponent(lblWaktu)
+                            .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbActivities, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblnotelp))))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3);
@@ -488,33 +552,6 @@ public class FormJadwal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtbarangbaruMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtbarangbaruMouseClicked
-        // TODO add your handling code here:
-        this.setVisible(false);
-        new FormBarangBaru().setVisible(true);
-    }//GEN-LAST:event_txtbarangbaruMouseClicked
-
-    private void txteditkaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txteditkaryawanMouseClicked
-        if(selectedEmployee!=null){
-            this.setVisible(false);
-            new FormeditAnggota(selectedEmployee).setVisible(true);
-        }
-        else JOptionPane.showMessageDialog(this, "Tidak ada karyawan yang dipilih.", "Alert", JOptionPane.WARNING_MESSAGE);
-
-    }//GEN-LAST:event_txteditkaryawanMouseClicked
-
-    private void txtCariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCariMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCariMouseClicked
-
-    private void txtKeyWordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyWordKeyReleased
-        if(txtKeyWord.getText().equals("")) tblSchedule.setRowSorter(null);
-        else{
-            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtKeyWord.getText()));
-            tblSchedule.setRowSorter(rowSorter);
-        }
-    }//GEN-LAST:event_txtKeyWordKeyReleased
 
     private void lblSuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuplierMouseClicked
         this.setVisible(false);
@@ -538,32 +575,47 @@ public class FormJadwal extends javax.swing.JFrame {
 
     private void cbCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoryActionPerformed
         if(cbCategory.getSelectedItem().toString().equals("Full Time")){
-            setTable(ftEmployee);
+            setTable(allDaysOfWeek, ftEmployee, allSchedule, allEmployeeSchedule);
         }
-        else setTable(ptEmployee);        
+        else setTable(allDaysOfWeek, ptEmployee, allSchedule, allEmployeeSchedule);
     }//GEN-LAST:event_cbCategoryActionPerformed
 
-    private void txtPrevWeekMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPrevWeekMouseClicked
-        calendar.setTime(iDay);
-        int temp=calendar.get(Calendar.DAY_OF_WEEK)-calendar.getFirstDayOfWeek();        
-        calendar.add(Calendar.DATE,-temp-7);
-        iDay=calendar.getTime();
-        setAllDayOfWeek(iDay);
-        setColumnTable(table);
-        if(cbCategory.getSelectedIndex()==0) setTable(ftEmployee);
-        else setTable(ptEmployee);        
-    }//GEN-LAST:event_txtPrevWeekMouseClicked
+    private void lblPrevWeekMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPrevWeekMouseClicked
+        allDaysOfWeek=schedule.getPrevWeek(allDaysOfWeek);
+        if(cbCategory.getSelectedIndex()==0) setTable(allDaysOfWeek, ftEmployee, allSchedule, allEmployeeSchedule);
+        else setTable(allDaysOfWeek, ptEmployee, allSchedule, allEmployeeSchedule);
+        setWeekRange(allDaysOfWeek);
+    }//GEN-LAST:event_lblPrevWeekMouseClicked
 
-    private void txtNextWeekMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNextWeekMouseClicked
-        calendar.setTime(iDay);
-        int temp=calendar.get(Calendar.DAY_OF_WEEK)-calendar.getFirstDayOfWeek();        
-        calendar.add(Calendar.DATE,-temp+7);
-        iDay=calendar.getTime();
-        setAllDayOfWeek(iDay);
-        setColumnTable(table);
-        if(cbCategory.getSelectedIndex()==0) setTable(ftEmployee);
-        else setTable(ptEmployee);        
-    }//GEN-LAST:event_txtNextWeekMouseClicked
+    private void lblNextWeekMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNextWeekMouseClicked
+        allDaysOfWeek=schedule.getNextWeek(allDaysOfWeek);
+        if(cbCategory.getSelectedIndex()==0) setTable(allDaysOfWeek, ftEmployee, allSchedule, allEmployeeSchedule);
+        else setTable(allDaysOfWeek, ptEmployee, allSchedule, allEmployeeSchedule);
+        setWeekRange(allDaysOfWeek);
+    }//GEN-LAST:event_lblNextWeekMouseClicked
+
+    private void txtCariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCariMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCariMouseClicked
+
+    private void txtKeyWordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyWordKeyReleased
+        if(txtKeyWord.getText().equals("")) tblSchedule.setRowSorter(null);
+        else{
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtKeyWord.getText()));
+            tblSchedule.setRowSorter(rowSorter);
+        }
+    }//GEN-LAST:event_txtKeyWordKeyReleased
+
+    private void tblScheduleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblScheduleMouseClicked
+        int id=Integer.parseInt(tblSchedule.getValueAt(tblSchedule.getSelectedRow(), 0).toString());
+        if(tblSchedule.getSelectedColumn()>1){
+            System.out.print(tblSchedule.getSelectedColumn());
+            Date date=allDaysOfWeek[tblSchedule.getSelectedColumn()-2];
+            System.out.println(" "+date);
+            selEmployeeSchedule=schedule.getEmployeSchedule(id, date, allEmployeeSchedule);
+            setField(selEmployeeSchedule);
+        }                
+    }//GEN-LAST:event_tblScheduleMouseClicked
 
     /**
      * @param args the command line arguments
@@ -633,6 +685,7 @@ public class FormJadwal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Psamping;
+    private javax.swing.JComboBox<String> cbActivities;
     private javax.swing.JComboBox<String> cbCategory;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
@@ -650,16 +703,22 @@ public class FormJadwal extends javax.swing.JFrame {
     private javax.swing.JLabel lblJamKerja;
     private javax.swing.JLabel lblKaryawan;
     private javax.swing.JLabel lblLaporan;
+    private javax.swing.JLabel lblNextWeek;
+    private javax.swing.JLabel lblPrevWeek;
     private javax.swing.JLabel lblSuplier;
+    private javax.swing.JLabel lblWaktu;
+    private javax.swing.JLabel lblWeekRange;
+    private javax.swing.JLabel lblidkaryawan;
+    private javax.swing.JLabel lblkota;
+    private javax.swing.JLabel lblnTanggal;
+    private javax.swing.JLabel lblnotelp;
     private javax.swing.JTable tblSchedule;
     private javax.swing.JLabel txtCari;
+    private javax.swing.JTextField txtDate;
+    private javax.swing.JTextField txtEmployeeId;
+    private javax.swing.JTextField txtEnd;
     private javax.swing.JTextField txtKeyWord;
-    private javax.swing.JLabel txtNextWeek;
-    private javax.swing.JLabel txtPrevWeek;
-    private javax.swing.JLabel txtbarangbaru;
-    private javax.swing.JLabel txtbarangbuang;
-    private javax.swing.JLabel txtbarangbuang1;
-    private javax.swing.JLabel txteditkaryawan;
+    private javax.swing.JTextField txtStart;
     // End of variables declaration//GEN-END:variables
 
 }
