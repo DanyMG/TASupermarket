@@ -13,7 +13,7 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import supermarket.barang.FormBarang;
-import supermarket.jamkerja.FormJamKerja;
+import supermarket.jamkerja.FormJadwal;
 import supermarket.laporan.FormLaporan;
 import supermarket.suplier.FormSuplier;
 
@@ -446,7 +446,7 @@ public class FormAnggota extends javax.swing.JFrame {
     private void lblJamKerjaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblJamKerjaMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new FormJamKerja().setVisible(true);
+        new FormJadwal().setVisible(true);
     }//GEN-LAST:event_lblJamKerjaMouseClicked
 
     private void lblLaporanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLaporanMouseClicked

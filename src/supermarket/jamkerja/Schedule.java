@@ -16,11 +16,11 @@ import supermarket.KoneksiMySQL;
  *
  * @author DanyMG
  */
-public class ShiftWork {
+public class Schedule {
     private Connection con;
     private Statement stm;
     private ResultSet RsSW;
-    public ShiftWork(){
+    public Schedule(){
         try{
             KoneksiMySQL kon= new KoneksiMySQL("localhost", "root", "", "supermarket");
             con=kon.getConnection();
