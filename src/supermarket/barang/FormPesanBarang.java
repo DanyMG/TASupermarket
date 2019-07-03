@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import supermarket.anggota.*;
 import supermarket.karyawan.*;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
-import supermarket.jamkerja.FormJamKerja;
+import supermarket.jamkerja.FormJadwal;
 import supermarket.suplier.FormSuplier;
 import supermarket.suplier.Suplier;
 
@@ -607,7 +607,7 @@ public class FormPesanBarang extends javax.swing.JFrame {
 
     private void lblJamKerjaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblJamKerjaMouseClicked
         this.setVisible(false);
-        new FormJamKerja().setVisible(true);
+        new FormJadwal().setVisible(true);
     }//GEN-LAST:event_lblJamKerjaMouseClicked
 
     private void lblAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnggotaMouseClicked

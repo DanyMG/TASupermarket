@@ -9,7 +9,7 @@ package supermarket.karyawan;
 import javax.swing.JOptionPane;
 import supermarket.anggota.FormAnggota;
 import supermarket.barang.FormBarang;
-import supermarket.jamkerja.FormJamKerja;
+import supermarket.jamkerja.FormJadwal;
 import supermarket.suplier.FormSuplier;
 
 /**
@@ -466,7 +466,7 @@ public class FormeditKaryawan extends javax.swing.JFrame {
 
     private void lblJamKerjaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblJamKerjaMouseClicked
         this.setVisible(false);
-        new FormJamKerja().setVisible(true);
+        new FormJadwal().setVisible(true);
     }//GEN-LAST:event_lblJamKerjaMouseClicked
 
     private void lblAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnggotaMouseClicked
