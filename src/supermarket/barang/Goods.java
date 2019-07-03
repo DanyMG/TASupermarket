@@ -18,7 +18,7 @@ import supermarket.KoneksiMySQL;
 public class Goods {
     private Connection con;
     private Statement stm;
-    private ResultSet RsKaryawan;//rdgoods
+    private ResultSet RsGoods;//rdgoods
     public Goods(){
         try{
             KoneksiMySQL kon= new KoneksiMySQL("localhost", "root", "", "supermarket");
@@ -32,14 +32,14 @@ public class Goods {
         String[][] employee;        
         try{    
             stm=con.createStatement();
-            RsKaryawan=stm.executeQuery("select * from barang");
-            employee=new String[countRowRs(RsKaryawan)][7];
-            for(int i=0;RsKaryawan.next();i++){
-                employee[i][0]=RsKaryawan.getString("id_barang");
-                employee[i][1]=RsKaryawan.getString("nama_barang");
-                employee[i][2]=RsKaryawan.getString("jumlah");
-                employee[i][3]=RsKaryawan.getString("harga_beli");
-                employee[i][4]=RsKaryawan.getString("harga_jual");
+            RsGoods=stm.executeQuery("select * from barang");
+            employee=new String[countRowRs(RsGoods)][7];
+            for(int i=0;RsGoods.next();i++){
+                employee[i][0]=RsGoods.getString("id_barang");
+                employee[i][1]=RsGoods.getString("nama_barang");
+                employee[i][2]=RsGoods.getString("jumlah");
+                employee[i][3]=RsGoods.getString("harga_beli");
+                employee[i][4]=RsGoods.getString("harga_jual");
                 
             }            
         } catch (SQLException e){
@@ -76,8 +76,12 @@ public class Goods {
             return false;
         }
     }
-    public int getLastId(String[][] eData){             
-        return Integer.parseInt(eData[eData.length-1][0]);
+    public int getLastId(String[][] eData){ 
+        if(eData.length==0){
+            return 0;
+        }else{
+            return Integer.parseInt(eData[eData.length-1][0]);
+        }
     }
     public boolean editGoods(String[] goods){
         try{
@@ -118,30 +122,41 @@ public class Goods {
             return false;
         }
     }
-    public boolean addSaleBill(String[] saleBill,String[][] saleBillDetails){
+    public boolean addSaleBill(String[][] saleBillDetails){
         try{
             stm=con.createStatement();
-            if(saleBill[1].equals("")){
-                stm.executeUpdate("INSERT INTO "
-                    + "penjualan (id_penjualan, id_anggota, tanggal_penjualan, total_tagihan) "
-                    + "VALUES (NULL,NULL, '"+saleBill[2]+"', '"+saleBill[3]+"')");
-            }else{
-                stm.executeUpdate("INSERT INTO "
-                    + "penjualan (id_penjualan, id_anggota, tanggal_penjualan, total_tagihan) "
-                    + "VALUES (NULL,'"+saleBill[1]+"', '"+saleBill[2]+"', '"+saleBill[3]+"')");
-            }            
-            con.setAutoCommit(false);
-            stm=con.createStatement();  
-            System.out.println(saleBillDetails.length);
-            for(int i=0;i<saleBillDetails.length;i++){
-                stm.addBatch("INSERT INTO penjualan_barang (id_penjualan, id_barang, jml_penjualan, total_harga) "
-                    + "VALUES ('"+saleBillDetails[0]+"', '"+saleBillDetails[1]+"', '"+saleBillDetails[2]+"', '"+saleBillDetails[3]+"')");
+            for(String[] bill:saleBillDetails){
+            stm.executeUpdate("INSERT INTO "
+                        + "penjualan (id_penjualan, id_anggota, tgl_penjualan, id_barang, jml_penjualan, tot_harga) "
+                        + "VALUES ('"+bill[0]+"','"+bill[1]+"', '"+bill[2]+"', '"+bill[3]+"', '"+bill[4]+"', '"+bill[5]+"')");
+                  
             }
-            stm.executeBatch();
+            
             return true;            
         }catch(SQLException e){
             System.out.println("Error discard : "+e);
             return false;
         }
+    }
+        public String[][] getAllBill(){
+        String[][] goods;        
+        try{    
+            stm=con.createStatement();
+            RsGoods=stm.executeQuery("select * from penjualan");
+            goods=new String[countRowRs(RsGoods)][7];
+            for(int i=0;RsGoods.next();i++){
+                goods[i][0]=RsGoods.getString("id_penjualan");
+                goods[i][1]=RsGoods.getString("id_anggota");
+                goods[i][2]=RsGoods.getString("tgl_penjualan");
+                goods[i][3]=RsGoods.getString("id_barang");
+                goods[i][4]=RsGoods.getString("jml_penjualan");
+                goods[i][5]=RsGoods.getString("tot_harga");
+                
+            }            
+        } catch (SQLException e){
+            System.out.println("Error : "+e);
+            goods=new String[0][0];
+        }
+        return goods;
     }
 }
