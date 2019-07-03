@@ -6,11 +6,10 @@
 
 package supermarket.jamkerja;
 
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
-import javafx.util.converter.LocalDateStringConverter;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -27,54 +26,70 @@ import supermarket.suplier.FormSuplier;
  *
  * @author DanyMG
  */
-public class FormJamKerja extends javax.swing.JFrame {
+public class FormJadwal extends javax.swing.JFrame {
     Employee emp=new Employee();    
     String[][] allEmployee=emp.getAllEmployee();
     String[][] ftEmployee=emp.getAllFtEmployee(allEmployee);
     String[][] ptEmployee=emp.getAllPtEmployee(allEmployee);
     
-    ShiftWork sw=new ShiftWork();
-    String[][] allShiftWork=sw.getAllShiftWork();
-    
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    Schedule schedule=new Schedule();
+    String[][] allShiftWork=schedule.getAllShiftWork();
+        
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM");
     Calendar calendar=Calendar.getInstance();
-    Date today=new Date();
-    Date firsDayWeek,lastDayWeek;
+    Date today=new Date(),iDay=today;    
+    Date[] allDayOfWeek=new Date[7];
     
+    DefaultTableModel table= new DefaultTableModel();
     
     private TableRowSorter<TableModel> rowSorter;
-    public FormJamKerja() {
-        initComponents();
-        calendar.setTime(today);
-        if(allShiftWork==null) ///tambah jadwal
+    public FormJadwal() {
+        initComponents();        
+        setAllDayOfWeek(getFirstDayOfWeek(today));
+        setColumnTable(table);
         setTable(ftEmployee);
     }
-    public void setColumnTable(DefaultTableModel model){        
-        model.addColumn ("Nama Karyawan");        
-        model.addColumn ("Senin");
-        model.addColumn ("Selasa");
-        model.addColumn ("Rabu");
-        model.addColumn ("Kamis");
-        model.addColumn ("Jumat");
-        model.addColumn ("Sabtu");
-        model.addColumn ("Minggu");
+    public void setAllDayOfWeek(Date firstDayOfWeek){
+        allDayOfWeek[0]=firstDayOfWeek;
+        for(int i=1;i<7;i++){
+            calendar.setTime(allDayOfWeek[i-1]);
+            calendar.add(Calendar.DATE, 1);
+            allDayOfWeek[i]=calendar.getTime();
+        }
+    }
+    public Date getFirstDayOfWeek(Date index){
+        calendar.setTime(iDay);
+        int i=calendar.get(Calendar.DAY_OF_WEEK)-calendar.getFirstDayOfWeek();
+        System.out.println(-i);
+        calendar.add(Calendar.DATE,-i);
+        return calendar.getTime();        
+    }    
+    public void setColumnTable(DefaultTableModel model){
+        model.setColumnCount(0);
+        model.addColumn ("Nama Karyawan");
+        model.addColumn ("Min "+sdf.format(allDayOfWeek[0]));        
+        model.addColumn ("Sen "+sdf.format(allDayOfWeek[1]));
+        model.addColumn ("Sel "+sdf.format(allDayOfWeek[2]));
+        model.addColumn ("Rab "+sdf.format(allDayOfWeek[3]));
+        model.addColumn ("Kam "+sdf.format(allDayOfWeek[4]));
+        model.addColumn ("Jum "+sdf.format(allDayOfWeek[5]));
+        model.addColumn ("Sab "+sdf.format(allDayOfWeek[6]));
+        
     }
     public void setColumnModel(TableColumnModel columnModel){        
         columnModel.getColumn(0).setPreferredWidth(100);        
     }
-    public void setTable(String[][] eData){       
-        DefaultTableModel table= new DefaultTableModel();
-        setColumnTable(table);
-        tblShiftWork.setModel(table);        
-        TableColumnModel columnModel=tblShiftWork.getColumnModel();
+    public void setTable(String[][] employee){        
+        tblSchedule.setModel(table);        
+        TableColumnModel columnModel=tblSchedule.getColumnModel();
         setColumnModel(columnModel);        
-        tblShiftWork.setColumnModel(columnModel);        
-          for (String[] data : eData) {
-              if(Integer.parseInt(data[6])==0) table.addRow(new Object[]{data[1]});          
-          }            
-//        for (String[] data : sfData) {            
-//            table.addRow(new Object[]{data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]});
-//        }        
+        tblSchedule.setColumnModel(columnModel); 
+        table.setRowCount(0);
+        for (String[] data1 : employee) {            
+            if(Integer.parseInt(data1[6])==0){
+                table.addRow(new Object[]{data1[1], null, null, null, null, null, null, null});                
+            }            
+        } 
     }
     public void filterTable(String kategori){
         
@@ -114,9 +129,9 @@ public class FormJamKerja extends javax.swing.JFrame {
         txtbarangbuang1 = new javax.swing.JLabel();
         cbCategory = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblShiftWork = new javax.swing.JTable();
-        txtbarangbuang2 = new javax.swing.JLabel();
-        txtbarangbuang3 = new javax.swing.JLabel();
+        tblSchedule = new javax.swing.JTable();
+        txtPrevWeek = new javax.swing.JLabel();
+        txtNextWeek = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -248,7 +263,7 @@ public class FormJamKerja extends javax.swing.JFrame {
         lblJamKerja.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblJamKerja.setForeground(new java.awt.Color(254, 151, 114));
         lblJamKerja.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblJamKerja.setText("Jam Kerja");
+        lblJamKerja.setText("Jadwal");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -395,7 +410,7 @@ public class FormJamKerja extends javax.swing.JFrame {
 
         jToolBar1.add(jPanel11);
 
-        tblShiftWork.setModel(new javax.swing.table.DefaultTableModel(
+        tblSchedule.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -406,13 +421,23 @@ public class FormJamKerja extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblShiftWork);
+        jScrollPane1.setViewportView(tblSchedule);
 
-        txtbarangbuang2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        txtbarangbuang2.setText("<-");
+        txtPrevWeek.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtPrevWeek.setText("<-");
+        txtPrevWeek.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPrevWeekMouseClicked(evt);
+            }
+        });
 
-        txtbarangbuang3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        txtbarangbuang3.setText("->");
+        txtNextWeek.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtNextWeek.setText("->");
+        txtNextWeek.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtNextWeekMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -425,9 +450,9 @@ public class FormJamKerja extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(txtbarangbuang2)
-                        .addGap(253, 253, 253)
-                        .addComponent(txtbarangbuang3)))
+                        .addComponent(txtPrevWeek)
+                        .addGap(157, 157, 157)
+                        .addComponent(txtNextWeek)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -437,8 +462,8 @@ public class FormJamKerja extends javax.swing.JFrame {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtbarangbuang2)
-                    .addComponent(txtbarangbuang3))
+                    .addComponent(txtPrevWeek)
+                    .addComponent(txtNextWeek))
                 .addGap(7, 7, 7)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
                 .addContainerGap())
@@ -484,10 +509,10 @@ public class FormJamKerja extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCariMouseClicked
 
     private void txtKeyWordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyWordKeyReleased
-        if(txtKeyWord.getText().equals("")) tblShiftWork.setRowSorter(null);
+        if(txtKeyWord.getText().equals("")) tblSchedule.setRowSorter(null);
         else{
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtKeyWord.getText()));
-            tblShiftWork.setRowSorter(rowSorter);
+            tblSchedule.setRowSorter(rowSorter);
         }
     }//GEN-LAST:event_txtKeyWordKeyReleased
 
@@ -518,6 +543,28 @@ public class FormJamKerja extends javax.swing.JFrame {
         else setTable(ptEmployee);        
     }//GEN-LAST:event_cbCategoryActionPerformed
 
+    private void txtPrevWeekMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPrevWeekMouseClicked
+        calendar.setTime(iDay);
+        int temp=calendar.get(Calendar.DAY_OF_WEEK)-calendar.getFirstDayOfWeek();        
+        calendar.add(Calendar.DATE,-temp-7);
+        iDay=calendar.getTime();
+        setAllDayOfWeek(iDay);
+        setColumnTable(table);
+        if(cbCategory.getSelectedIndex()==0) setTable(ftEmployee);
+        else setTable(ptEmployee);        
+    }//GEN-LAST:event_txtPrevWeekMouseClicked
+
+    private void txtNextWeekMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNextWeekMouseClicked
+        calendar.setTime(iDay);
+        int temp=calendar.get(Calendar.DAY_OF_WEEK)-calendar.getFirstDayOfWeek();        
+        calendar.add(Calendar.DATE,-temp+7);
+        iDay=calendar.getTime();
+        setAllDayOfWeek(iDay);
+        setColumnTable(table);
+        if(cbCategory.getSelectedIndex()==0) setTable(ftEmployee);
+        else setTable(ptEmployee);        
+    }//GEN-LAST:event_txtNextWeekMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -535,14 +582,30 @@ public class FormJamKerja extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormJamKerja.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormJadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormJamKerja.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormJadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormJamKerja.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormJadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormJamKerja.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormJadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -563,7 +626,7 @@ public class FormJamKerja extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormJamKerja().setVisible(true);
+                new FormJadwal().setVisible(true);
             }
         });
     }
@@ -588,14 +651,14 @@ public class FormJamKerja extends javax.swing.JFrame {
     private javax.swing.JLabel lblKaryawan;
     private javax.swing.JLabel lblLaporan;
     private javax.swing.JLabel lblSuplier;
-    private javax.swing.JTable tblShiftWork;
+    private javax.swing.JTable tblSchedule;
     private javax.swing.JLabel txtCari;
     private javax.swing.JTextField txtKeyWord;
+    private javax.swing.JLabel txtNextWeek;
+    private javax.swing.JLabel txtPrevWeek;
     private javax.swing.JLabel txtbarangbaru;
     private javax.swing.JLabel txtbarangbuang;
     private javax.swing.JLabel txtbarangbuang1;
-    private javax.swing.JLabel txtbarangbuang2;
-    private javax.swing.JLabel txtbarangbuang3;
     private javax.swing.JLabel txteditkaryawan;
     // End of variables declaration//GEN-END:variables
 
