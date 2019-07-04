@@ -711,10 +711,13 @@ public class FormPenjualanBarang extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPrintMouseClicked
 
     private void btnaddSaleGoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnaddSaleGoodsMouseClicked
-       addSaleTable();        
-       txtTotBill.setText(Integer.toString(getTotalBill()));
-       cbNameGoods.setSelectedIndex(0);
-       txtSumGoods.setText("");
+        if(Integer.parseInt(txtSumGoods.getText())<=Integer.parseInt(allGoods[Integer.parseInt(txtIdGoods.getText())-1][2])){
+            addSaleTable();        
+            txtTotBill.setText(Integer.toString(getTotalBill()));
+            cbNameGoods.setSelectedIndex(0);
+            txtSumGoods.setText("");
+        }else JOptionPane.showMessageDialog(this, "Jumlah barang melebihi barang yang tersedia.", "Alert", JOptionPane.WARNING_MESSAGE);
+       
     }//GEN-LAST:event_btnaddSaleGoodsMouseClicked
 
     private void txtNameMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameMemberActionPerformed
