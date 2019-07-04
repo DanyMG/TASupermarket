@@ -7,7 +7,6 @@ package supermarket.barang;
 
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import supermarket.anggota.FormAnggota;
 import supermarket.jamkerja.FormJadwal;
 import supermarket.karyawan.Employee;

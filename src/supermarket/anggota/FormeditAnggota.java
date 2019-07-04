@@ -78,6 +78,7 @@ public class FormeditAnggota extends javax.swing.JFrame {
         txtTelp = new javax.swing.JTextField();
         btnEdit = new javax.swing.JToggleButton();
         btnReset = new javax.swing.JToggleButton();
+        lblkembali = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,10 +137,10 @@ public class FormeditAnggota extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel6.setBackground(new java.awt.Color(52, 17, 9));
+        jPanel6.setBackground(new java.awt.Color(254, 151, 114));
 
         lblKaryawan.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblKaryawan.setForeground(new java.awt.Color(254, 151, 114));
+        lblKaryawan.setForeground(new java.awt.Color(52, 17, 9));
         lblKaryawan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblKaryawan.setText("Karyawan");
         lblKaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -161,10 +162,10 @@ public class FormeditAnggota extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel7.setBackground(new java.awt.Color(254, 151, 114));
+        jPanel7.setBackground(new java.awt.Color(52, 17, 9));
 
         lblAnggota.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblAnggota.setForeground(new java.awt.Color(52, 17, 9));
+        lblAnggota.setForeground(new java.awt.Color(254, 151, 114));
         lblAnggota.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAnggota.setText("Anggota");
         lblAnggota.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -338,6 +339,14 @@ public class FormeditAnggota extends javax.swing.JFrame {
             }
         });
 
+        lblkembali.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblkembali.setText("< Kembali");
+        lblkembali.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblkembaliMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -363,11 +372,17 @@ public class FormeditAnggota extends javax.swing.JFrame {
                     .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTelp, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(150, 150, 150))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblkembali)
+                .addGap(60, 60, 60))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(150, 150, 150)
+                .addGap(65, 65, 65)
+                .addComponent(lblkembali)
+                .addGap(83, 83, 83)
                 .addComponent(lblTambKaryawan)
                 .addGap(50, 50, 50)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -393,7 +408,7 @@ public class FormeditAnggota extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEdit)
                     .addComponent(btnReset))
-                .addContainerGap(193, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3);
@@ -457,6 +472,11 @@ public class FormeditAnggota extends javax.swing.JFrame {
         this.setVisible(false);
         new FormAnggota().setVisible(true);
     }//GEN-LAST:event_lblAnggotaMouseClicked
+
+    private void lblkembaliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblkembaliMouseClicked
+        this.setVisible(false);
+        new FormAnggota().setVisible(true);        
+    }//GEN-LAST:event_lblkembaliMouseClicked
     
     /**
      * @param args the command line arguments
@@ -514,6 +534,7 @@ public class FormeditAnggota extends javax.swing.JFrame {
     private javax.swing.JLabel lblTambKaryawan;
     private javax.swing.JLabel lblalamat;
     private javax.swing.JLabel lblidkaryawan;
+    private javax.swing.JLabel lblkembali;
     private javax.swing.JLabel lblkota;
     private javax.swing.JLabel lblnmkaryawan;
     private javax.swing.JLabel lblnotelp;

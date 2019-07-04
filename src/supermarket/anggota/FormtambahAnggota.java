@@ -149,10 +149,10 @@ public class FormtambahAnggota extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel6.setBackground(new java.awt.Color(52, 17, 9));
+        jPanel6.setBackground(new java.awt.Color(254, 151, 114));
 
         lblKaryawan.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblKaryawan.setForeground(new java.awt.Color(254, 151, 114));
+        lblKaryawan.setForeground(new java.awt.Color(52, 17, 9));
         lblKaryawan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblKaryawan.setText("Karyawan");
         lblKaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -174,10 +174,10 @@ public class FormtambahAnggota extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel7.setBackground(new java.awt.Color(254, 151, 114));
+        jPanel7.setBackground(new java.awt.Color(52, 17, 9));
 
         lblAnggota.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblAnggota.setForeground(new java.awt.Color(52, 17, 9));
+        lblAnggota.setForeground(new java.awt.Color(254, 151, 114));
         lblAnggota.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAnggota.setText("Anggota");
         lblAnggota.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -489,7 +489,7 @@ public class FormtambahAnggota extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(!isEditField()){        
             this.setVisible(false);
-            new FormKaryawan().setVisible(true);
+            new FormAnggota().setVisible(true);
         }
         else{
             String[] pilihan= new String[2];

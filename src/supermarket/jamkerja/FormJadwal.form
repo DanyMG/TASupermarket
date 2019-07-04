@@ -318,7 +318,7 @@
                       <Color blue="72" green="97" red="fe" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Jadwal"/>
+                    <Property name="text" type="java.lang.String" value="Jam Kerja"/>
                   </Properties>
                 </Component>
               </SubComponents>

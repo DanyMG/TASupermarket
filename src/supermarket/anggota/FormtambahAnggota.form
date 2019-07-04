@@ -172,7 +172,7 @@
             <Container class="javax.swing.JPanel" name="jPanel6">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="9" green="11" red="34" type="rgb"/>
+                  <Color blue="72" green="97" red="fe" type="rgb"/>
                 </Property>
               </Properties>
 
@@ -198,7 +198,7 @@
                       <Font name="Tahoma" size="24" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="72" green="97" red="fe" type="rgb"/>
+                      <Color blue="9" green="11" red="34" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="Karyawan"/>
@@ -212,7 +212,7 @@
             <Container class="javax.swing.JPanel" name="jPanel7">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="72" green="97" red="fe" type="rgb"/>
+                  <Color blue="9" green="11" red="34" type="rgb"/>
                 </Property>
               </Properties>
 
@@ -249,7 +249,7 @@
                       <Font name="Tahoma" size="24" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="9" green="11" red="34" type="rgb"/>
+                      <Color blue="72" green="97" red="fe" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="Anggota"/>

@@ -277,7 +277,7 @@ public class FormJadwal extends javax.swing.JFrame {
         lblJamKerja.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblJamKerja.setForeground(new java.awt.Color(254, 151, 114));
         lblJamKerja.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblJamKerja.setText("Jadwal");
+        lblJamKerja.setText("Jam Kerja");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
