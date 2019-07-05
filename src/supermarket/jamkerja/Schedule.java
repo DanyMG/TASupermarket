@@ -9,9 +9,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import supermarket.KoneksiMySQL;
 
@@ -22,9 +19,7 @@ import supermarket.KoneksiMySQL;
 public class Schedule {
     private Connection con;
     private Statement stm;
-    private ResultSet RsSchedule;
-    private Calendar cal=Calendar.getInstance();
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private ResultSet RsSW;
     public Schedule(){
         try{
             KoneksiMySQL kon= new KoneksiMySQL("localhost", "root", "", "supermarket");
@@ -34,73 +29,21 @@ public class Schedule {
             System.out.println("Error : "+e);
         }
     }
-    public Date[] getDaysOfWeek(Date selDate){
-        Date[] date=new Date[7];
-        for(int i=0;i<date.length;i++){
-            if(i==0) date[i]=getFirstDayOfWeek(selDate);
-            else {
-                cal.setTime(date[i-1]);
-                cal.add(Calendar.DATE, 1);
-                date[i]=cal.getTime();
-            }         
-        }
-        return date;
-    }
-    public Date getFirstDayOfWeek(Date selDate){        
-        cal.setTime(selDate);
-        int i=cal.get(Calendar.DAY_OF_WEEK)-cal.getFirstDayOfWeek();
-        cal.add(Calendar.DATE,-i);        
-        return cal.getTime();
-    }
-    public Date getLastDayOfWeek(Date[] allDaysOfWeek){
-        return allDaysOfWeek[allDaysOfWeek.length-1];
-    }
-    public Date[] getPrevWeek(Date[] allDaysOfWeek){
-        Date[] prevWeek=new Date[7];
-        for(int i=0;i<prevWeek.length;i++){
-            if(i==0){
-                cal.setTime(allDaysOfWeek[i]);
-                cal.add(Calendar.DATE,-(cal.get(Calendar.DAY_OF_WEEK)-cal.getFirstDayOfWeek())-7);
-            }
-            else{
-                cal.setTime(prevWeek[i-1]);
-                cal.add(Calendar.DATE, 1);               
-            }
-            prevWeek[i]=cal.getTime();
-        }
-        return prevWeek;
-    }    
-    public Date[] getNextWeek(Date[] allDaysOfWeek){
-       Date[] nextWeek=new Date[7];
-        for(int i=0;i<nextWeek.length;i++){
-            if(i==0){
-                cal.setTime(allDaysOfWeek[i]);
-                cal.add(Calendar.DATE,-(cal.get(Calendar.DAY_OF_WEEK)-cal.getFirstDayOfWeek())+7);
-            }
-            else{
-                cal.setTime(nextWeek[i-1]);
-                cal.add(Calendar.DATE, 1);                
-            }
-            nextWeek[i]=cal.getTime();
-        }
-        return nextWeek;
-    }
-    public String[][] getAllSchedule(){
-        String[][] schedule;
+    public String[][] getAllShiftWork(){
+        String[][] SW;        
         try{    
             stm=con.createStatement();
             RsSchedule=stm.executeQuery("select * from jadwal");
             schedule=new String[countRowRs(RsSchedule)][2];
             for(int i=0;RsSchedule.next();i++){
-                schedule[i][0]=RsSchedule.getString("id_karyawan");
+                schedule[i][0]=RsSchedule.getString("id_jadwal");
                 schedule[i][1]=RsSchedule.getString("tgl_jadwal");                
             }            
         } catch (SQLException e){
             System.out.println("Error : "+e);
-            schedule=new String[0][0];
+            SW=new String[0][0];
         }
-        
-        return schedule;
+        return SW;
     }
     public String[][] getAllEmployeeSchedule(){
         String[][] eSchedule;
@@ -122,9 +65,22 @@ public class Schedule {
         }
         return eSchedule;
     }
+    public boolean addSchedule(Date schedule){
+        try{
+            stm=con.createStatement();
+            stm.executeUpdate("INSERT INTO "
+                    + "jadwal(id_jadwal, tgl_jadwal ) "
+                    + "VALUES (NULL,'"+sdf.format(schedule)+"')");
+            return true;
+        }catch(SQLException e){
+            System.out.println("Error : "+e);
+            return false;
+        }
+    }
     public boolean addEmployeeSchedule(String[] eS){
         try{
             stm=con.createStatement();
+            System.out.println(eS[2]);
             stm.executeUpdate("INSERT INTO "
                     + "jadwal_karyawan(id_jk, id_jadwal, id_karyawan, waktu_mulai, waktu_selesai, nama_jk) "
                     + "VALUES (NULL,'"+eS[1]+"', '"+eS[2]+"', '"+eS[3]+"', '"+eS[4]+"', '"+eS[5]+"')");
@@ -134,24 +90,46 @@ public class Schedule {
             return false;
         }
     }
+    public boolean isAnyDate(String selDate, String[][] allSchedule) throws ParseException{
+        for(String[] schedule:allSchedule){
+            System.out.println(schedule[1]+" ?? "+selDate);
+            if(schedule[1].equals(selDate)) return true;
+        }
+        return false;
+    }
+    public int getIdSchedule(Date seldate,String[][] allSchedule) throws ParseException{
+        for(String[] schedule:allSchedule){
+            if(sdf.parse(schedule[1])==seldate) return  Integer.parseInt(schedule[0]);
+        }
+        return 0;
+    }
     public String[] getEmployeSchedule(int id,Date date, String[][] allEmployeeSchedule){
         String[] eSchedule=new String[6];
-        try{
-            for(String[] es:allEmployeeSchedule){
-                if(sdf.parse(es[1])==date && Integer.parseInt(es[2])==id){                    
-                    eSchedule=es;
-                }else{
-                    eSchedule[0]=Integer.toString(id);
-                    eSchedule[1]=sdf.format(date);
-                    eSchedule[2]=null;
-                    eSchedule[3]=null;
-                    eSchedule[4]=null;
-                    eSchedule[5]=null;
+        if(allEmployeeSchedule.length!=0){
+            try{
+                for(String[] es:allEmployeeSchedule){
+                    if(sdf.parse(es[1])==date && Integer.parseInt(es[2])==id){                    
+                        eSchedule=es;
+                    }else{
+                        eSchedule[0]=Integer.toString(id);
+                        eSchedule[1]=sdf.format(date);
+                        eSchedule[2]=null;
+                        eSchedule[3]=null;
+                        eSchedule[4]=null;
+                        eSchedule[5]=null;
+                    }
                 }
+            }catch(NumberFormatException | ParseException e){
+                System.out.println("Error : "+e);
             }
-        }catch(NumberFormatException | ParseException e){
-            System.out.println("Error : "+e);
-        }        
+        }else{
+            eSchedule[0]=Integer.toString(id);
+                        eSchedule[1]=sdf.format(date);
+                        eSchedule[2]=null;
+                        eSchedule[3]=null;
+                        eSchedule[4]=null;
+                        eSchedule[5]=null;
+        }                
         return eSchedule;
     }    
     public int countRowRs(ResultSet rs) throws SQLException{
@@ -159,5 +137,8 @@ public class Schedule {
         int count=rs.getRow();
         rs.beforeFirst();
         return count;
-    }    
+    }
+    public boolean addShiftWork(Date sun, Date sat){
+        
+    }
 }
