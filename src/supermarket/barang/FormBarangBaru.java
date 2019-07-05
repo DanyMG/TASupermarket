@@ -439,7 +439,7 @@ public class FormBarangBaru extends javax.swing.JFrame {
     private void btntambahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btntambahMouseClicked
         if(checkEmptyField()) JOptionPane.showMessageDialog(this, "Tolong lengkapi data barang baru"); //Mengecek data kosong pada data karyawan baru
         else{
-            String[] newEData=new String[]{Integer.toString(id),txtnama.getText(), txthrgbeli.getText(), txthrgjual.getText()};            
+            String[] newEData=new String[]{Integer.toString(id),txtnama.getText(),"0", txthrgbeli.getText(), txthrgjual.getText()};            
             if(brg.addGoods(newEData)){
                 JOptionPane.showMessageDialog(this, "Data barang berhasil ditambahkan.");
                 id++;
